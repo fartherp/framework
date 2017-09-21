@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<head>
+    <style type="text/css">
+        body {
+            font-family: "微软雅黑";
+            font-size: 15px;
+        }
+        table {
+            word-break: break-word;
+        }
+        table td {
+            word-break: break-word;
+            text-align: center;
+        }
+        .blue {
+            background: #C5D9F1;
+            text-align: right;
+            padding-right: 5px;
+        }
+        .brown {
+            background: #EEECE1;
+        }
+    </style>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+</head>
+
+<body>
+<div style="text-align:center">
+    您的【$!contractName】合同【$!contractId】已经通过【$!prePerson】审批，审批记录如下：
+</div>
+<div id="speicalInfo">
+    <table border="1" cellspacing="0" cellpadding="0" width="90%" align="center">
+        <tr class="brown">
+            <td>审批信息</td>
+        </tr>
+        <tr>
+            <td>
+                <table border="1" cellspacing="0" cellpadding="0" width="100%">
+                    <tr>
+                        <td class="blue">审核流程</td>
+                        <td colspan="6">$!flow.paticipants</td>
+                    </tr>
+                    <tr>
+                        <td class="blue">审批点提示</td>
+                        <td colspan="6">$!flow.notstandardreason</td>
+                    </tr>
+                    <tr>
+                        <td class="blue">序号</td>
+                        <td class="blue">审核人</td>
+                        <td class="blue">审核时间</td>
+                        <td class="blue">操作人</td>
+                        <td class="blue">审核状态</td>
+                        <td class="blue">审核批注</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>$!addUserName</td>
+                        <td>-</td>
+                        <td>$!addUserName</td>
+                        <td>发起人</td>
+                        <td>-</td>
+                    </tr>
+                    #set($index = 1)
+                    #foreach($item in $!flowTask)
+                        <tr>
+                            <td>$!index</td>
+                            <td>
+                                $!item.erpCustomerName
+                            </td>
+                            <td>
+                                #if($item.endtime)
+                                    $date.format("yyyy-MM-dd HH:mm:ss", $!item.endtime)
+                                #end
+                            </td>
+                            <td>$!item.operatorName</td>
+                            <td>$!item.flowtaskstatusName</td>
+                            <td>$!item.msg</td>
+                        </tr>
+                        #set($index = $index + 1)
+                    #end
+                </table>
+            </td>
+        </tr>
+    </table>
+    查看具体信息请登陆ALB系统
+</div>
+</body>
+
+</html>

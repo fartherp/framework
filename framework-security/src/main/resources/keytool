@@ -1,0 +1,86 @@
+1.生成keyStroe文件
+keytool -genkey -validity 36000 -alias www.ck.org -keyalg RSA -keystore d:\ck.keystore
+
+-genkey表示生成密钥
+-validity指定证书有效期，这里是36000天
+-alias指定别名，这里是www.zlex.org
+-keyalg指定算法，这里是RSA
+-keystore指定存储位置，这里是d:\zlex.keystore
+密码为 123456
+
+2.生成自签名证书
+keytool -export -keystore d:\ck.keystore -alias www.ck.org -file d:\ck.cer -rfc
+
+-export指定为导出操作
+-keystore指定keystore文件
+-alias指定导出keystore文件中的别名
+-file指向导出路径
+-rfc以文本格式输出，也就是以BASE64编码输出
+密码是 123456
+
+3.将证书导入到我们的密钥库
+keytool -import -alias www.ck.org -file d:/ck.cer -keystore d:/ck.keystore
+-import表示导入
+-alias指定别名，这里是www.ck.org
+-file指定算法，这里是d:/ck.cer
+-keystore指定存储位置，这里是d:/cx.keystore
+密码为654321
+
+4.配置hosts
+C:\Windows\System32\drivers\etc\hosts文件，将www.ck.org绑定在本机上。在文件末尾追加127.0.0.1       www.ck.org
+
+5.配置tomcat
+zlex.keystore拷贝到tomcat的conf目录下，然后配置server.xml
+<Connector
+    SSLEnabled="true"
+    URIEncoding="UTF-8"
+    clientAuth="false"
+    keystoreFile="conf/ck.keystore"
+    keystorePass="123456"
+    maxThreads="150"
+    port="443"
+    protocol="HTTP/1.1"
+    scheme="https"
+    secure="true"
+    sslProtocol="TLS" />
+    注意clientAuth="false"测试阶段，置为false，正式使用时建议使用true
+
+注：工具JarSigner可以完成代码签名
+1：签名
+jarsigner -storetype jks -keystore ck.keystore -verbose tools.jar www.ck.org
+2：验签
+jarsigner -verify -verbose -certs tools.jar
+
+#单向认证
+1.生成keyStroe文件
+keytool -genkey -validity 36000 -alias www.ck.org -keyalg RSA -keystore d:\ck.keystore
+密码为 123456
+
+2.导出CA证书申请
+keytool -certreq -alias www.ck.org -file d:\ck.csr -keystore d:\ck.keystore -v
+
+3.将上述文件内容拷贝到https://www.thawte.com/cgi/server/try.exe中，点击next，获得回应内容，这里是p7b格式
+将内容存储为zlex.p7b
+
+4.将由CA签发的证书导入密钥库
+keytool -import -trustcacerts -alias www.ck.org -file d:\ck.p7b -keystore d:\ck.keystore -v
+密码为 123456
+
+5.配置hosts
+C:\Windows\System32\drivers\etc\hosts文件，将www.ck.org绑定在本机上。在文件末尾追加127.0.0.1       www.ck.org
+
+6.配置tomcat
+zlex.keystore拷贝到tomcat的conf目录下，然后配置server.xml
+<Connector
+    SSLEnabled="true"
+    URIEncoding="UTF-8"
+    clientAuth="false"
+    keystoreFile="conf/ck.keystore"
+    keystorePass="123456"
+    maxThreads="150"
+    port="443"
+    protocol="HTTP/1.1"
+    scheme="https"
+    secure="true"
+    sslProtocol="TLS" />
+    注意clientAuth="false"测试阶段，置为false，正式使用时建议使用true
