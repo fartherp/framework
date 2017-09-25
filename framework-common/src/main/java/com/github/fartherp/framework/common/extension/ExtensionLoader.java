@@ -44,7 +44,7 @@ public class ExtensionLoader<T> {
 
     private static final String DEFAULT_DIRECTORY = "META-INF/";
 
-    private static final String FRAMEWORK_DIRECTORY = DEFAULT_DIRECTORY + "framework/";
+    private static final String FRAMEWORK_DIRECTORY = DEFAULT_DIRECTORY + "framework";
 
     private static final Pattern NAME_SEPARATOR = Pattern.compile("\\s*[,]+\\s*");
 
@@ -594,7 +594,7 @@ public class ExtensionLoader<T> {
      * @param dir 目录
      */
     private void loadFile(Map<String, Class<?>> extensionClasses, String dir) {
-        String fileName = dir + type.getName();
+        String fileName = dir + "/" + type.getName();
         try {
             Enumeration<java.net.URL> urls;
             ClassLoader classLoader = findClassLoader();
