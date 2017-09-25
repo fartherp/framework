@@ -1,0 +1,2 @@
+adaptive=com.github.fartherp.framework.common.compiler.support.AdaptiveCompiler
+javassist=com.github.fartherp.framework.common.compiler.support.JavassistCompiler
