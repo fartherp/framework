@@ -13,6 +13,11 @@ public class ExcelDto {
     private Long id;
     private String name;
     private Integer age;
+    private String time;
+    private String client;
+    private String version;
+    private String ip;
+    private int status;
 
     public Long getId() {
         return id;
@@ -36,5 +41,45 @@ public class ExcelDto {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

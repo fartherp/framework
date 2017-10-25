@@ -18,4 +18,14 @@ public class Constant {
      *
      */
     public static final String OFFICE_EXCEL_2010_POSTFIX = "xlsx";
+
+    public final static int WIDTH_DEFAULT = 6000;
+
+    public final static short HEIGHT_DEFAULT = 500;
+
+    public static final String PDF_CONTENT_TYPE = "application/pdf;charset=GBK";
+
+    public static final String EXCEL_CONTENT_TYPE = "application/msexcel;charset=GBK";
+
+    public static final String DOC_CONTENT_TYPE = "application/msword;charset=GBK";
 }

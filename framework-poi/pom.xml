@@ -32,6 +32,10 @@
             <artifactId>poi-ooxml</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.fartherp</groupId>
             <artifactId>framework-common</artifactId>
             <version>${project.version}</version>
