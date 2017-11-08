@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
  * Date: 2016/3/24
  */
 public enum DialectType {
-    MYSQL("mysql", "cn.vansky.framework.core.orm.mybatis.plugin.page.dialect.MySQLDialect"),
+    MYSQL("mysql", MySQLDialect.class.getName()),
     ORACLE("oracle", ""),
     SQL_SERVER("microsoft sql server", ""),;
 
