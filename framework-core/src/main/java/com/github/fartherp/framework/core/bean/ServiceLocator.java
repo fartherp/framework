@@ -4,8 +4,8 @@
 
 package com.github.fartherp.framework.core.bean;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.Assert;
 
 import java.util.Map;
 
@@ -15,17 +15,13 @@ import java.util.Map;
  * Date: 2015/6/24
  */
 public class ServiceLocator {
-    private static final Logger LOGGER = Logger.getLogger(ServiceLocator.class);
 
     private static ServiceLocator locator = null;
 
     private static ApplicationContext factory = null;
 
     public ApplicationContext getFactory() {
-        if (factory == null) {
-            LOGGER.error("ServiceLocator.factory is null maybe not config InitSystemListener correctly in web.xml");
-        }
-
+        Assert.notNull(factory, "没有注入spring factory");
         return factory;
     }
 
