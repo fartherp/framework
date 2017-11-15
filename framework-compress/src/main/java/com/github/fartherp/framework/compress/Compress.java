@@ -97,4 +97,12 @@ public interface Compress {
      * @return 压缩类型对象
      */
     CommonCompress response(HttpServletResponse response);
+
+    /**
+     * 设置响应
+     * @param response 响应
+     * @param fileName 文件名
+     * @return 压缩类型对象
+     */
+    CommonCompress response(HttpServletResponse response, String fileName);
 }

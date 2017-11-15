@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 /**
@@ -173,10 +175,27 @@ public abstract class CommonCompress implements Compress {
      * @param response 响应
      */
     public CommonCompress response(HttpServletResponse response) {
+        this.response(response, new Date().getTime() + "");
+        return this;
+    }
+
+    public CommonCompress response(HttpServletResponse response, String fileName) {
         this.flag = 2;
         response.reset();
         response.setContentType("APPLICATION/OCTET-STREAM");
-        response.setHeader("content-disposition", "attachment; filename=" + new Date().getTime() + DOT + getSuffix());
+        String filename;
+        try {
+            filename = URLEncoder.encode(fileName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            try {
+                filename = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+                filename = fileName;
+            }
+        }
+        response.setHeader("content-disposition", "attachment; filename=" + filename + DOT + getSuffix());
         setHttpServletResponse(response);
         return this;
     }
