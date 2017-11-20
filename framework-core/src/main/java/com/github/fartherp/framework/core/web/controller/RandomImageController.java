@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.util.Random;
 
 /**
- * <input type="text" name="validateCode" class="validateCodeInput" />
- * <img src="<c:url value="/"/>validateCode/image"  title="点击刷新验证码" onclick="this.src='<c:url value="/"/>validateCode/image?d='+Math.random()"/>
+ * <pre>
+ * &lt;input type="text" name="validateCode" class="validateCodeInput" /&gt;
+ * &lt;img src="&lt;c:url value="/"/&gt;validateCode/image" title="点击刷新验证码" onclick="this.src='&lt;c:url value="/"/&gt;validateCode/image?d='+Math.random()"/&gt;
+ * </pre>
  * Author: CK
  * Date: 2015/8/17
  */
@@ -36,7 +38,17 @@ public class RandomImageController {
         try {
             // 生成100px*22px的包含6个字符的验证码
             RandomImage validateImage = new RandomImage(6, 100, 22);
-            resp.setHeader("cache-control", "no-store");
+            // Set to expire far in the past.
+            resp.setDateHeader("Expires", 0);
+            // Set standard HTTP/1.1 no-cache headers.
+            resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+            // Set IE extended HTTP/1.1 no-cache headers (use addHeader).
+            resp.addHeader("Cache-Control", "post-check=0, pre-check=0");
+            // Set standard HTTP/1.0 no-cache header.
+            resp.setHeader("Pragma", "no-cache");
+            // return a jpeg
+            resp.setContentType("image/jpeg");
+
             ios = ImageIO.createImageOutputStream(resp.getOutputStream());
             ImageIO.write(validateImage.getValidateImage(), "JPEG", ios);
             req.getSession().setAttribute(LOGIN_VALIDATE_STRING, validateImage.getValidateString());
