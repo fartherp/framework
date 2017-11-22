@@ -72,4 +72,8 @@ public interface ISecurity extends IEncrypt, IDecrypt {
      * 算法HMAC
      */
     public static final String HMAC_ALGORITHM = "HmacMD5";
+    /**
+     * 初始向量（默认）0000000000000000(16进制)
+     */
+    public static final byte[] DEFAULT_IV = new byte[8];
 }

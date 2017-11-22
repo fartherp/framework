@@ -6,6 +6,7 @@ package com.github.fartherp.framework.security.symmetry;
 
 import com.github.fartherp.framework.common.util.ISOUtil;
 import com.github.fartherp.framework.security.ISecurity;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -15,19 +16,11 @@ import org.testng.annotations.Test;
  */
 public class DESTest {
     @Test
-    public void encrypt() {
+    public void testDES() {
         ISecurity aes = new DES(ISOUtil.hex2byte("1111111111111111"));
+        String data = "2222222222222222";
         byte[] encryption = aes.encrypt(ISOUtil.hex2byte("2222222222222222"));
-        System.out.println(ISOUtil.hexString(encryption));
-        System.out.println(ISOUtil.hexString(aes.decrypt(encryption)));
-    }
-
-    @Test
-    public void encrypt1() {
-        ISecurity aes = new DES("admin@va".getBytes());
-        byte [] encrypt = aes.encrypt(ISOUtil.hex2byte("000000000000A43428481AE64383964A1"));
-        System.out.println(ISOUtil.hexString(encrypt));
-        byte [] decrypt = aes.decrypt(encrypt);
-        System.out.println(ISOUtil.hexString(decrypt));
+        Assert.assertEquals("950973182317F80BB95374BA8DDFF8C2", ISOUtil.hexString(encryption));
+        Assert.assertEquals(data, ISOUtil.hexString(aes.decrypt(encryption)));
     }
 }

@@ -4,7 +4,9 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
+import com.github.fartherp.framework.common.util.ISOUtil;
 import com.github.fartherp.framework.security.ISecurity;
+import org.testng.Assert;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,9 +15,13 @@ import com.github.fartherp.framework.security.ISecurity;
  */
 public class DESCBCTest {
     public static void main(String[] args) {
-        ISecurity desSecurity = new DESCBC("12345678".getBytes(),"admin@va".getBytes());
-        byte[] encryption = desSecurity.encrypt("asdf".getBytes());
-        System.out.println(new String(encryption));
-        System.out.println(new String(desSecurity.decrypt(encryption)));
+        String keyS = "9BED98891580C3B2";
+        byte[] key = ISOUtil.hex2byte(keyS);
+        ISecurity desSecurity = new DESCBC(key);
+        String dataS = "F4F3E7B3566F6622098750B491EA8D5C61";
+        byte[] data = ISOUtil.hex2byte(dataS);
+        byte[] encryption = desSecurity.encrypt(data);
+        Assert.assertEquals("5416B1A5537436105B6E2CAC0F87986F2968AC2DBFB464D0", ISOUtil.hexString(encryption));
+        Assert.assertEquals(dataS, ISOUtil.hexString(desSecurity.decrypt(encryption)));
     }
 }
