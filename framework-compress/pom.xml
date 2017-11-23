@@ -14,6 +14,10 @@
     <artifactId>framework-compress</artifactId>
     <packaging>jar</packaging>
 
+    <name>framework-compress</name>
+    <url>https://github.com/fartherp/framework</url>
+    <description>framework-compress</description>
+
     <properties>
         <maven.test.skip>true</maven.test.skip>
     </properties>

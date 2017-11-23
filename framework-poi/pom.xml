@@ -14,6 +14,10 @@
     <artifactId>framework-poi</artifactId>
     <packaging>jar</packaging>
 
+    <name>framework-poi</name>
+    <url>https://github.com/fartherp/framework</url>
+    <description>framework-poi</description>
+
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>

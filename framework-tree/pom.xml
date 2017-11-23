@@ -14,6 +14,10 @@
     <artifactId>framework-tree</artifactId>
     <packaging>jar</packaging>
 
+    <name>framework-tree</name>
+    <url>https://github.com/fartherp/framework</url>
+    <description>framework-tree</description>
+
     <dependencies>
         <dependency>
             <groupId>com.github.fartherp</groupId>

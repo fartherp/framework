@@ -14,6 +14,10 @@
     <artifactId>framework-core</artifactId>
     <packaging>jar</packaging>
 
+    <name>framework-core</name>
+    <url>https://github.com/fartherp/framework</url>
+    <description>framework-core</description>
+
     <dependencies>
         <dependency>
             <groupId>org.mockito</groupId>

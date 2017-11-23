@@ -13,6 +13,11 @@
 
     <artifactId>framework-filter</artifactId>
     <packaging>jar</packaging>
+
+    <name>framework-filter</name>
+    <url>https://github.com/fartherp/framework</url>
+    <description>framework-filter</description>
+
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
