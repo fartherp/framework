@@ -8,9 +8,6 @@ import com.github.fartherp.framework.poi.excel.ExcelBuilder;
 import com.github.fartherp.framework.poi.excel.ExcelDto;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.testng.Assert.*;
 
 /**
@@ -19,7 +16,7 @@ import static org.testng.Assert.*;
  * @author: CK
  * @date: 2017/11/25
  */
-public class ExcelWriteStyleTest {
+public class FileExcelWriteTest {
     @SuppressWarnings("all")
     @Test
     public void writeExcel() throws Exception {
@@ -30,13 +27,9 @@ public class ExcelWriteStyleTest {
         title[3] = "版本系统";
         title[4] = "登录IP";
         title[5] = "状态";
-        String head = "用户登录日志";
-        String fileName = "D:\\style.xlsx";
-        String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-
-        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFileWrite(title, fileName, getList());
-        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle(excelDtoExcelWrite);
-        writeStyle.condition(condition).head(head).writeExcel(
+        String fileName = "D:\\style1.xlsx";
+        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFileWrite(title, fileName, ExcelWriteStyleTest.getList());
+        excelDtoExcelWrite.writeExcel(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
                     public String[] dealBean(ExcelDto obj) {
                         String[] result = new String[6];
@@ -50,20 +43,4 @@ public class ExcelWriteStyleTest {
                     }
                 });
     }
-
-    public static List<ExcelDto> getList() {
-        List<ExcelDto> excelDtos = new ArrayList<ExcelDto>();
-        for (int i = 1; i < 4; i++) {
-            ExcelDto dto = new ExcelDto();
-            dto.setTime("2017-10-20 10:10:1" + i);
-            dto.setName("name" + i);
-            dto.setClient("client"  + i);
-            dto.setVersion("1.0." + i);
-            dto.setIp("192.168.1." + i);
-            dto.setStatus(i);
-            excelDtos.add(dto);
-        }
-        return excelDtos;
-    }
-
 }
