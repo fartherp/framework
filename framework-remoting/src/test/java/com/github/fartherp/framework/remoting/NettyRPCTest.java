@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
  * @author hyssop
  */
 public class NettyRPCTest {
-    @Test
+//    @Test
     public void test_RPC_Sync() throws InterruptedException, RemotingConnectException,
             RemotingSendRequestException, RemotingTimeoutException {
         RemotingServer server = createRemotingServer();
@@ -81,7 +81,7 @@ public class NettyRPCTest {
         return client;
     }
 
-    @Test
+//    @Test
     public void test_RPC_Oneway() throws InterruptedException, RemotingConnectException,
             RemotingTimeoutException, RemotingTooMuchRequestException, RemotingSendRequestException {
         RemotingServer server = createRemotingServer();
@@ -100,7 +100,7 @@ public class NettyRPCTest {
     }
 
 
-    @Test
+//    @Test
     public void test_RPC_Async() throws InterruptedException, RemotingConnectException,
             RemotingTimeoutException, RemotingTooMuchRequestException, RemotingSendRequestException {
         RemotingServer server = createRemotingServer();
@@ -125,7 +125,7 @@ public class NettyRPCTest {
     }
 
 
-    @Test
+//    @Test
     public void test_server_call_client() throws InterruptedException, RemotingConnectException,
             RemotingSendRequestException, RemotingTimeoutException {
         final RemotingServer server = createRemotingServer();

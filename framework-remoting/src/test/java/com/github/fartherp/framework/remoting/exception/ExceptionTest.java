@@ -46,7 +46,7 @@ public class ExceptionTest {
         return client;
     }
 
-    @Test
+//    @Test
     public void test_CONNECT_EXCEPTION() {
         RemotingClient client = createRemotingClient();
 
