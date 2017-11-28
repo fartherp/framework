@@ -4,7 +4,6 @@
 package com.github.fartherp.framework.common.extension;
 
 import com.github.fartherp.framework.common.extension.io.UnsafeStringWriter;
-import com.github.fartherp.framework.common.extension.support.ActivateComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,12 +71,6 @@ public class ExtensionLoader<T> {
     private Set<Class<?>> cachedWrapperClasses;
 
     private Map<String, IllegalStateException> exceptions = new ConcurrentHashMap<String, IllegalStateException>();
-
-    public static final String REMOVE_VALUE_PREFIX = "-";
-
-    public static final String DEFAULT_KEY = "default";
-
-    public static final Pattern COMMA_SPLIT_PATTERN = Pattern.compile("\\s*[,]+\\s*");
 
     private List<String> paths;
 
@@ -154,91 +147,6 @@ public class ExtensionLoader<T> {
 
     public String getExtensionName(Class<?> extensionClass) {
         return cachedNames.get(extensionClass);
-    }
-
-    public List<T> getActivateExtension(URL url, String key) {
-        return getActivateExtension(url, key, null);
-    }
-
-    public List<T> getActivateExtension(URL url, String[] values) {
-        return getActivateExtension(url, values, null);
-    }
-
-    public List<T> getActivateExtension(URL url, String key, String group) {
-        String value = url.getParameter(key);
-        return getActivateExtension(url, StringUtils.isBlank(value) ? null : COMMA_SPLIT_PATTERN.split(value), group);
-    }
-
-    public List<T> getActivateExtension(URL url, String[] values, String group) {
-        List<T> exts = new ArrayList<T>();
-        List<String> names = values == null ? new ArrayList<String>(0) : Arrays.asList(values);
-        if (!names.contains(REMOVE_VALUE_PREFIX + DEFAULT_KEY)) {
-            getExtensionClasses();
-            for (Map.Entry<String, Activate> entry : cachedActivates.entrySet()) {
-                String name = entry.getKey();
-                Activate activate = entry.getValue();
-                if (isMatchGroup(group, activate.group())) {
-                    T ext = getExtension(name);
-                    if (!names.contains(name)
-                            && !names.contains(REMOVE_VALUE_PREFIX + name)
-                            && isActive(activate, url)) {
-                        exts.add(ext);
-                    }
-                }
-            }
-            Collections.sort(exts, ActivateComparator.COMPARATOR);
-        }
-        List<T> usrs = new ArrayList<T>();
-        for (int i = 0; i < names.size(); i++) {
-            String name = names.get(i);
-            if (!name.startsWith(REMOVE_VALUE_PREFIX)
-                    && !names.contains(REMOVE_VALUE_PREFIX + name)) {
-                if (DEFAULT_KEY.equals(name)) {
-                    if (usrs.size() > 0) {
-                        exts.addAll(0, usrs);
-                        usrs.clear();
-                    }
-                } else {
-                    T ext = getExtension(name);
-                    usrs.add(ext);
-                }
-            }
-        }
-        if (usrs.size() > 0) {
-            exts.addAll(usrs);
-        }
-        return exts;
-    }
-
-    private boolean isMatchGroup(String group, String[] groups) {
-        if (group == null || group.length() == 0) {
-            return true;
-        }
-        if (groups != null && groups.length > 0) {
-            for (String g : groups) {
-                if (group.equals(g)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean isActive(Activate activate, URL url) {
-        String[] keys = activate.value();
-        if (keys == null || keys.length == 0) {
-            return true;
-        }
-        for (String key : keys) {
-            for (Map.Entry<String, String> entry : url.getParameters().entrySet()) {
-                String k = entry.getKey();
-                String v = entry.getValue();
-                if ((k.equals(key) || k.endsWith("." + key)) && isNotEmpty(v)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -569,15 +477,7 @@ public class ExtensionLoader<T> {
     private Map<String, Class<?>> loadExtensionClasses() {
         final SPI defaultAnnotation = type.getAnnotation(SPI.class);
         if (defaultAnnotation != null) {
-            String value = defaultAnnotation.value();
-            if (value != null && (value = value.trim()).length() > 0) {
-                String[] names = NAME_SEPARATOR.split(value);
-                if (names.length > 1) {
-                    throw new IllegalStateException("more than 1 default extension name on extension " + type.getName()
-                            + ": " + Arrays.toString(names));
-                }
-                if (names.length == 1) cachedDefaultName = names[0];
-            }
+            cachedDefaultName = defaultAnnotation.value();
         }
 
         Map<String, Class<?>> extensionClasses = new HashMap<String, Class<?>>();
@@ -594,7 +494,8 @@ public class ExtensionLoader<T> {
      * @param dir 目录
      */
     private void loadFile(Map<String, Class<?>> extensionClasses, String dir) {
-        String fileName = dir + "/" + type.getName();
+        int diff = dir.length() - dir.lastIndexOf("/");
+        String fileName = diff == 1 ? dir + type.getName() : dir + "/" + type.getName();
         try {
             Enumeration<java.net.URL> urls;
             ClassLoader classLoader = findClassLoader();
@@ -611,8 +512,10 @@ public class ExtensionLoader<T> {
                         try {
                             String line = null;
                             while ((line = reader.readLine()) != null) {
+                                // 内部类 line: javassist=com.github.fartherp.framework.common.compiler.support.JavassistCompiler#Test
                                 final int ci = line.indexOf('#');
                                 if (ci >= 0) {
+                                    // line: javassist=com.github.fartherp.framework.common.compiler.support.JavassistCompiler
                                     line = line.substring(0, ci).trim();
                                 }
                                 if (line.length() > 0) {
@@ -620,17 +523,18 @@ public class ExtensionLoader<T> {
                                         String name = null;
                                         int i = line.indexOf('=');
                                         if (i > 0) {
+                                            // name: javassist
                                             name = line.substring(0, i).trim();
+                                            // line: com.github.fartherp.framework.common.compiler.support.JavassistCompiler
                                             line = line.substring(i + 1).trim();
                                         }
                                         if (line.length() > 0) {
                                             Class<?> clazz = Class.forName(line, true, classLoader);
                                             if (!type.isAssignableFrom(clazz)) {
                                                 throw new IllegalStateException("Error when load extension class(interface: " +
-                                                        type + ", class line: " + clazz.getName() + "), class "
-                                                        + clazz.getName() + "is not subtype of interface.");
+                                                        type + ", class: " + clazz.getName() + "), class is not subtype of interface.");
                                             }
-                                            // 类有@Adaptive注解，只需有一个@Adaptive
+                                            // 类有@Adaptive注解，只需有一个@Adaptive，适配
                                             if (clazz.isAnnotationPresent(Adaptive.class)) {
                                                 if (cachedAdaptiveClass == null) {
                                                     cachedAdaptiveClass = clazz;

@@ -21,7 +21,7 @@ public class ExtensionLoaderTest {
     @Test
     public void testGetExtensionLoader() throws Exception {
         SimpleExt ext = ExtensionLoader.getExtensionLoader(SimpleExt.class, "generator/").getDefaultExtension();
-        String bang = ext.bang(null, 0);
+        String bang = ext.bang(0);
         assertEquals(bang, "bang1");
     }
 
