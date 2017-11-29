@@ -33,7 +33,7 @@ public class ExcelWriteStyleTest {
         String fileName = "D:\\style.xlsx";
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFileWrite(title, fileName, getList());
+        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFile(title, fileName, getList());
         ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
         writeStyle.condition(condition).head(head).writeExcel(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
