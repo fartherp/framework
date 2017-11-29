@@ -20,7 +20,6 @@ import static org.testng.Assert.*;
  * @date: 2017/11/25
  */
 public class ExcelWriteStyleTest {
-    @SuppressWarnings("all")
     @Test
     public void writeExcel() throws Exception {
         String[] title = new String [6];
@@ -35,7 +34,7 @@ public class ExcelWriteStyleTest {
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
         ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFileWrite(title, fileName, getList());
-        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle(excelDtoExcelWrite);
+        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
         writeStyle.condition(condition).head(head).writeExcel(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
                     public String[] dealBean(ExcelDto obj) {

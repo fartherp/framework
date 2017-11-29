@@ -33,7 +33,7 @@ import static com.github.fartherp.framework.poi.excel.ExcelUtils.setStyleNoColor
  */
 public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
 
-    private ExcelWrite excelWrite;
+    private ExcelWrite<T> excelWrite;
 
     /**
      * 头
@@ -45,7 +45,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
      */
     private String condition;
 
-    public ExcelWriteStyle(ExcelWrite excelWrite) {
+    public ExcelWriteStyle(ExcelWrite<T> excelWrite) {
         super(excelWrite.getTitle(), excelWrite.getFileName(), excelWrite.getList());
         this.excelWrite = excelWrite;
     }
@@ -146,12 +146,12 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
         throw new IllegalArgumentException("no outputStream");
     }
 
-    public ExcelWriteStyle head(String head) {
+    public ExcelWriteStyle<T> head(String head) {
         this.head = head;
         return this;
     }
 
-    public ExcelWriteStyle condition(String condition) {
+    public ExcelWriteStyle<T> condition(String condition) {
         this.condition = condition;
         return this;
     }
