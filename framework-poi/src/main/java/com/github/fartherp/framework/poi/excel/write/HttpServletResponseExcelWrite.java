@@ -23,6 +23,7 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
     private HttpServletResponseExcelWrite(String[] title, String fileName, List<T> list, HttpServletResponse response) {
         super(title, fileName, list);
         this.setResponse(response);
+        this.createOutputStream();
     }
 
     public static <T> HttpServletResponseExcelWrite getInstance(String[] title, String fileName, List<T> list, HttpServletResponse response) {
