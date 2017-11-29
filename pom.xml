@@ -9,7 +9,7 @@
     <groupId>com.github.fartherp</groupId>
     <artifactId>framework</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>framework</name>
     <url>https://github.com/fartherp/framework</url>
@@ -32,7 +32,7 @@
     <properties>
         <encoding.charset>UTF-8</encoding.charset>
         <jdk.version>1.7</jdk.version>
-        <project-version>1.0-SNAPSHOT</project-version>
+        <project-version>1.0.3</project-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<maven.test.skip>true</maven.test.skip>-->
         <profiles.dir>src/main/profiles</profiles.dir>
