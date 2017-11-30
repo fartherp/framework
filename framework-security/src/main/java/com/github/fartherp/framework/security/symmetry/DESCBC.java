@@ -4,15 +4,9 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
 
 import static com.github.fartherp.framework.security.ISecurity.DES_CBC_ALGORITHM;
 import static com.github.fartherp.framework.security.ISecurity.DES_ECB_ALGORITHM;
@@ -41,45 +35,48 @@ import static com.github.fartherp.framework.security.ISecurity.DES_ECB_ALGORITHM
  * </pre>
  * @author CK
  */
-public class DESCBC extends SymmetrySecurity {
+public class DESCBC {
 
-    public DESCBC(byte[] key) {
-        this(DEFAULT_IV, key);
-    }
-
-    public DESCBC(byte[] desIv, byte[] key) {
-        this.desIv = desIv;
-        this.key = key;
-    }
-
-    public void validation(byte[] data, byte[] key) {
-        if (key.length != 8) {
-            throw new RuntimeException("Invalid DESCBC key length (must be 8 bytes)");
-        }
-        if (this.desIv == null || this.desIv.length != 8) {
-            throw new RuntimeException("Invalid DESCBC iv length (must be 8 bytes)");
-        }
-    }
-
-    public Cipher getCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
-        return Cipher.getInstance(DES_CBC_ALGORITHM);
+    /**
+     * 加密
+     * @param data 加密原数据
+     * @param key 密钥
+     * @param iv 初始向量
+     * @return 加密数据
+     */
+    public static byte[] encrypt(byte[] data, byte[] key, byte[] iv) {
+        validation(data, key, iv);
+        AlgorithmParameterSpec algorithmParameterSpec = new IvParameterSpec(iv);
+        Key secretKeySpec = Symmetry.generateRandomKey(key, DES_ECB_ALGORITHM);
+        return Symmetry.encrypt(DES_CBC_ALGORITHM, secretKeySpec, data, algorithmParameterSpec);
     }
 
     /**
-     * SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(ConfigureEncryptAndDecrypt.DES_ECB_ALGORITHM);
-     * DESKeySpec deSedeKeySpec = new DESKeySpec(key);
-     * secretKeyFactory.generateSecret(deSedeKeySpec);
-     * @param key the key array
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
-     * @throws InvalidKeySpecException
+     * 解密
+     * @param data 加密数据
+     * @param key 密钥
+     * @param iv 初始向量
+     * @return 加密原数据
      */
-    public Key generateRandomKey(byte [] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
-        return new SecretKeySpec(key, DES_ECB_ALGORITHM);
+    public static byte[] decrypt(byte[] data, byte[] key, byte[] iv) {
+        validation(data, key, iv);
+        AlgorithmParameterSpec algorithmParameterSpec = new IvParameterSpec(iv);
+        Key secretKeySpec = Symmetry.generateRandomKey(key, DES_ECB_ALGORITHM);
+        return Symmetry.decrypt(DES_CBC_ALGORITHM, secretKeySpec, data, algorithmParameterSpec);
     }
 
-    public AlgorithmParameterSpec getAlgorithmParameterSpec() {
-        return new IvParameterSpec(this.desIv);
+    /**
+     * 验证DESCBC数据有效性及密钥有效性
+     * @param data 加密数据
+     * @param key 密钥(DESCBC密钥必须是8位)
+     * @param iv 初始向量(必须是8位)
+     */
+    public static void validation(byte[] data, byte[] key, byte[] iv) {
+        if (key.length != 8) {
+            throw new RuntimeException("Invalid DESCBC key length (must be 8 bytes)");
+        }
+        if (iv == null || iv.length != 8) {
+            throw new RuntimeException("Invalid DESCBC iv length (must be 8 bytes)");
+        }
     }
 }

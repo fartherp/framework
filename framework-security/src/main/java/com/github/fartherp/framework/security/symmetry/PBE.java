@@ -4,13 +4,9 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
@@ -27,46 +23,67 @@ import static com.github.fartherp.framework.security.ISecurity.PBE_ALGORITHM;
  * Author: CK
  * Date: 2015/4/13
  */
-public class PBE extends SymmetrySecurity {
+public class PBE {
 
-    public PBE(byte[] key) {
-        this.key = key;
-        salt = initSalt();
+    /**
+     * 加密
+     * @param data 加密原数据
+     * @param key 密钥
+     * @return 加密数据
+     */
+    public static byte[] encrypt(byte[] data, byte[] key, byte[] salt) {
+        AlgorithmParameterSpec algorithmParameterSpec = getAlgorithmParameterSpec(salt);
+        Key keySpec = generateRandomKey(key);
+        return Symmetry.encrypt(PBE_ALGORITHM, keySpec, data, algorithmParameterSpec);
     }
 
-    private byte[] salt;
-
-    public void validation(byte[] data, byte[] key) {
-
+    /**
+     * 解密
+     * @param data 加密数据
+     * @param key 密钥
+     * @return 加密原数据
+     */
+    public static byte[] decrypt(byte[] data, byte[] key, byte[] salt) {
+        AlgorithmParameterSpec algorithmParameterSpec = getAlgorithmParameterSpec(salt);
+        Key keySpec = generateRandomKey(key);
+        return Symmetry.decrypt(PBE_ALGORITHM, keySpec, data, algorithmParameterSpec);
     }
 
-    public Cipher getCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
-        return Cipher.getInstance(PBE_ALGORITHM);
+    /**
+     * 生成密钥
+     * @param key 密钥
+     * @return key
+     */
+    public static Key generateRandomKey(byte[] key) {
+        try {
+            String keyString = new String(key);
+            PBEKeySpec keySpec = new PBEKeySpec(keyString.toCharArray());
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(PBE_ALGORITHM);
+            return keyFactory.generateSecret(keySpec);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("[" + PBE_ALGORITHM + "]无此算法", e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException("[" + PBE_ALGORITHM + "]无效密钥错误", e);
+        }
     }
 
-    public Key generateRandomKey(byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException, UnsupportedEncodingException {
-        String keyString = new String(key);
-        PBEKeySpec keySpec = new PBEKeySpec(keyString.toCharArray());
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(PBE_ALGORITHM);
-        return keyFactory.generateSecret(keySpec);
+    /**
+     * 生成向量
+     * @param salt 向量
+     * @return key
+     */
+    public static AlgorithmParameterSpec getAlgorithmParameterSpec(byte[] salt) {
+        return new PBEParameterSpec(salt, 100);
     }
 
-    public AlgorithmParameterSpec getAlgorithmParameterSpec() {
-        return new PBEParameterSpec(this.salt, 100);
-    }
-
-    public byte[] initSalt() {
+    /**
+     * 生成向量
+     * @return 向量
+     */
+    public static byte[] initSalt() {
         byte[] salt = new byte[8];
         Random random = new Random();
         random.nextBytes(salt);
         return salt;
-    }
-
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
     }
 }

@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.security.single;
 
-import com.github.fartherp.framework.common.util.ISOUtil;
 import com.github.fartherp.framework.security.ISecurity;
 
 import javax.crypto.KeyGenerator;
@@ -26,42 +25,37 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HMAC {
 
-    public HMAC() {
-        initMacKey();
-    }
-
-    private String key;
-
-    public byte[] encrypt(byte [] data) {
+    /**
+     * 加密
+     * @param data 加密数据
+     * @param key BASE64加密后的密钥
+     * @return 加密数组
+     */
+    public static byte[] encrypt(byte[] data, byte[] key) {
         try {
-            SecretKey secretKey = new SecretKeySpec(ISOUtil.hex2byte(this.key), ISecurity.HMAC_ALGORITHM);
+            SecretKey secretKey = new SecretKeySpec(key, ISecurity.HMAC_ALGORITHM);
             Mac mac = Mac.getInstance(secretKey.getAlgorithm());
             mac.init(secretKey);
             return mac.doFinal(data);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("[" + this.getClass().getName() + "]无此算法错误", e);
+            throw new RuntimeException("无此算法错误", e);
         } catch (InvalidKeyException e) {
-            throw new RuntimeException("[" + this.getClass().getName() + "]无效密钥错误", e);
+            throw new RuntimeException("无效密钥错误", e);
         }
     }
 
     /**
      * 初始化HMAC密钥
      *
-     * @return HMAC密钥
+     * @return BASE64加密后的密钥
      */
-    public String initMacKey() {
+    public static byte[] initMacKey() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(ISecurity.HMAC_ALGORITHM);
             SecretKey secretKey = keyGenerator.generateKey();
-            this.key = ISOUtil.hexString(secretKey.getEncoded());
-            return this.key;
+            return secretKey.getEncoded();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("[" + this.getClass().getName() + "]获取自增密钥错误", e);
+            throw new RuntimeException("获取自增密钥错误", e);
         }
-    }
-
-    public String getKey() {
-        return key;
     }
 }

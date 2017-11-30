@@ -4,18 +4,19 @@
 
 package com.github.fartherp.framework.security.single;
 
-import com.github.fartherp.framework.common.util.ISOUtil;
+import base64.Base64Utils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class HMACTest {
 
     @Test
     public void testEncrypt() throws Exception {
-        HMAC hmac = new HMAC();
-        String key = hmac.getKey();
-        System.out.println(key);
-        byte[] a = hmac.encrypt("aaaa".getBytes());
-        String result = ISOUtil.hexString(a);
-        System.out.println(result);
+        byte[] key = HMAC.initMacKey();
+        key = Base64Utils.decode("aDoeS0jpEa7R6YssPU7gZvf95RYH4slqbQgr2gpijhviXyOa16xxOAYmlg0VqBKTE0QPYB26wySLruNJNsbO3A==");
+        byte[] data = "aaaa".getBytes();
+        byte[] encryptData = HMAC.encrypt(data, key);
+        String result = Base64Utils.encode(encryptData);
+        Assert.assertEquals("omXf1QfFYGlZ+SshA2twjw==", result);
     }
 }

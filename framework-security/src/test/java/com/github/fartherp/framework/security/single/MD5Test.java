@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.security.single;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -15,7 +16,8 @@ public class MD5Test {
 
     @Test
     public void main() {
-        String s = MD5.digest("aaa".getBytes());
-        System.out.println(s);
+        byte[] data = "aaa".getBytes();
+        String result = MD5.digest(data);
+        Assert.assertEquals("47bce5c74f589f4867dbd57e9ca9f808", result);
     }
 }

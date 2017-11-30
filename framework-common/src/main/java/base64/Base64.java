@@ -63,8 +63,7 @@ public class Base64 {
      * @throws RuntimeException If an unexpected error occurs.
      * @since 1.2
      */
-    public static String encode(String str, String charset)
-            throws RuntimeException {
+    public static String encode(String str, String charset) throws RuntimeException {
         byte[] bytes;
         try {
             bytes = str.getBytes(charset);
@@ -118,8 +117,7 @@ public class Base64 {
      * @throws RuntimeException If an unexpected error occurs.
      * @since 1.2
      */
-    public static String decode(String str, String charset)
-            throws RuntimeException {
+    public static String decode(String str, String charset) throws RuntimeException {
         byte[] bytes;
         try {
             bytes = str.getBytes("ASCII");
@@ -172,8 +170,7 @@ public class Base64 {
      * @throws RuntimeException If an unexpected error occurs.
      * @since 1.2
      */
-    public static byte[] encode(byte[] bytes, int wrapAt)
-            throws RuntimeException {
+    public static byte[] encode(byte[] bytes, int wrapAt) throws RuntimeException {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
@@ -249,8 +246,7 @@ public class Base64 {
      * @param outputStream The output stream.
      * @throws IOException If an I/O error occurs.
      */
-    public static void encode(InputStream inputStream, OutputStream outputStream)
-            throws IOException {
+    public static void encode(InputStream inputStream, OutputStream outputStream) throws IOException {
         encode(inputStream, outputStream, 0);
     }
 
@@ -274,8 +270,7 @@ public class Base64 {
      *                     is applied.
      * @throws IOException If an I/O error occurs.
      */
-    public static void encode(InputStream inputStream,
-                              OutputStream outputStream, int wrapAt) throws IOException {
+    public static void encode(InputStream inputStream, OutputStream outputStream, int wrapAt) throws IOException {
         Base64OutputStream aux = new Base64OutputStream(outputStream, wrapAt);
         copy(inputStream, aux);
         aux.commit();
@@ -298,8 +293,7 @@ public class Base64 {
      * @param outputStream The output stream in which decoded data are written.
      * @throws IOException If an I/O error occurs.
      */
-    public static void decode(InputStream inputStream, OutputStream outputStream)
-            throws IOException {
+    public static void decode(InputStream inputStream, OutputStream outputStream) throws IOException {
         copy(new Base64InputStream(inputStream), outputStream);
     }
 
@@ -317,8 +311,7 @@ public class Base64 {
      * @throws IOException If an I/O error occurs.
      * @since 1.3
      */
-    public static void encode(File source, File target, int wrapAt)
-            throws IOException {
+    public static void encode(File source, File target, int wrapAt) throws IOException {
         InputStream inputStream = null;
         OutputStream outputStream = null;
         try {
@@ -422,8 +415,7 @@ public class Base64 {
      * @param outputStream The output stream.
      * @throws IOException If a unexpected I/O error occurs.
      */
-    private static void copy(InputStream inputStream, OutputStream outputStream)
-            throws IOException {
+    private static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
         // 1KB buffer
         byte[] b = new byte[1024];
         int len;

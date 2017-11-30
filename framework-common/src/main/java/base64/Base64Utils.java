@@ -29,7 +29,7 @@ public class Base64Utils {
      * @return
      * @throws Exception
      */
-    public static byte[] decode(String base64) throws Exception {
+    public static byte[] decode(String base64) {
         return Base64.decode(base64.getBytes());
     }
 
@@ -40,7 +40,7 @@ public class Base64Utils {
      * @return
      * @throws Exception
      */
-    public static String encode(byte[] bytes) throws Exception {
+    public static String encode(byte[] bytes) {
         return new String(Base64.encode(bytes));
     }
 
@@ -52,7 +52,7 @@ public class Base64Utils {
      * @return
      * @throws Exception
      */
-    public static String encodeFile(String filePath) throws Exception {
+    public static String encodeFile(String filePath) {
         byte[] bytes = fileToByte(filePath);
         return encode(bytes);
     }
@@ -64,7 +64,7 @@ public class Base64Utils {
      * @param base64
      * @throws Exception
      */
-    public static void decodeToFile(String filePath, String base64) throws Exception {
+    public static void decodeToFile(String filePath, String base64) {
         byte[] bytes = decode(base64);
         byteArrayToFile(bytes, filePath);
     }
@@ -76,7 +76,7 @@ public class Base64Utils {
      * @return
      * @throws Exception
      */
-    public static byte[] fileToByte(String filePath) throws Exception {
+    public static byte[] fileToByte(String filePath) {
         byte[] data = new byte[0];
         File file = new File(filePath);
         if (file.exists()) {
@@ -93,7 +93,7 @@ public class Base64Utils {
                 in.close();
                 data = out.toByteArray();
             } catch (Exception e) {
-                throw new Exception("文件转换二进制数据", e);
+                throw new RuntimeException("文件转换二进制数据", e);
             }
         }
         return data;
@@ -105,7 +105,7 @@ public class Base64Utils {
      * @param bytes
      * @param filePath
      */
-    public static void byteArrayToFile(byte[] bytes, String filePath) throws Exception {
+    public static void byteArrayToFile(byte[] bytes, String filePath) {
         InputStream in = new ByteArrayInputStream(bytes);
         File destFile = new File(filePath);
         if (!destFile.getParentFile().exists()) {
@@ -123,7 +123,7 @@ public class Base64Utils {
             out.close();
             in.close();
         } catch (Exception e) {
-            throw new Exception("二进制数据写文件", e);
+            throw new RuntimeException("二进制数据写文件", e);
         }
     }
 }

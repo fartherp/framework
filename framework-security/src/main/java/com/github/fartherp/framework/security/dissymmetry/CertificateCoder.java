@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import com.github.fartherp.framework.security.single.BASE64;
+import base64.Base64Utils;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -270,7 +270,7 @@ public class CertificateCoder {
             Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());
             signature.initSign(privateKey);
             signature.update(sign);
-            return BASE64.encryptBASE64(signature.sign());
+            return Base64Utils.encode(signature.sign());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
         } catch (SignatureException e) {
@@ -298,7 +298,7 @@ public class CertificateCoder {
             Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());
             signature.initVerify(publicKey);
             signature.update(data);
-            return signature.verify(BASE64.decryptBASE64B(sign));
+            return signature.verify(Base64Utils.decode(sign));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
         } catch (SignatureException e) {

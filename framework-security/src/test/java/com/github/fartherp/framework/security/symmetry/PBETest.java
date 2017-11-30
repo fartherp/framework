@@ -4,7 +4,11 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import com.github.fartherp.framework.security.ISecurity;
+import base64.Base64Utils;
+import org.testng.Assert;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,12 +16,13 @@ import com.github.fartherp.framework.security.ISecurity;
  * Date: 2015/4/13
  */
 public class PBETest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidKeySpecException, NoSuchAlgorithmException {
         String key = "efg";
-        ISecurity pbe = new PBE(key.getBytes());
-        String plaintext = "root";
-        byte[] encryption = pbe.encrypt(plaintext.getBytes());
-        System.out.println(new String(encryption));
-        System.out.println(new String(pbe.decrypt(encryption)));
+        String data = "root";
+        byte[] salt = PBE.initSalt();
+        salt = Base64Utils.decode("sgf8lG50gls=");
+        byte[] encryption = PBE.encrypt(data.getBytes(), key.getBytes(), salt);
+        Assert.assertEquals("p3ydxNVXnB4=", Base64Utils.encode(encryption));
+        Assert.assertEquals(data, new String(PBE.decrypt(encryption, key.getBytes(), salt)));
     }
 }

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import com.github.fartherp.framework.security.TSecurity;
+import base64.Base64Utils;
 
 import java.util.Map;
 
@@ -15,25 +15,24 @@ import java.util.Map;
  */
 public class DSATest {
     public static void main(String[] args) {
-        TSecurity tSecurity = new DSA();
         String inputStr = "abc";
 
         // 构建密钥
-        Map<String, Object> keyMap = tSecurity.initKey();
+        DisSymmetryKey disSymmetryKey = DSA.initKey();
 
         // 获得密钥
-        String publicKey = tSecurity.getPublicKey();
-        String privateKey = tSecurity.getPrivateKey();
+        byte[] publicKey = disSymmetryKey.getPublicKey();
+        byte[] privateKey = disSymmetryKey.getPrivateKey();
 
-        System.out.println("公钥:" + publicKey);
-        System.out.println("私钥:" + privateKey);
+        System.out.println("公钥:" + Base64Utils.encode(publicKey));
+        System.out.println("私钥:" + Base64Utils.encode(privateKey));
 
         // 产生签名
-        String sign = tSecurity.sign(inputStr, privateKey);
-        System.out.println("签名:" + sign);
+        byte[] sign = DSA.sign(inputStr.getBytes(), privateKey);
+        System.out.println("签名:" + Base64Utils.encode(sign));
 
         // 验证签名
-        boolean status = tSecurity.verify(inputStr, publicKey, sign);
+        boolean status = DSA.verify(inputStr.getBytes(), publicKey, sign);
         System.out.println("状态:" + status);
     }
 }

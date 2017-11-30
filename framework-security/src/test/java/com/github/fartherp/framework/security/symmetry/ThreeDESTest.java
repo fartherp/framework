@@ -5,7 +5,6 @@
 package com.github.fartherp.framework.security.symmetry;
 
 import com.github.fartherp.framework.common.util.ISOUtil;
-import com.github.fartherp.framework.security.ISecurity;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -22,14 +21,13 @@ public class ThreeDESTest {
     public void testThreeDESOfTwo() {
         String keyS = "9BED98891580C3B245FE9EC58BFA8D2A";
         byte[] key = ISOUtil.hex2byte(keyS);
-        ISecurity desSecurity = new ThreeDES(key);
         String dataS = "F4F3E7B3566F6622098750B491EA8D5C";
         // encrypt
-        byte[] encryption = desSecurity.encrypt(ISOUtil.hex2byte(dataS));
+        byte[] encryption = ThreeDES.encrypt(ISOUtil.hex2byte(dataS), key);
         Assert.assertEquals("FE7B6C8A73167964798EBAC2BA4899AA", ISOUtil.hexString(encryption));
 
         // decrypt
-        Assert.assertEquals(dataS, ISOUtil.hexString(desSecurity.decrypt(encryption)));
+        Assert.assertEquals(dataS, ISOUtil.hexString(ThreeDES.decrypt(encryption, key)));
     }
 
     /**
@@ -39,13 +37,12 @@ public class ThreeDESTest {
     public void testThreeDESOfThree() {
         String keyS = "9BED98891580C3B245FE9EC58BFA8D2A2DC5A7FEAB967E40";
         byte[] key = ISOUtil.hex2byte(keyS);
-        ISecurity desSecurity = new ThreeDES(key);
         String dataS = "F4F3E7B3566F6622098750B491EA8D5C";
         // encrypt
-        byte[] encryption = desSecurity.encrypt(ISOUtil.hex2byte(dataS));
+        byte[] encryption = ThreeDES.encrypt(ISOUtil.hex2byte(dataS), key);
         Assert.assertEquals("738533847602379CDC0F3B7EF880C356", ISOUtil.hexString(encryption));
 
         // decrypt
-        Assert.assertEquals(dataS, ISOUtil.hexString(desSecurity.decrypt(encryption)));
+        Assert.assertEquals(dataS, ISOUtil.hexString(ThreeDES.decrypt(encryption, key)));
     }
 }

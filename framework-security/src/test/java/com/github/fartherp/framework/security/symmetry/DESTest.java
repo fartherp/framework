@@ -4,8 +4,7 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import com.github.fartherp.framework.common.util.ISOUtil;
-import com.github.fartherp.framework.security.ISecurity;
+import base64.Base64Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,10 +16,10 @@ import org.testng.annotations.Test;
 public class DESTest {
     @Test
     public void testDES() {
-        ISecurity aes = new DES(ISOUtil.hex2byte("1111111111111111"));
+        byte[] key = "11111111".getBytes();
         String data = "2222222222222222";
-        byte[] encryption = aes.encrypt(ISOUtil.hex2byte("2222222222222222"));
-        Assert.assertEquals("950973182317F80BB95374BA8DDFF8C2", ISOUtil.hexString(encryption));
-        Assert.assertEquals(data, ISOUtil.hexString(aes.decrypt(encryption)));
+        byte[] encryption = DES.encrypt(data.getBytes(), key);
+        Assert.assertEquals("+ScU6A6DLtz5JxToDoMu3K1qiLT6N4M9", Base64Utils.encode(encryption));
+        Assert.assertEquals(data, new String(DES.decrypt(encryption, key)));
     }
 }

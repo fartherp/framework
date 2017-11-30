@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.security.single;
 
+import org.testng.Assert;
+
 /**
  * Created by IntelliJ IDEA.
  * Author: CK
@@ -11,7 +13,8 @@ package com.github.fartherp.framework.security.single;
  */
 public class SHATest {
     public static void main(String[] args) {
-        String s = SHA.digest("aaa".getBytes());
-        System.out.println(s);
+        byte[] data = "aaa".getBytes();
+        String result = SHA.digest(data);
+        Assert.assertEquals("7e240de74fb1ed08fa08d38063f6a6a91462a815", result);
     }
 }

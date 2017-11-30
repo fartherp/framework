@@ -8,10 +8,8 @@ package com.github.fartherp.framework.security;
  * 对称加密解密接口
  *
  * @author CK
- * @see IEncrypt 继承于此接口
- * @see IDecrypt 继承于此接口
  */
-public interface ISecurity extends IEncrypt, IDecrypt {
+public interface ISecurity {
     /**
      * 默认编码集UTF-8
      */

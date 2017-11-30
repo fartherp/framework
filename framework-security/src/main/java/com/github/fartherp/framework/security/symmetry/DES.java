@@ -4,14 +4,9 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
+
+import static com.github.fartherp.framework.security.ISecurity.DES_ECB_ALGORITHM;
 
 /**
  * DES-ECB加密解密实现
@@ -32,37 +27,49 @@ import java.security.spec.InvalidKeySpecException;
  *          DATA: 2222222222222222 补位: 0808080808080808 ALL_DATA: 22222222222222220808080808080808
  *          DEST: 950973182317F80BB95374BA8DDFF8C2
  * </pre>
+ * 密钥生成
+ * <pre>
+ * SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(ConfigureEncryptAndDecrypt.DES_ECB_ALGORITHM);
+ * DESKeySpec deSedeKeySpec = new DESKeySpec(key);
+ * secretKeyFactory.generateSecret(deSedeKeySpec);
+ * </pre>
  * Author: CK.
  * Date: 2015/4/11.
  */
-public class DES extends SymmetrySecurity {
+public class DES {
 
-    public DES(byte[] key) {
-        this.key = key;
-    }
-
-    public void validation(byte[] data, byte[] key) {
-        if (key.length != 8) {
-            throw new RuntimeException("Invalid DES key length (must be 8 bytes)");
-        }
-    }
-
-    public Cipher getCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
-        return Cipher.getInstance(DES_ECB_ALGORITHM);
+    /**
+     * 加密
+     * @param data 加密原数据
+     * @param key 密钥
+     * @return 加密数据
+     */
+    public static byte[] encrypt(byte[] data, byte[] key) {
+        validation(data, key);
+        Key secretKeySpec = Symmetry.generateRandomKey(key, DES_ECB_ALGORITHM);
+        return Symmetry.encrypt(DES_ECB_ALGORITHM, secretKeySpec, data);
     }
 
     /**
-     * <pre>
-     * SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(ConfigureEncryptAndDecrypt.DES_ECB_ALGORITHM);
-     * DESKeySpec deSedeKeySpec = new DESKeySpec(key);
-     * secretKeyFactory.generateSecret(deSedeKeySpec);
-     * </pre>
+     * 解密
+     * @param data 加密数据
+     * @param key 密钥
+     * @return 加密原数据
      */
-    public Key generateRandomKey(byte[] key) throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException {
-        return new SecretKeySpec(key, DES_ECB_ALGORITHM);
+    public static byte[] decrypt(byte[] data, byte[] key) {
+        validation(data, key);
+        Key secretKeySpec = Symmetry.generateRandomKey(key, DES_ECB_ALGORITHM);
+        return Symmetry.decrypt(DES_ECB_ALGORITHM, secretKeySpec, data);
     }
 
-    public AlgorithmParameterSpec getAlgorithmParameterSpec() {
-        return null;
+    /**
+     * 验证DES数据有效性及密钥有效性
+     * @param data 加密数据
+     * @param key 密钥(DES密钥必须是8位)
+     */
+    public static void validation(byte[] data, byte[] key) {
+        if (key.length != 8) {
+            throw new RuntimeException("Invalid DES key length (must be 8 bytes)");
+        }
     }
 }
