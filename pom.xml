@@ -9,23 +9,23 @@
     <groupId>com.github.fartherp</groupId>
     <artifactId>framework</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
 
     <name>framework</name>
     <url>https://github.com/fartherp/framework</url>
     <description>framework</description>
 
     <modules>
+        <module>framework-cache</module>
         <module>framework-common</module>
         <module>framework-compress</module>
         <module>framework-core</module>
-        <module>framework-security</module>
-        <module>framework-poi</module>
         <module>framework-exception</module>
-        <module>framework-cache</module>
-        <module>framework-tree</module>
         <module>framework-filter</module>
+        <module>framework-poi</module>
         <module>framework-remoting</module>
+        <module>framework-security</module>
+        <module>framework-tree</module>
     </modules>
 
     <properties>
