@@ -4,8 +4,10 @@
 
 package com.github.fartherp.framework.compress;
 
+import com.github.fartherp.framework.common.util.FileUtilies;
 import org.apache.commons.lang.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -172,29 +174,19 @@ public abstract class CommonCompress implements Compress {
 
     /**
      * 设置响应
+     * @param request 请求
      * @param response 响应
      */
-    public CommonCompress response(HttpServletResponse response) {
-        this.response(response, new Date().getTime() + "");
+    public CommonCompress response(HttpServletRequest request, HttpServletResponse response) {
+        this.response(request, response, new Date().getTime() + "");
         return this;
     }
 
-    public CommonCompress response(HttpServletResponse response, String fileName) {
+    public CommonCompress response(HttpServletRequest request, HttpServletResponse response, String fileName) {
         this.flag = 2;
         response.reset();
-        response.setContentType("APPLICATION/OCTET-STREAM");
-        String filename;
-        try {
-            filename = URLEncoder.encode(fileName, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            try {
-                filename = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-                filename = fileName;
-            }
-        }
+        response.setContentType("application/octet-stream;charset=GBK");
+        String filename = FileUtilies.getFileName(fileName, request);
         response.setHeader("content-disposition", "attachment; filename=" + filename + DOT + getSuffix());
         setHttpServletResponse(response);
         return this;

@@ -5,7 +5,6 @@
 package com.github.fartherp.framework.common.util;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import com.github.fartherp.framework.common.constant.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -36,14 +33,7 @@ public class CsvUtil {
         CSVWriter writer = null;
         try {
             response.setContentType("application/octet-stream;charset=GBK");
-            String fileName = URLEncoder.encode(filename, Constant.UTF_8);
-            // 根据浏览器代理获取浏览器内核类型
-            UserAgent userAgent = UserAgentUtil.getUserAgent(request.getHeader("USER-AGENT"));
-            String browserType = userAgent == null ? "" : userAgent.getBrowserType();
-            if ("Firefox".equals(browserType)) {
-                // 针对火狐浏览器处理方式不一样了,解决Firefox下载文件名编码问题
-                fileName = new String(filename.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
-            }
+            String fileName = FileUtilies.getFileName(filename, request);
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".csv");
             writer = new CSVWriter(response.getWriter());
             if (title != null && title.length > 0) {
@@ -52,8 +42,6 @@ public class CsvUtil {
             if (bodyList != null && bodyList.size() > 0) {
                 writer.writeAll(bodyList);
             }
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("charset no support UTF-8", e);
         } catch (IOException e) {
             throw new RuntimeException("write csv file of response fail ", e);
         } finally {

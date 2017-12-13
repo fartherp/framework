@@ -23,7 +23,6 @@
         <module>framework-poi</module>
         <module>framework-exception</module>
         <module>framework-cache</module>
-        <module>framework-ip</module>
         <module>framework-tree</module>
         <module>framework-filter</module>
         <module>framework-remoting</module>

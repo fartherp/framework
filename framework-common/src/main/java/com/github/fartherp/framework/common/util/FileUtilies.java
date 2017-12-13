@@ -4,11 +4,16 @@
 
 package com.github.fartherp.framework.common.util;
 
+import com.github.fartherp.framework.common.constant.Constant;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.StringTokenizer;
 
 /**
@@ -20,8 +25,9 @@ public class FileUtilies {
 
     /**
      * 生成文件
+     *
      * @param targetPackage 目标包
-     * @param fileName Mapper文件名
+     * @param fileName      Mapper文件名
      * @return 文件
      */
     public static File getDirectory(String targetPackage, String fileName, String dir) {
@@ -77,6 +83,22 @@ public class FileUtilies {
                     // ignore
                 }
             }
+        }
+    }
+
+    public static String getFileName(String filename, HttpServletRequest request) {
+        try {
+            String fileName = URLEncoder.encode(filename, Constant.UTF_8);
+            // 根据浏览器代理获取浏览器内核类型
+            UserAgent userAgent = UserAgentUtil.getUserAgent(request.getHeader("USER-AGENT"));
+            String browserType = userAgent == null ? "" : userAgent.getBrowserType();
+            if ("Firefox".equals(browserType)) {
+                // 针对火狐浏览器处理方式不一样了,解决Firefox下载文件名编码问题
+                fileName = new String(filename.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
+            }
+            return fileName;
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("charset no support UTF-8", e);
         }
     }
 }

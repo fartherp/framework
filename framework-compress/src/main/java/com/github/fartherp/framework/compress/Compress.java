@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.compress;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -93,16 +94,18 @@ public interface Compress {
 
     /**
      * 设置响应
+     * @param request 请求
      * @param response 响应
      * @return 压缩类型对象
      */
-    CommonCompress response(HttpServletResponse response);
+    CommonCompress response(HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 设置响应
+     * @param request 请求
      * @param response 响应
      * @param fileName 文件名
      * @return 压缩类型对象
      */
-    CommonCompress response(HttpServletResponse response, String fileName);
+    CommonCompress response(HttpServletRequest request, HttpServletResponse response, String fileName);
 }
