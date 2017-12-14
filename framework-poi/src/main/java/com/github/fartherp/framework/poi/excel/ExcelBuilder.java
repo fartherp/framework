@@ -8,6 +8,7 @@ import com.github.fartherp.framework.poi.excel.write.ExcelWrite;
 import com.github.fartherp.framework.poi.excel.write.FileExcelWrite;
 import com.github.fartherp.framework.poi.excel.write.HttpServletResponseExcelWrite;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class ExcelBuilder {
     }
 
     @SuppressWarnings("all")
-    public static <T> ExcelWrite<T> buildHttpServletResponse(String[] title, String fileName, List<T> list, HttpServletResponse response) {
-        ExcelWrite<T> excelWrite = HttpServletResponseExcelWrite.getInstance(title, fileName, list, response);
+    public static <T> ExcelWrite<T> buildHttpServletResponse(String[] title, String fileName, List<T> list, HttpServletRequest request, HttpServletResponse response) {
+        ExcelWrite<T> excelWrite = HttpServletResponseExcelWrite.getInstance(title, fileName, list, request, response);
         return excelWrite;
     }
 }

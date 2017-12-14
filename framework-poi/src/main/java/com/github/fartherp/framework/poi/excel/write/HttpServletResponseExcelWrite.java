@@ -4,10 +4,11 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
+import com.github.fartherp.framework.common.util.FileUtilies;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -20,14 +21,14 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
 
     private HttpServletResponse response;
 
-    private HttpServletResponseExcelWrite(String[] title, String fileName, List<T> list, HttpServletResponse response) {
+    private HttpServletResponseExcelWrite(String[] title, String fileName, List<T> list, HttpServletRequest request, HttpServletResponse response) {
         super(title, fileName, list);
-        this.setResponse(response);
+        this.setResponse(request, response);
         this.createOutputStream();
     }
 
-    public static <T> HttpServletResponseExcelWrite getInstance(String[] title, String fileName, List<T> list, HttpServletResponse response) {
-        return new HttpServletResponseExcelWrite<T>(title, fileName, list, response);
+    public static <T> HttpServletResponseExcelWrite getInstance(String[] title, String fileName, List<T> list, HttpServletRequest request, HttpServletResponse response) {
+        return new HttpServletResponseExcelWrite<T>(title, fileName, list, request, response);
     }
 
     public ExcelWrite<T> createOutputStream() {
@@ -39,22 +40,11 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
         return this;
     }
 
-    public ExcelWrite<T> setResponse(HttpServletResponse response) {
+    public ExcelWrite<T> setResponse(HttpServletRequest request, HttpServletResponse response) {
         this.response = response;
         response.reset();
         response.setContentType("application/msexcel;charset=GBK");
-        String filename;
-        try {
-            filename = URLEncoder.encode(this.fileName, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            try {
-                filename = new String(fileName.getBytes("UTF-8"), "iso-8859-1");
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-                filename = fileName;
-            }
-        }
+        String filename = FileUtilies.getFileName(this.fileName, request);
         response.setHeader("content-disposition", "attachment; filename=" + filename);
         return this;
     }
