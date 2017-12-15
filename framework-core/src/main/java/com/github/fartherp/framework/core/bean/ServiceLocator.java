@@ -4,9 +4,7 @@
 
 package com.github.fartherp.framework.core.bean;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -16,7 +14,7 @@ import java.util.Map;
  * Author: CK
  * Date: 2015/6/24
  */
-public class ServiceLocator implements ApplicationContextAware {
+public class ServiceLocator {
 
     private static ServiceLocator locator = null;
 
@@ -53,9 +51,5 @@ public class ServiceLocator implements ApplicationContextAware {
 
     public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) {
         return getFactory().getBeansOfType(type, includeNonSingletons, allowEagerInit);
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        factory = applicationContext;
     }
 }
