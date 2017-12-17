@@ -27,7 +27,7 @@ public class FileExcelWriteTest {
         title[3] = "版本系统";
         title[4] = "登录IP";
         title[5] = "状态";
-        String fileName = "D:\\style1.xlsx";
+        String fileName = "D:\\style1.xls";
         ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFile(title, fileName, ExcelWriteStyleTest.getList());
         excelDtoExcelWrite.writeExcel(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {

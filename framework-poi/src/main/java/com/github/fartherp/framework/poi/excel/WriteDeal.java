@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.poi.excel;
 
+import com.github.fartherp.framework.poi.excel.write.ExcelWrite;
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -31,4 +33,12 @@ public interface WriteDeal<T> {
      * @return 高度
      */
     short setHeight();
+
+    /**
+     * 设置最大行数
+     * @return 最大行数
+     */
+    int setMaxRows();
+
+    void setExcelWrite(ExcelWrite excelWrite);
 }

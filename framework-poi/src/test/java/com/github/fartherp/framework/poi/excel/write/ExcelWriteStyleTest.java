@@ -30,7 +30,7 @@ public class ExcelWriteStyleTest {
         title[4] = "登录IP";
         title[5] = "状态";
         String head = "用户登录日志";
-        String fileName = "D:\\style.xlsx";
+        String fileName = "D:\\style.xls";
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
         ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFile(title, fileName, getList());
@@ -52,13 +52,23 @@ public class ExcelWriteStyleTest {
 
     public static List<ExcelDto> getList() {
         List<ExcelDto> excelDtos = new ArrayList<ExcelDto>();
-        for (int i = 1; i < 4; i++) {
+        for (int i = 0; i < 65535; i++) {
             ExcelDto dto = new ExcelDto();
             dto.setTime("2017-10-20 10:10:1" + i);
             dto.setName("name" + i);
             dto.setClient("client"  + i);
             dto.setVersion("1.0." + i);
             dto.setIp("192.168.1." + i);
+            dto.setStatus(i);
+            excelDtos.add(dto);
+        }
+        for (int i = 0; i < 10; i++) {
+            ExcelDto dto = new ExcelDto();
+            dto.setTime("2222-22-22 22:22:2" + i);
+            dto.setName("2222" + i);
+            dto.setClient("22222"  + i);
+            dto.setVersion("2.2." + i);
+            dto.setIp("222.222.2." + i);
             dto.setStatus(i);
             excelDtos.add(dto);
         }

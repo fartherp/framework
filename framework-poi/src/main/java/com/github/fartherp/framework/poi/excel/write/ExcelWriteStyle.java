@@ -4,21 +4,12 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
-import com.github.fartherp.framework.poi.Constant;
 import com.github.fartherp.framework.poi.excel.WriteDeal;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
 
 import static com.github.fartherp.framework.poi.excel.ExcelUtils.setRegionStyle;
 import static com.github.fartherp.framework.poi.excel.ExcelUtils.setRichTextString;
@@ -48,95 +39,83 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
     public ExcelWriteStyle(ExcelWrite<T> excelWrite) {
         super(excelWrite.getTitle(), excelWrite.getFileName(), excelWrite.getList());
         this.excelWrite = excelWrite;
+        this.outputStream = this.excelWrite.getOutputStream();
     }
 
-    /**
-     * @param deal  实际处理结果
-     */
-    public void writeExcel(WriteDeal<T> deal) {
-        // 创建Excel文档
-        Workbook wb;
-        if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2003_POSTFIX)) {
-            wb = new HSSFWorkbook();
-            type = Constant.OFFICE_EXCEL_2003_POSTFIX;
-        } else if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2010_POSTFIX)) {
-            wb = new XSSFWorkbook();
-            type = Constant.OFFICE_EXCEL_2010_POSTFIX;
-        } else {
-            throw new IllegalArgumentException("不是Excel文件");
-        }
-        // sheet 对应一个工作页
-        Sheet sheet = wb.createSheet("sheet1");
-        int offset = 0;
+    public void deal(WriteDeal<T> deal) {
+        // 总条数
+        int size = this.list.size();
+        // 最大行数
+        int maxRows = deal.setMaxRows();
+        // 创建几个sheet
+        int sheetNum = size / maxRows + 1;
 
-        CellRangeAddress region0 = new CellRangeAddress(offset, offset, (short) 0, (short) title.length - 1);
-        sheet.addMergedRegion(region0);
+        for (int j = 1; j <= sheetNum; j++) {
+            // sheet 对应一个工作页
+            Sheet sheet = this.wb.createSheet("sheet" + j);
+            int offset = 0;
 
-        Row row0 = sheet.createRow(offset);
-        row0.setHeight(deal.setHeight());
-        offset++;
+            CellRangeAddress region0 = new CellRangeAddress(offset, offset, (short) 0, (short) this.title.length - 1);
+            sheet.addMergedRegion(region0);
 
-        Cell cell0 = row0.createCell(0);
-        cell0.setCellValue(setRichTextString(type, head));
-
-        CellStyle lightColorStrong = setStyleLightColorStrong(wb);
-        setRegionStyle(sheet, region0, lightColorStrong);
-
-        CellRangeAddress region1 = new CellRangeAddress(offset, offset, (short) 0, (short) title.length - 1);
-        sheet.addMergedRegion(region1);
-
-        Row row1 = sheet.createRow(offset);
-        row1.setHeight(deal.setHeight());
-        offset++;
-
-        Cell cell1 = row1.createCell(0);
-        cell1.setCellValue(setRichTextString(type, condition));
-
-        setRegionStyle(sheet, region1, lightColorStrong);
-
-        Row titleRow = sheet.createRow(offset);
-        titleRow.setHeight(deal.setHeight());
-        offset++;
-
-        CellStyle colorStrong = setStyleColorStrong(wb);
-        int[] columnWidth = deal.setColumnWidth(title);
-        for (int i = 0; i < title.length; i++) {
-            Cell cell = titleRow.createCell(i);
-            cell.setCellValue(setRichTextString(type, title[i]));
-            cell.setCellStyle(colorStrong);
-            sheet.setColumnWidth(i, columnWidth[i]);
-        }
-
-        CellStyle noColor = setStyleNoColor(wb);
-        for (T t : list) {
-            // 创建一行
-            Row dataRow = sheet.createRow(offset);
-            dataRow.setHeight(deal.setHeight());
+            Row row0 = sheet.createRow(offset);
+            row0.setHeight(deal.setHeight());
             offset++;
-            // 得到要插入的每一条记录
-            String[] data = deal.dealBean(t);
-            for (int j = 0; j < data.length; j++) {
-                // 在一行内循环
-                Cell cell = dataRow.createCell(j);
-                cell.setCellValue(setRichTextString(type, data[j]));
-                cell.setCellStyle(noColor);
+
+            Cell cell0 = row0.createCell(0);
+            cell0.setCellValue(setRichTextString(this.type, head));
+
+            CellStyle lightColorStrong = setStyleLightColorStrong(wb);
+            setRegionStyle(sheet, region0, lightColorStrong);
+
+            CellRangeAddress region1 = new CellRangeAddress(offset, offset, (short) 0, (short) this.title.length - 1);
+            sheet.addMergedRegion(region1);
+
+            Row row1 = sheet.createRow(offset);
+            row1.setHeight(deal.setHeight());
+            offset++;
+
+            Cell cell1 = row1.createCell(0);
+            cell1.setCellValue(setRichTextString(this.type, this.condition));
+
+            setRegionStyle(sheet, region1, lightColorStrong);
+
+            Row titleRow = sheet.createRow(offset);
+            titleRow.setHeight(deal.setHeight());
+            offset++;
+
+            CellStyle colorStrong = setStyleColorStrong(this.wb);
+            int[] columnWidth = deal.setColumnWidth(this.title);
+            for (int i = 0; i < this.title.length; i++) {
+                Cell cell = titleRow.createCell(i);
+                cell.setCellValue(setRichTextString(this.type, this.title[i]));
+                cell.setCellStyle(colorStrong);
+                sheet.setColumnWidth(i, columnWidth[i]);
             }
-        }
-        // 创建文件输出流，准备输出电子表格
-        OutputStream outputStream = excelWrite.getOutputStream();
-        try {
-            wb.write(outputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    outputStream = null;
+
+            CellStyle noColor = setStyleNoColor(this.wb);
+
+            offset = 3;
+            // 除去标题，条件，头
+            int maxRow = maxRows - offset;
+            // 开始位置
+            int start = (j - 1) * maxRow;
+            // 结束位置
+            int end = j * maxRow > size ? size : j * maxRow;
+            // 每个sheet的row重新计算
+            int row = offset;
+            for (int i = start; i < end; i++) {
+                // 创建一行
+                Row dataRow = sheet.createRow(row);
+                dataRow.setHeight(deal.setHeight());
+                row++;
+                // 得到要插入的每一条记录
+                String[] data = deal.dealBean(this.list.get(i));
+                for (int k = 0; k < data.length; k++) {
+                    // 在一行内循环
+                    Cell cell = dataRow.createCell(k);
+                    cell.setCellValue(setRichTextString(this.type, data[k]));
+                    cell.setCellStyle(noColor);
                 }
             }
         }
