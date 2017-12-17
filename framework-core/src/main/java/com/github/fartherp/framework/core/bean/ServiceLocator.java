@@ -4,7 +4,9 @@
 
 package com.github.fartherp.framework.core.bean;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -14,42 +16,85 @@ import java.util.Map;
  * Author: CK
  * Date: 2015/6/24
  */
-public class ServiceLocator {
-
-    private static ServiceLocator locator = null;
+public class ServiceLocator implements ApplicationContextAware {
 
     private static ApplicationContext factory = null;
 
-    public ApplicationContext getFactory() {
+    public static ApplicationContext getFactory() {
         Assert.notNull(factory, "没有注入spring factory");
         return factory;
     }
 
-    public void setFactory(ApplicationContext context) {
-        setToFactory(context);
-    }
-
-    private static void setToFactory(ApplicationContext context) {
+    public static void setFactory(ApplicationContext context) {
         factory = context;
     }
 
-    public static ServiceLocator getInstance() {
-        if (locator == null) {
-            locator = new ServiceLocator();
-        }
-        return locator;
-    }
-
     @SuppressWarnings("unchecked")
-    public <T> T getBean(String beanName) {
+    public static <T> T getBean(String beanName) {
         return (T) getFactory().getBean(beanName);
     }
 
-    public <T> Map<String, T> getBeansOfType(Class<T> type) {
+    public static <T> Map<String, T> getBeansOfType(Class<T> type) {
         return getFactory().getBeansOfType(type);
     }
 
-    public <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) {
+    public static <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) {
         return getFactory().getBeansOfType(type, includeNonSingletons, allowEagerInit);
+    }
+
+    /**
+     * 获取类型为requiredType的对象
+     *
+     * @param clazz 类型
+     * @return Object
+     *
+     */
+    public static <T> T getBean(Class<T> clazz) {
+        return getFactory().getBean(clazz);
+    }
+
+    /**
+     * 如果BeanFactory包含一个与所给名称匹配的bean定义，则返回true
+     *
+     * @param name 名称
+     * @return boolean
+     */
+    public static boolean containsBean(String name) {
+        return getFactory().containsBean(name);
+    }
+
+    /**
+     * 判断以给定名字注册的bean定义是一个singleton还是一个prototype。
+     * 如果与给定名字相应的bean定义没有被找到，将会抛出一个异常（NoSuchBeanDefinitionException）
+     *
+     * @param name 名称
+     * @return boolean
+     *
+     */
+    public static boolean isSingleton(String name) {
+        return getFactory().isSingleton(name);
+    }
+
+    /**
+     *
+     * @param name 名称
+     * @return Class 注册对象的类型
+     */
+    public static Class<?> getType(String name) {
+        return getFactory().getType(name);
+    }
+
+    /**
+     * 如果给定的bean名字在bean定义中有别名，则返回这些别名
+     *
+     * @param name 名称
+     * @return String[]
+     */
+    public static String[] getAliases(String name) {
+        return getFactory().getAliases(name);
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        setFactory(applicationContext);
     }
 }

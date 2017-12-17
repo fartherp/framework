@@ -19,7 +19,7 @@ public class ServiceLocatorTest {
     @Test
     public void testGetFactory() throws Exception {
         try {
-            ServiceLocator.getInstance().getBean("test");
+            ServiceLocator.getBean("test");
         } catch (IllegalArgumentException e) {
             Assert.assertEquals(e.getMessage(), "没有注入spring factory");
         }

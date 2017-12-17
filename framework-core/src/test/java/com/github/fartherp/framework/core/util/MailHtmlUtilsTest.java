@@ -23,7 +23,7 @@ public class MailHtmlUtilsTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        ServiceLocator.getInstance().setFactory(applicationContext);
+        ServiceLocator.setFactory(applicationContext);
     }
 
     @AfterMethod

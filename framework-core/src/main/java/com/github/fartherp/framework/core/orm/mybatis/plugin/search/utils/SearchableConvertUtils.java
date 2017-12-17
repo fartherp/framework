@@ -3,6 +3,7 @@
  */
 package com.github.fartherp.framework.core.orm.mybatis.plugin.search.utils;
 
+import com.github.fartherp.framework.core.bean.ServiceLocator;
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.exception.InvalidSearchPropertyException;
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.exception.InvalidSearchValueException;
@@ -10,7 +11,6 @@ import com.github.fartherp.framework.core.orm.mybatis.plugin.search.exception.Se
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.filter.CustomCondition;
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.filter.SearchFilter;
 import com.github.fartherp.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import com.github.fartherp.framework.core.util.SpringUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.InvalidPropertyException;
@@ -60,7 +60,7 @@ public final class SearchableConvertUtils {
             synchronized (SearchableConvertUtils.class) {
                 if (conversionService == null) {
                     try {
-                        conversionService = SpringUtils.getBean(ConversionService.class);
+                        conversionService = ServiceLocator.getBean(ConversionService.class);
                     } catch (Exception e) {
                         throw new SearchException("conversionService is null, " +
                                 "search param convert must use conversionService. " +

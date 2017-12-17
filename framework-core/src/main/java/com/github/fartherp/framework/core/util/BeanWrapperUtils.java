@@ -30,7 +30,7 @@ public class BeanWrapperUtils {
             String key = entry.getKey().toString();
             Object value = entry.getValue();
             if (value instanceof String) {
-                PropertyValue propertyValue = new PropertyValue(key, ServiceLocator.getInstance().getBean((String) value));
+                PropertyValue propertyValue = new PropertyValue(key, ServiceLocator.getBean((String) value));
                 mutablePropertyValues.addPropertyValue(propertyValue);
             } else {
                 PropertyValue propertyValue = new PropertyValue(key, value);

@@ -19,10 +19,10 @@ import javax.servlet.ServletContextListener;
 public class InitSystemListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
-        ServiceLocator.getInstance().setFactory(context);
+        ServiceLocator.setFactory(context);
     }
 
     public void contextDestroyed(ServletContextEvent event) {
-        ServiceLocator.getInstance().setFactory(null);
+        ServiceLocator.setFactory(null);
     }
 }
