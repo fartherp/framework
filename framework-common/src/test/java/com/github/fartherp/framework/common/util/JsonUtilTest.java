@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.common.util;
 
-import com.google.gson.annotations.Expose;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -22,7 +21,7 @@ public class JsonUtilTest {
         user.setName("名称");
         user.setDesc("测试");
         user.setAge(27);
-        System.out.println(JsonUtil.toJson(user, "desc"));
+        assertEquals("{\"name\":\"名称\",\"age\":27}", JsonUtil.toJson(user, "desc"));
     }
 
     public static class User {
