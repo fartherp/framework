@@ -107,11 +107,11 @@ public class MapUtils<K, V> {
      */
     public static Map<String, Object> toMap(Object o, Map<String, String> map, String... ignoreProperties) {
         PropertyDescriptor[] ts = ReflectUtil.getPropertyDescriptors(o);
-        List<String> ignoreList = (ignoreProperties != null) ? Arrays.asList(ignoreProperties) : null;
+        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
         Map<String,Object> m = new HashMap<String, Object>(ts.length);
         for (PropertyDescriptor t : ts) {
             Method r = t.getReadMethod();
-            if (r != null && (ignoreProperties == null || (!ignoreList.contains(t.getName())))) {
+            if (r != null && (ignoreList == null || (!ignoreList.contains(t.getName())))) {
                 try {
                     if (!Modifier.isPublic(r.getDeclaringClass().getModifiers())) {
                         r.setAccessible(true);
@@ -149,10 +149,10 @@ public class MapUtils<K, V> {
      */
     public static void toObject(Map<String, Object> source, Object target, String... ignoreProperties) {
         PropertyDescriptor[] ts = ReflectUtil.getPropertyDescriptors(target);
-        List<String> ignoreList = (ignoreProperties != null) ? Arrays.asList(ignoreProperties) : null;
+        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
         for (PropertyDescriptor t : ts) {
             String name = t.getName();
-            if (ignoreProperties == null || !ignoreList.contains(name)) {
+            if (ignoreList == null || !ignoreList.contains(name)) {
                 if (null != source && source.containsKey(name)) {
                     ReflectUtil.setValueByField(target, t.getName(), source.get(name));
                 }

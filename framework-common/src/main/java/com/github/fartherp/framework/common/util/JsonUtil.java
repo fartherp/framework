@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.common.util;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -16,7 +18,9 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A json tools for the gson deal of the google.
@@ -35,22 +39,47 @@ public class JsonUtil {
         return gson().fromJson(json, clazz);
     }
 
-    public static String toJson(Object obj) {
-        return gson().toJson(obj);
+    public static String toJson(Object obj, String... ignoreProperties) {
+        return gson(ignoreProperties).toJson(obj);
     }
 
-    public static Gson gson() {
+    public static Gson gson(String... ignoreProperties) {
         String datePattern = DateUtil.yyyy_MM_dd_HH_mm_ss;
         GsonBuilder builder = new GsonBuilder();
         builder.setDateFormat(datePattern);
+        ExclusionStrategy exclusionStrategy = getExclusionStrategy(ignoreProperties);
+        if (exclusionStrategy != null) {
+            builder.setExclusionStrategies(exclusionStrategy);
+        }
         return builder.create();
     }
 
-    public static Gson gson1() {
+    public static Gson gson1(String... ignoreProperties) {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Date.class, new DateSerializer());
         builder.setDateFormat(DateFormat.LONG);
+        ExclusionStrategy exclusionStrategy = getExclusionStrategy(ignoreProperties);
+        if (exclusionStrategy != null) {
+            builder.setExclusionStrategies(exclusionStrategy);
+        }
         return builder.create();
+    }
+
+    public static ExclusionStrategy getExclusionStrategy(String... ignoreProperties) {
+        ExclusionStrategy exclusionStrategy = null;
+        final List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
+        if (ignoreList != null) {
+            exclusionStrategy = new ExclusionStrategy() {
+                public boolean shouldSkipField(FieldAttributes fa) {
+                    return ignoreList.contains(fa.getName());
+                }
+
+                public boolean shouldSkipClass(Class<?> clazz) {
+                    return false;
+                }
+            };
+        }
+        return exclusionStrategy;
     }
 
     /**
