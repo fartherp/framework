@@ -5,6 +5,8 @@
 package com.github.fartherp.framework.core.util;
 
 import com.google.gson.GsonBuilder;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -231,7 +233,9 @@ public class JsonResp {
          * @return 该响应对象.
          */
         public JList addAll(Collection collection) {
-            resp.dataList.addAll(collection);
+            if (CollectionUtils.isNotEmpty(collection)) {
+                resp.dataList.addAll(collection);
+            }
             return this;
         }
     }
@@ -276,7 +280,9 @@ public class JsonResp {
          */
         @SuppressWarnings("unchecked")
         public JData addAll(Map<String, Object> data) {
-            ((Map) resp.data).putAll(data);
+            if (MapUtils.isNotEmpty(data)) {
+                ((Map) resp.data).putAll(data);
+            }
             return this;
         }
 
