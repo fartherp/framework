@@ -20,7 +20,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Excel模板抽象类
  *
  * @author: CK
  * @date: 2017/11/25

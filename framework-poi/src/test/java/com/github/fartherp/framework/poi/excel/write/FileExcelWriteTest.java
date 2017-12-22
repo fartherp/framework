@@ -8,8 +8,6 @@ import com.github.fartherp.framework.poi.excel.ExcelBuilder;
 import com.github.fartherp.framework.poi.excel.ExcelDto;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -17,8 +15,7 @@ import static org.testng.Assert.*;
  * @date: 2017/11/25
  */
 public class FileExcelWriteTest {
-    @SuppressWarnings("all")
-    @Test
+//    @Test
     public void writeExcel() throws Exception {
         String[] title = new String [6];
         title[0] = "登录时间";

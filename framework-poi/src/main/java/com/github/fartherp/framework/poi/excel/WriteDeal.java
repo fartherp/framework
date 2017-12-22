@@ -7,7 +7,7 @@ package com.github.fartherp.framework.poi.excel;
 import com.github.fartherp.framework.poi.excel.write.ExcelWrite;
 
 /**
- * Created by IntelliJ IDEA.
+ * Excel写接口
  *
  * @author: CK
  * @date: 2017/11/25

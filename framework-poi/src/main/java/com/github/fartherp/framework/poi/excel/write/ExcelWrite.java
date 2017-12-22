@@ -11,7 +11,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Excel写接口
  * Author: CK
  * Date: 2016/5/29
  */

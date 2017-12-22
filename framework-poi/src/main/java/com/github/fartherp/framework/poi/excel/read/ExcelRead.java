@@ -5,7 +5,6 @@
 package com.github.fartherp.framework.poi.excel.read;
 
 import com.github.fartherp.framework.poi.Constant;
-import com.github.fartherp.framework.poi.ReadDeal;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -73,18 +72,5 @@ public class ExcelRead<E> {
                 }
             }
         }
-    }
-
-    public static interface ExcelReadDeal<E> extends ReadDeal<E> {
-        /**
-         * 一行excel数据返回业务BEAN
-         * @param row 一行excel数据
-         * @return 业务BEAN
-         */
-        E dealBean(Row row);
-    }
-
-    public static abstract class DefaultExcelReadDeal<E> extends ReadDeal.DefaultReadDeal<E> implements ExcelReadDeal<E> {
-
     }
 }

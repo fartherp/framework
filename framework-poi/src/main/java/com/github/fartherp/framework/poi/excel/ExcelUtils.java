@@ -18,7 +18,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 /**
- * Created by IntelliJ IDEA.
+ * Excel工具类
  *
  * @author: CK
  * @date: 2017/11/25

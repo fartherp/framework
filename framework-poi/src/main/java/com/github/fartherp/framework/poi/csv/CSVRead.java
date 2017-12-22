@@ -2,10 +2,9 @@
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.poi.read;
+package com.github.fartherp.framework.poi.csv;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.github.fartherp.framework.poi.ReadDeal;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -54,18 +53,5 @@ public class CSVRead<E> {
                 reader = null;
             }
         }
-    }
-
-    public static interface CSVReaderDeal<E> extends ReadDeal<E> {
-        /**
-         * 一行CSV数据返回业务BEAN
-         * @param arr 一行CSV数据
-         * @return 业务BEAN
-         */
-        E dealBean(String[] arr);
-    }
-
-    public static abstract class DefaultCSVReaderDeal<E> extends ReadDeal.DefaultReadDeal<E> implements CSVReaderDeal<E> {
-
     }
 }
