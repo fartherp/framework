@@ -35,10 +35,6 @@
 2.oracle数据库返回的错误信息,转成可识别信息
 3.通用的异常返回的错误信息,转成可识别信息
 
-## IP框架 framework-ip
-> **ip模块**
-1.QQ ip地址库
-
 ## poi框架 framework-poi
 > **poi模块**
 1.csv读取及下载
