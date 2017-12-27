@@ -20,7 +20,7 @@ import java.util.List;
  *
  * <pre>
  * {@code
- * <bean id="myCacheManager" class="cn.vansky.framework.core.cache.redis.RedisCacheManager">
+ * <bean id="myCacheManager" class="com.github.fartherp.framework.cache.redis.RedisCacheManager">
  *     <property name="clientList">
  *         <list>
  *             <ref local="client"/>
@@ -28,7 +28,7 @@ import java.util.List;
  *     </property>
  * </bean>
  *
- * <bean id="client" class="cn.vansky.framework.core.cache.redis.RedisClient">
+ * <bean id="client" class="com.github.fartherp.framework.cache.redis.RedisClient">
  *     <property name="redisServer">
  *         <value>127.0.0.1</value>
  *     </property>

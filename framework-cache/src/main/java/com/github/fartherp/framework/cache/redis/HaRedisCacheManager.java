@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  *
  * <pre>
  * {@code
- * <bean id="myCacheManager" class="cn.vansky.framework.core.cache.redis.HaRedisCacheManager">
+ * <bean id="myCacheManager" class="com.github.fartherp.framework.cache.redis.HaRedisCacheManager">
  *     <property name="clientList">
  *         <list>
  *             <ref local="client"/>
@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
  *     <property name="retryTimes" value="3" />
  * </bean>
  *
- * <bean id="client" class="cn.vansky.framework.core.cache.redis.RedisClient">
+ * <bean id="client" class="com.github.fartherp.framework.cache.redis.RedisClient">
  *     <property name="redisServer">
  *         <value>127.0.0.1</value>
  *     </property>

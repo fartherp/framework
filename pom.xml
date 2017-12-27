@@ -77,7 +77,7 @@
         <commons-pool.version>1.5.5</commons-pool.version>
         <opencsv.version>2.3</opencsv.version>
         <ST4.version>4.0.4</ST4.version>
-        <jedis.version>2.0.0</jedis.version>
+        <jedis.version>2.9.0</jedis.version>
         <encoding.charset>UTF-8</encoding.charset>
         <druid.version>1.0.4</druid.version>
         <dbunit.version>2.4.9</dbunit.version>

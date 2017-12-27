@@ -10,6 +10,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.ReflectionUtils;
@@ -70,70 +71,6 @@ public class RedisClient implements InitializingBean, DisposableBean {
      * redis端口
      */
     private int port = Protocol.DEFAULT_PORT;
-    /**
-     * operation time out
-     */
-    private int timeout = Protocol.DEFAULT_TIMEOUT;
-
-    /**
-     * if maxIdle == 0, ObjectPool has 0 size pool
-     */
-    private int maxIdle = GenericObjectPool.DEFAULT_MAX_IDLE;
-
-    /**
-     * max wait time
-     */
-    private long maxWait = GenericObjectPool.DEFAULT_MAX_WAIT;
-
-    /**
-     * set if support test client workable on get client
-     */
-    private boolean testOnBorrow = GenericObjectPool.DEFAULT_TEST_ON_BORROW;
-
-    /**
-     * set min idle count
-     */
-    private int minIdle = GenericObjectPool.DEFAULT_MIN_IDLE;
-
-    /**
-     * set max idle count
-     */
-    private int maxActive = GenericObjectPool.DEFAULT_MAX_ACTIVE;
-
-    /**
-     * set if support test client workable on return client to pool
-     */
-    private boolean testOnReturn = GenericObjectPool.DEFAULT_TEST_ON_RETURN;
-
-    /**
-     * set if support test client workable while idle
-     */
-    private boolean testWhileIdle = GenericObjectPool.DEFAULT_TEST_WHILE_IDLE;
-
-    /**
-     * set time between eviction runs during in Milliseconds
-     */
-    private long timeBetweenEvictionRunsMillis = GenericObjectPool.DEFAULT_TIME_BETWEEN_EVICTION_RUNS_MILLIS;
-
-    /**
-     * set number tests per eviction to run
-     */
-    private int numTestsPerEvictionRun = GenericObjectPool.DEFAULT_NUM_TESTS_PER_EVICTION_RUN;
-
-    /**
-     * set min evictable idle count in milliseconds
-     */
-    private long minEvictableIdleTimeMillis = GenericObjectPool.DEFAULT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
-
-    /**
-     * softMinEvictableIdleTimeMillis
-     */
-    private long softMinEvictableIdleTimeMillis = GenericObjectPool.DEFAULT_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS;
-
-    /**
-     * lifo
-     */
-    private boolean lifo = GenericObjectPool.DEFAULT_LIFO;
 
     /**
      * If the pool in ObjectPool is exhausted (no available idle instances and
@@ -151,26 +88,8 @@ public class RedisClient implements InitializingBean, DisposableBean {
     private GenericObjectPool realPool;
 
     public void afterPropertiesSet() throws Exception {
-        GenericObjectPool.Config poolConfig = new GenericObjectPool.Config();
-        // maxIdle为负数时，sop中不对pool size大小做限制，此处做限制，防止保持过多空闲redis连接
-        if (this.maxIdle >= 0) {
-            poolConfig.maxIdle = this.maxIdle;
-        }
-        poolConfig.maxWait = this.maxWait;
-        if (this.whenExhaustedAction >= 0 && this.whenExhaustedAction < 3) {
-            poolConfig.whenExhaustedAction = this.whenExhaustedAction;
-        }
-        poolConfig.testOnBorrow = this.testOnBorrow;
-        poolConfig.minIdle = this.minIdle;
-        poolConfig.maxActive = this.maxActive;
-        poolConfig.testOnReturn = this.testOnReturn;
-        poolConfig.testWhileIdle = this.testWhileIdle;
-        poolConfig.timeBetweenEvictionRunsMillis = this.timeBetweenEvictionRunsMillis;
-        poolConfig.numTestsPerEvictionRun = this.numTestsPerEvictionRun;
-        poolConfig.minEvictableIdleTimeMillis = this.minEvictableIdleTimeMillis;
-        poolConfig.softMinEvictableIdleTimeMillis = this.softMinEvictableIdleTimeMillis;
-        poolConfig.lifo = this.lifo;
-        jedisPool = new JedisPool(poolConfig, redisServer, port, timeout, redisAuthKey);
+        GenericObjectPoolConfig poolConfig = PoolConfigUtils.genericObjectPoolConfig();
+        jedisPool = new JedisPool(poolConfig, redisServer, port, PoolConfigUtils.timeout, redisAuthKey);
         realPool = getRealPoolInstance();
     }
 
@@ -830,10 +749,6 @@ public class RedisClient implements InitializingBean, DisposableBean {
         shutdown();
     }
 
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
-
     public JedisPool getJedisPool() {
         return jedisPool;
     }
@@ -882,104 +797,6 @@ public class RedisClient implements InitializingBean, DisposableBean {
         this.port = port;
     }
 
-    public int getMaxIdle() {
-        return maxIdle;
-    }
-
-    public void setMaxIdle(int maxIdle) {
-        this.maxIdle = maxIdle;
-    }
-
-    public long getMaxWait() {
-        return maxWait;
-    }
-
-    public void setMaxWait(long maxWait) {
-        this.maxWait = maxWait;
-    }
-
-    public boolean isTestOnBorrow() {
-        return testOnBorrow;
-    }
-
-    public void setTestOnBorrow(boolean testOnBorrow) {
-        this.testOnBorrow = testOnBorrow;
-    }
-
-    public int getMinIdle() {
-        return minIdle;
-    }
-
-    public void setMinIdle(int minIdle) {
-        this.minIdle = minIdle;
-    }
-
-    public int getMaxActive() {
-        return maxActive;
-    }
-
-    public void setMaxActive(int maxActive) {
-        this.maxActive = maxActive;
-    }
-
-    public boolean isTestOnReturn() {
-        return testOnReturn;
-    }
-
-    public void setTestOnReturn(boolean testOnReturn) {
-        this.testOnReturn = testOnReturn;
-    }
-
-    public boolean isTestWhileIdle() {
-        return testWhileIdle;
-    }
-
-    public void setTestWhileIdle(boolean testWhileIdle) {
-        this.testWhileIdle = testWhileIdle;
-    }
-
-    public long getTimeBetweenEvictionRunsMillis() {
-        return timeBetweenEvictionRunsMillis;
-    }
-
-    public void setTimeBetweenEvictionRunsMillis(
-            long timeBetweenEvictionRunsMillis) {
-        this.timeBetweenEvictionRunsMillis = timeBetweenEvictionRunsMillis;
-    }
-
-    public int getNumTestsPerEvictionRun() {
-        return numTestsPerEvictionRun;
-    }
-
-    public void setNumTestsPerEvictionRun(int numTestsPerEvictionRun) {
-        this.numTestsPerEvictionRun = numTestsPerEvictionRun;
-    }
-
-    public long getMinEvictableIdleTimeMillis() {
-        return minEvictableIdleTimeMillis;
-    }
-
-    public void setMinEvictableIdleTimeMillis(long minEvictableIdleTimeMillis) {
-        this.minEvictableIdleTimeMillis = minEvictableIdleTimeMillis;
-    }
-
-    public long getSoftMinEvictableIdleTimeMillis() {
-        return softMinEvictableIdleTimeMillis;
-    }
-
-    public void setSoftMinEvictableIdleTimeMillis(
-            long softMinEvictableIdleTimeMillis) {
-        this.softMinEvictableIdleTimeMillis = softMinEvictableIdleTimeMillis;
-    }
-
-    public boolean isLifo() {
-        return lifo;
-    }
-
-    public void setLifo(boolean lifo) {
-        this.lifo = lifo;
-    }
-
     public byte getWhenExhaustedAction() {
         return whenExhaustedAction;
     }
@@ -988,7 +805,4 @@ public class RedisClient implements InitializingBean, DisposableBean {
         this.whenExhaustedAction = whenExhaustedAction;
     }
 
-    public int getTimeout() {
-        return timeout;
-    }
 }
