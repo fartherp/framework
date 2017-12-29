@@ -55,7 +55,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
         return this;
     }
 
-    public void list(List<T> list) {
+    public ExcelWrite<T> list(List<T> list) {
         // 当前总数
         excelWrite.setTotal(excelWrite.getTotal() + list.size());
         createSheet(list, true);
@@ -74,6 +74,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
             }
             excelWrite.setCurrentRow(excelWrite.getCurrentRow() + 1);
         }
+        return this;
     }
 
     public void createSheet(List<T> list, boolean flag) {

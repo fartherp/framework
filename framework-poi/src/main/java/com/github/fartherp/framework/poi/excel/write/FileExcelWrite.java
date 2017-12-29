@@ -15,7 +15,7 @@ import java.util.List;
  * @date: 2017/11/25
  */
 public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
-    public FileExcelWrite(String[] title, String fileName) {
+    public <T> FileExcelWrite(String[] title, String fileName) {
         super(title, fileName);
         this.createOutputStream();
     }

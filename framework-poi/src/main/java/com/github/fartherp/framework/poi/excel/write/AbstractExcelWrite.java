@@ -162,7 +162,7 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         return this;
     }
 
-    public void list(List<T> list) {
+    public ExcelWrite<T> list(List<T> list) {
         // 实际业务处理
         // 当前总数
         total += list.size();
@@ -180,6 +180,7 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
             }
             currentRow++;
         }
+        return this;
     }
 
     public void createSheet(List<T> list, boolean flag) {

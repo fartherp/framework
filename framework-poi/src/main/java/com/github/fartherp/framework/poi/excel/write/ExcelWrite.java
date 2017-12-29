@@ -48,7 +48,7 @@ public interface ExcelWrite<T> {
 
     void createWb();
 
-    void list(List<T> list);
+    ExcelWrite<T> list(List<T> list);
 
     void write();
 
