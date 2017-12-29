@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.excel.WriteDeal;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.OutputStream;
@@ -23,15 +24,35 @@ public interface ExcelWrite<T> {
 
     String getFileName();
 
-    List<T> getList();
-
     OutputStream getOutputStream();
+
+    WriteDeal<T> getDeal();
+
+    Workbook getWb();
+
+    int getTotal();
+
+    void setTotal(int total);
+
+    int getCurrentSheetNumber();
+
+    void setCurrentSheetNumber(int currentSheetNumber);
+
+    Sheet getCurrentSheet();
+
+    void setCurrentSheet(Sheet currentSheet);
+
+    int getCurrentRow();
+
+    void setCurrentRow(int currentRow);
 
     void createWb();
 
-    void writeExcel(WriteDeal<T> deal);
+    void list(List<T> list);
 
-    void write(Workbook wb);
+    void write();
 
     ExcelWrite<T> createOutputStream();
+
+    ExcelWrite<T> deal(WriteDeal<T> deal);
 }

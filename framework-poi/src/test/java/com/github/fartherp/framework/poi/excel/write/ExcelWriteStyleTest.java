@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
-import com.github.fartherp.framework.poi.excel.ExcelBuilder;
 import com.github.fartherp.framework.poi.excel.ExcelDto;
 import org.testng.annotations.Test;
 
@@ -31,9 +30,9 @@ public class ExcelWriteStyleTest {
         String fileName = "D:\\style.xls";
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFile(title, fileName, getList());
+        FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
         ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
-        writeStyle.condition(condition).head(head).writeExcel(
+        writeStyle.condition(condition).head(head).deal(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
                     public String[] dealBean(ExcelDto obj) {
                         String[] result = new String[6];
@@ -46,11 +45,14 @@ public class ExcelWriteStyleTest {
                         return result;
                     }
                 });
+        writeStyle.list(ExcelWriteStyleTest.getList());
+        writeStyle.list(ExcelWriteStyleTest.getList1());
+        writeStyle.write();
     }
 
     public static List<ExcelDto> getList() {
         List<ExcelDto> excelDtos = new ArrayList<ExcelDto>();
-        for (int i = 0; i < 65535; i++) {
+        for (int i = 0; i < 65536; i++) {
             ExcelDto dto = new ExcelDto();
             dto.setTime("2017-10-20 10:10:1" + i);
             dto.setName("name" + i);
@@ -60,6 +62,11 @@ public class ExcelWriteStyleTest {
             dto.setStatus(i);
             excelDtos.add(dto);
         }
+        return excelDtos;
+    }
+
+    public static List<ExcelDto> getList1() {
+        List<ExcelDto> excelDtos = new ArrayList<ExcelDto>();
         for (int i = 0; i < 10; i++) {
             ExcelDto dto = new ExcelDto();
             dto.setTime("2222-22-22 22:22:2" + i);

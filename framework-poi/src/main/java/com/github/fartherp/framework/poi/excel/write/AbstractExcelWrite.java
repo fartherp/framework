@@ -43,18 +43,43 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
     protected String fileName;
 
     /**
-     * 数据
+     * 输出流
      */
-    protected List<T> list;
-
     protected OutputStream outputStream;
 
+    /**
+     * 自定义处理类
+     */
+    protected WriteDeal<T> deal;
+
+    /**
+     * excel
+     */
     protected Workbook wb;
 
-    public AbstractExcelWrite(String[] title, String fileName, List<T> list) {
+    /**
+     * 总数量
+     */
+    protected int total;
+
+    /**
+     * 当前处理sheet编号
+     */
+    protected int currentSheetNumber;
+
+    /**
+     * 当前处理sheet
+     */
+    protected Sheet currentSheet;
+
+    /**
+     * 当前处理sheet的行
+     */
+    protected int currentRow;
+
+    public AbstractExcelWrite(String[] title, String fileName) {
         this.title = title;
         this.fileName = fileName;
-        this.list = list;
     }
 
     public String getType() {
@@ -69,12 +94,48 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         return fileName;
     }
 
-    public List<T> getList() {
-        return list;
-    }
-
     public OutputStream getOutputStream() {
         return outputStream;
+    }
+
+    public WriteDeal<T> getDeal() {
+        return deal;
+    }
+
+    public Workbook getWb() {
+        return wb;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getCurrentSheetNumber() {
+        return currentSheetNumber;
+    }
+
+    public void setCurrentSheetNumber(int currentSheetNumber) {
+        this.currentSheetNumber = currentSheetNumber;
+    }
+
+    public Sheet getCurrentSheet() {
+        return currentSheet;
+    }
+
+    public void setCurrentSheet(Sheet currentSheet) {
+        this.currentSheet = currentSheet;
+    }
+
+    public int getCurrentRow() {
+        return currentRow;
+    }
+
+    public void setCurrentRow(int currentRow) {
+        this.currentRow = currentRow;
     }
 
     public void createWb() {
@@ -90,56 +151,58 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         }
     }
 
-    public void writeExcel(WriteDeal<T> deal) {
+    public ExcelWrite<T> deal(WriteDeal<T> deal) {
+        if (fileName == null) {
+            throw new IllegalArgumentException("文件名不存在");
+        }
         // 创建excel
         createWb();
-        deal.setExcelWrite(this);
-        // 实际业务处理
-        this.deal(deal);
-        // 写内容
-        write(this.wb);
+        this.deal = deal;
+        this.deal.setExcelWrite(this);
+        return this;
     }
 
-    public void deal(WriteDeal<T> deal) {
-        // 总条数
-        int size = this.list.size();
-        // 最大行数
-        int maxRows = deal.setMaxRows();
-        // 创建几个sheet
-        int sheetNum = size / maxRows + 1;
-        for (int j = 1; j <= sheetNum; j++) {
-            // sheet 对应一个工作页
-            Sheet sheet = this.wb.createSheet("sheet" + j);
-            Row sheetRow = sheet.createRow(0); // 下标为0的行开始
-            for (int i = 0; i < this.title.length; i++) {
-                Cell cell = sheetRow.createCell(i);
-                cell.setCellValue(this.title[i]);
+    public void list(List<T> list) {
+        // 实际业务处理
+        // 当前总数
+        total += list.size();
+        createSheet(list, true);
+        for (T t : list) {
+            createSheet(list, false);
+            // 创建一行
+            Row sheetRow = currentSheet.createRow(currentRow);
+            // 得到要插入的每一条记录
+            String [] data = deal.dealBean(t);
+            for (int k = 0; k < data.length; k++) {
+                // 在一行内循环
+                Cell cell = sheetRow.createCell(k);
+                cell.setCellValue(data[k]);
             }
-            int offset = 1;
-            // 除去标题
-            int maxRow = maxRows - offset;
-            // 开始位置
-            int start = (j - 1) * maxRow;
-            // 结束位置
-            int end = j * maxRow > size ? size : j * maxRow;
-            // 每个sheet的row重新计算
-            int row = offset;
-            for (int i = start; i < end; i++) {
-                // 创建一行
-                sheetRow = sheet.createRow(row);
-                row++;
-                // 得到要插入的每一条记录
-                String [] arr = deal.dealBean(this.list.get(i));
-                for (int k = 0; k < arr.length; k++) {
-                    // 在一行内循环
-                    Cell cell = sheetRow.createCell(k);
-                    cell.setCellValue(arr[k]);
-                }
-            }
+            currentRow++;
         }
     }
 
-    public void write(Workbook wb) {
+    public void createSheet(List<T> list, boolean flag) {
+        // excel处理的最大行数
+        int maxRows = deal.setMaxRows();
+        if ((flag && total == list.size()) || (total > maxRows && currentRow == maxRows)) {
+            total += 1;
+            // 第一个sheet(数量相等), 第二个及以后(超过最大行)
+            // sheet 对应一个工作页
+            currentSheet = wb.createSheet("sheet" + currentSheetNumber);
+            currentSheetNumber++;
+            // 从当前行开始
+            currentRow = 0;
+            Row dataRow = currentSheet.createRow(currentRow);
+            for (int i = 0; i < title.length; i++) {
+                Cell cell = dataRow.createCell(i);
+                cell.setCellValue(title[i]);
+            }
+            currentRow++;
+        }
+    }
+
+    public void write() {
         // 创建文件输出流，准备输出电子表格
         try {
             wb.write(this.outputStream);

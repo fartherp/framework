@@ -15,13 +15,9 @@ import java.util.List;
  * @date: 2017/11/25
  */
 public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
-    private FileExcelWrite(String[] title, String fileName, List<T> list) {
-        super(title, fileName, list);
+    public FileExcelWrite(String[] title, String fileName) {
+        super(title, fileName);
         this.createOutputStream();
-    }
-
-    public static <T> FileExcelWrite getInstance(String[] title, String fileName, List<T> list) {
-        return new FileExcelWrite<T>(title, fileName, list);
     }
 
     public ExcelWrite<T> createOutputStream() {

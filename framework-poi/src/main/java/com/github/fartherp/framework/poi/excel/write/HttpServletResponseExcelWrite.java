@@ -9,7 +9,6 @@ import com.github.fartherp.framework.common.util.FileUtilies;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 响应流
@@ -21,14 +20,10 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
 
     private HttpServletResponse response;
 
-    private HttpServletResponseExcelWrite(String[] title, String fileName, List<T> list, HttpServletRequest request, HttpServletResponse response) {
-        super(title, fileName, list);
+    public HttpServletResponseExcelWrite(String[] title, String fileName, HttpServletRequest request, HttpServletResponse response) {
+        super(title, fileName);
         this.setResponse(request, response);
         this.createOutputStream();
-    }
-
-    public static <T> HttpServletResponseExcelWrite getInstance(String[] title, String fileName, List<T> list, HttpServletRequest request, HttpServletResponse response) {
-        return new HttpServletResponseExcelWrite<T>(title, fileName, list, request, response);
     }
 
     public ExcelWrite<T> createOutputStream() {

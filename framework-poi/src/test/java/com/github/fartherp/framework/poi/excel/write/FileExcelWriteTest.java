@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
-import com.github.fartherp.framework.poi.excel.ExcelBuilder;
 import com.github.fartherp.framework.poi.excel.ExcelDto;
 import org.testng.annotations.Test;
 
@@ -25,8 +24,8 @@ public class FileExcelWriteTest {
         title[4] = "登录IP";
         title[5] = "状态";
         String fileName = "D:\\style1.xls";
-        ExcelWrite<ExcelDto> excelDtoExcelWrite = ExcelBuilder.buildFile(title, fileName, ExcelWriteStyleTest.getList());
-        excelDtoExcelWrite.writeExcel(
+        FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
+        excelDtoExcelWrite.deal(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
                     public String[] dealBean(ExcelDto obj) {
                         String[] result = new String[6];
@@ -39,5 +38,8 @@ public class FileExcelWriteTest {
                         return result;
                     }
                 });
+        excelDtoExcelWrite.list(ExcelWriteStyleTest.getList());
+        excelDtoExcelWrite.list(ExcelWriteStyleTest.getList1());
+        excelDtoExcelWrite.write();
     }
 }
