@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
+import com.github.fartherp.framework.security.ISecurity;
+
 import javax.crypto.Cipher;
 import java.math.BigInteger;
 import java.security.Key;
@@ -23,7 +25,7 @@ import static com.github.fartherp.framework.security.ISecurity.RSA_ALGORITHM;
 public class RSAC {
 
     public static byte[] encryptByPublicKey(byte[] data, String ns, String es) {
-        return encryptByPublicKey(data, ns, es, "RSA/ECB/nopadding");
+        return encryptByPublicKey(data, ns, es, ISecurity.RSA_ECB_ALGORITHM);
     }
 
     /**
@@ -53,7 +55,7 @@ public class RSAC {
     }
 
     public static byte[] decryptByPrivateKey(byte[] data, String ns, String ds) {
-        return decryptByPrivateKey(data, ns, ds, "RSA/ECB/nopadding");
+        return decryptByPrivateKey(data, ns, ds, ISecurity.RSA_ECB_ALGORITHM);
     }
 
     /**

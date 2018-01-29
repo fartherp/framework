@@ -74,4 +74,8 @@ public interface ISecurity {
      * 初始向量（默认）0000000000000000(16进制)
      */
     public static final byte[] DEFAULT_IV = new byte[8];
+    /**
+     * 算法RSA/ECB/Nopadding
+     */
+    public static final String RSA_ECB_ALGORITHM = "RSA/ECB/Nopadding";
 }
