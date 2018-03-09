@@ -49,10 +49,6 @@ public class JsonResp {
      * 数据对象
      */
     private Object data;
-    /**
-     * 数据列表指针
-     */
-    private List<Object> dataList;
 
     /**
      * 响应类型
@@ -223,7 +219,7 @@ public class JsonResp {
 
         public JList(JsonResp resp) {
             super(resp);
-            resp.dataList = new ArrayList<Object>();
+            resp.data = new ArrayList<Object>();
         }
 
         /**
@@ -232,9 +228,10 @@ public class JsonResp {
          * @param collection 数据集合
          * @return 该响应对象.
          */
+        @SuppressWarnings("unchecked")
         public JList addAll(Collection collection) {
             if (CollectionUtils.isNotEmpty(collection)) {
-                resp.dataList.addAll(collection);
+                ((List) resp.data).addAll(collection);
             }
             return this;
         }

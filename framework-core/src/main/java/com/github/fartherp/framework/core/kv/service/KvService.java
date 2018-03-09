@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.core.kv.service;
 
+import com.github.fartherp.framework.core.kv.dao.KvDao;
 import com.github.fartherp.framework.core.kv.handler.KvHandler;
 import com.github.fartherp.framework.core.kv.handler.KvHandlerSupport;
 
@@ -89,4 +90,6 @@ public interface KvService {
     public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
                                             Map<String, Object> extraConds, boolean needPrefix,
                                             boolean needPostfix, Integer maxLimit);
+
+    void setDao(KvDao dao);
 }

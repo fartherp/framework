@@ -41,15 +41,10 @@ public class GeneralExceptionHandler implements CustomizeExceptionHandler {
             if (headers != null) {
                 MediaType contentType = headers.getContentType();
                 // 默认UTF-8
-                Charset charset;
-                if (contentType != null && contentType.getCharSet() != null) {
-                    charset = contentType.getCharSet();
-                } else {
-                    charset = Charset.forName("UTF-8");
-                }
+                Charset charset = Charset.forName("UTF-8");
                 // 设置内容类型
                 if (contentType == null) {
-                    headers.setContentType(MediaType.TEXT_HTML);
+                    headers.setContentType(MediaType.APPLICATION_JSON);
                 }
                 // 设置内容长度
                 String json = JsonResp.asEmpty().error(message).toJson();

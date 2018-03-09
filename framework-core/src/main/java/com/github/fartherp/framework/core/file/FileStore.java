@@ -12,7 +12,7 @@ import java.io.OutputStream;
  * Author: CK
  * Date: 2016/1/17
  */
-public interface FileStore {
+public interface FileStore<T> {
     /**
      * 根据环境参数,切分目录,返回目录路径.
      *
@@ -49,5 +49,7 @@ public interface FileStore {
      * 附件配置
      * @return 附件配置
      */
-    FileStoreConfig getFileStoreConfig();
+    T getStoreConfig();
+
+    void setStoreConfig(T config);
 }

@@ -24,15 +24,15 @@ import java.io.UnsupportedEncodingException;
  * Author: CK
  * Date: 2016/3/7
  */
-public class FtpAttachStoreImpl implements FileStore {
+public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
     private static final Logger log = LoggerFactory.getLogger(FtpAttachStoreImpl.class);
     /**
      * Ftp配置
      */
-    private FtpConfig fileStoreConfig;
+    private FtpConfig config;
 
     public String partitionDir(Object mountDir) {
-        return fileStoreConfig.getDefaultDir() + File.separator + mountDir;
+        return config.getDefaultDir() + File.separator + mountDir;
     }
 
     public String generateFilename(String rawName) {
@@ -50,12 +50,12 @@ public class FtpAttachStoreImpl implements FileStore {
         } catch (UnsupportedEncodingException e) {
             log.error("URLEncoder.encode(rawName,utf-8) error: ", e);
         }
-        FtpUtils.store(fileStoreConfig, dir, fileStream, fileName);
+        FtpUtils.store(config, dir, fileStream, fileName);
     }
 
     public void fetch(String dir, String fileName, OutputStream output) {
         if (StringUtils.isBlank(dir)) {
-            dir = fileStoreConfig.getDefaultDir();
+            dir = config.getDefaultDir();
         }
         try {
             fileName = new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
@@ -63,14 +63,14 @@ public class FtpAttachStoreImpl implements FileStore {
             log.error("URLEncoder.encode(rawName,utf-8) error: ", e);
         }
         String path = PathUtils.join(dir, fileName);
-        FtpUtils.fetch(fileStoreConfig, path, output);
+        FtpUtils.fetch(config, path, output);
     }
 
-    public FtpConfig getFileStoreConfig() {
-        return fileStoreConfig;
+    public FtpConfig getStoreConfig() {
+        return config;
     }
 
-    public void setFileStoreConfig(FtpConfig fileStoreConfig) {
-        this.fileStoreConfig = fileStoreConfig;
+    public void setStoreConfig(FtpConfig config) {
+        this.config = config;
     }
 }

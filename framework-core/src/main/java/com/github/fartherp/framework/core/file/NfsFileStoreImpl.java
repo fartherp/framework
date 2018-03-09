@@ -25,13 +25,13 @@ import java.io.OutputStream;
  * Author: CK
  * Date: 2016/1/17
  */
-public class NfsFileStoreImpl implements FileStore {
+public class NfsFileStoreImpl implements FileStore<NfsConfig> {
     private static final Logger log = LoggerFactory.getLogger(NfsFileStoreImpl.class);
 
-    private NfsConfig fileStoreConfig;
+    private NfsConfig config;
 
     public String partitionDir(Object mountDir) {
-        return fileStoreConfig.getDefaultDir() + File.separator + mountDir;
+        return config.getDefaultDir() + File.separator + mountDir;
     }
 
     public String generateFilename(String rawName) {
@@ -100,11 +100,11 @@ public class NfsFileStoreImpl implements FileStore {
         }
     }
 
-    public FileStoreConfig getFileStoreConfig() {
-        return fileStoreConfig;
+    public NfsConfig getStoreConfig() {
+        return config;
     }
 
-    public void setFileStoreConfig(NfsConfig fileStoreConfig) {
-        this.fileStoreConfig = fileStoreConfig;
+    public void setStoreConfig(NfsConfig config) {
+        this.config = config;
     }
 }

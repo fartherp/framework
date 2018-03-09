@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.core.kv.dao;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
@@ -29,4 +30,6 @@ public interface KvDao {
      * @return the new {@code List<Map>}
      */
     public List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams);
+
+    void setDataSource(DataSource dataSource);
 }

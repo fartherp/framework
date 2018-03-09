@@ -9,7 +9,7 @@ package com.github.fartherp.framework.core.file;
  * Author: CK
  * Date: 2016/3/7
  */
-public class NfsConfig implements FileStoreConfig {
+public class NfsConfig {
 
     private String defaultDir;
 

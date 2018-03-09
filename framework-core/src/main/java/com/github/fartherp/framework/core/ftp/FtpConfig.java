@@ -4,14 +4,12 @@
 
 package com.github.fartherp.framework.core.ftp;
 
-import com.github.fartherp.framework.core.file.FileStoreConfig;
-
 /**
  * FTP配置
  * Author: CK
  * Date: 2015/6/30.
  */
-public class FtpConfig implements FileStoreConfig {
+public class FtpConfig {
 
     /**
      * ftp服务器
