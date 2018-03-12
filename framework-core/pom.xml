@@ -177,5 +177,9 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
