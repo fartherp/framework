@@ -2,7 +2,7 @@
  * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.validate;
+package com.github.fartherp.framework.common.validate;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

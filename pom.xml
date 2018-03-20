@@ -90,6 +90,8 @@
         <guice.version>3.0</guice.version>
         <junit.version>4.11</junit.version>
         <validation.version>1.1.0.Final</validation.version>
+        <hibernate-validator.version>5.3.6.Final</hibernate-validator.version>
+        <javax.el.version>2.2.4</javax.el.version>
     </properties>
 
     <scm>
@@ -652,6 +654,21 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
