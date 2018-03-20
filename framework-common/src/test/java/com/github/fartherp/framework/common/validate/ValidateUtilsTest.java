@@ -20,6 +20,7 @@ public class ValidateUtilsTest {
     public void testValidate() throws Exception {
         UserVo vo = new UserVo();
         vo.setEmail("214722930qq.com");
+        vo.setRealName("a");
         try {
             ValidateUtils.validate(vo);
         } catch (Exception e) {

@@ -27,6 +27,7 @@ public class UserVo {
     private String userName;
 
     @NotEmpty(message = "真实姓名不能为空")
+    @Value(values = {"admin", "test"})
     private String realName;
 
     @NotEmpty(message = "密码不能为空", groups = {AddGroup.class})
