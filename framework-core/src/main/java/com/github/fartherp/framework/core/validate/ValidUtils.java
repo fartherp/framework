@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.core.validate;
 
 import com.github.fartherp.framework.common.util.OutputUtils;
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -23,7 +24,26 @@ import java.util.Set;
  */
 public class ValidUtils {
 
+    /**
+     * 默认模式（非快速失败，所有验证一起返回）
+     * @param bean 对象
+     * @param error spring错误对象
+     * @param groups 分组
+     * @param <T> 泛型
+     */
     public static <T> void valid(T bean, BindingResult error, Class<?>... groups) {
+        valid(bean, error, true, groups);
+    }
+
+    /**
+     * 验证对象属性
+     * @param bean 对象
+     * @param error spring错误对象
+     * @param flag true: 快速失败返回模式    false: 普通模式
+     * @param groups 分组
+     * @param <T> 泛型
+     */
+    public static <T> void valid(T bean, BindingResult error, boolean flag, Class<?>... groups) {
         StringBuilder sb = new StringBuilder();
 
         List<FieldError> fieldErrors = error.getFieldErrors();
@@ -35,7 +55,7 @@ public class ValidUtils {
         }
 
         if (groups != null && groups.length > 0) {
-            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+            ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(flag).buildValidatorFactory();
             Validator validator = validatorFactory.getValidator();
             Set<ConstraintViolation<T>> constraintViolations = validator.validate(bean, groups);
             if (!constraintViolations.isEmpty()) {

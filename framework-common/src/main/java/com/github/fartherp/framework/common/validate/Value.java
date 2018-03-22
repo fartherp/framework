@@ -23,7 +23,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Documented
 public @interface Value {
 
-    String message() default "invalid value";
+    String message() default "{com.github.fartherp.framework.common.validate.Value.message}";
 
     Class<?>[] groups() default {};
 

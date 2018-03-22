@@ -19,30 +19,30 @@ import javax.validation.constraints.NotNull;
  */
 public class UserVo {
 
-    @NotNull(message = "用户id不能为空", groups = {EditGroup.class})
+    @NotNull(message = "{com.github.fartherp.framework.common.validate.UserVo.id.NotNull.message}", groups = {EditGroup.class})
     @Range(min = 1, max = Integer.MAX_VALUE, message = "用户id必须大于0", groups = {EditGroup.class})
     private Long id;
 
-    @NotEmpty(message = "用户名不能为空")
+    @NotEmpty(message = "{com.github.fartherp.framework.common.validate.UserVo.userName.NotEmpty.message}")
     private String userName;
 
     @NotEmpty(message = "真实姓名不能为空")
     @Value(values = {"admin", "test"})
     private String realName;
 
-    @NotEmpty(message = "密码不能为空", groups = {AddGroup.class})
+    @NotEmpty(message = "{com.github.fartherp.framework.common.validate.UserVo.password.NotEmpty.message}", groups = {AddGroup.class})
     @Length(min = 6, max = 10, message = "密码长度在[6,10]之间", groups = {AddGroup.class})
     private String password;
 
-    @NotEmpty(message = "确认密码不能为空", groups = {AddGroup.class})
+    @NotEmpty(message = "{com.github.fartherp.framework.common.validate.UserVo.confirmPassword.NotEmpty.message}", groups = {AddGroup.class})
     @Length(min = 6, max = 10, message = "确认密码长度在[6,10]之间", groups = {AddGroup.class})
     private String confirmPassword;
 
-    @NotNull(message = "权限ID不能为空")
+    @NotNull(message = "{com.github.fartherp.framework.common.validate.UserVo.authId.NotNull.message}")
     @Range(min = 1, max = Integer.MAX_VALUE, message = "权限ID必须大于0")
     private Integer authId;
 
-    @Email(message = "邮箱格式不正确")
+    @Email()
     private String email;
 
     public Long getId() {
