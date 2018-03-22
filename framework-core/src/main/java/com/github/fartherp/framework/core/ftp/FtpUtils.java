@@ -25,7 +25,6 @@ public class FtpUtils {
 
     public static final Logger log = LoggerFactory.getLogger(FtpUtils.class);
 
-
     /**
      * 配置一个ftp连接.
      *

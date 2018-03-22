@@ -114,4 +114,18 @@ public class FtpConfig {
     public void setDefaultDir(String defaultDir) {
         this.defaultDir = defaultDir;
     }
+
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("FtpConfig{");
+        sb.append("host='").append(host).append('\'');
+        sb.append(", port=").append(port);
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", keepAliveTimeout=").append(keepAliveTimeout);
+        sb.append(", binaryMode=").append(binaryMode);
+        sb.append(", localPassiveMode=").append(localPassiveMode);
+        sb.append(", defaultDir='").append(defaultDir).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
