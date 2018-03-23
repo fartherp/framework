@@ -38,7 +38,11 @@ public class ResponseExceptionHandler implements CustomizeExceptionHandler {
             String message = ex.getMessage();
             if (message == null) {
                 Throwable e = ex.getCause();
-                message = resolver.getMessage(e);
+                if (e == null) {
+                    message = resolver.getMessage(ex);
+                } else {
+                    message = resolver.getMessage(e);
+                }
             }
             HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
             HttpHeaders headers = outputMessage.getHeaders();

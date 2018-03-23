@@ -33,7 +33,11 @@ public class ForwardExceptionHandler implements CustomizeExceptionHandler {
         String message = ex.getMessage();
         if (message == null) {
             Throwable e = ex.getCause();
-            message = resolver.getMessage(e);
+            if (e == null) {
+                message = resolver.getMessage(ex);
+            } else {
+                message = resolver.getMessage(e);
+            }
         }
         // 将错误信息传递给view
         map.put("errorMsg", message);
