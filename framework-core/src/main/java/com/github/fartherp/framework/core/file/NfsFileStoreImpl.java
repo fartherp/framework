@@ -40,7 +40,7 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
         }
         String withoutExt = Files.getNameWithoutExtension(rawName);
         String ext = Files.getFileExtension(rawName);
-        return Joiner.on(".").join(withoutExt, Long.toString(System.currentTimeMillis()), ext);
+        return Joiner.on(".").join(withoutExt, System.currentTimeMillis() + "" + Thread.currentThread().getId(), ext);
     }
 
     public void store(String dir, InputStream fileStream, String fileName) {
