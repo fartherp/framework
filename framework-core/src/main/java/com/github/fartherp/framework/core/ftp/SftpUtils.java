@@ -362,4 +362,24 @@ public class SftpUtils {
         }
         return true;
     }
+
+    /**
+     * 创建远程目录（）
+     * @param path 远程路劲
+     * @throws SftpException
+     */
+    public void mkdir(String path) throws SftpException {
+        try {
+            sftp.cd(path);
+        } catch (SftpException e) {
+            if ("No such file".equals(e.getMessage())) {
+                // do nothing
+            }
+            sftp.mkdir(path);
+        }
+    }
+
+    public ChannelSftp getSftp() {
+        return sftp;
+    }
 }
