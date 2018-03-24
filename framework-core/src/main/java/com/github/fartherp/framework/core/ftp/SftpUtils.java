@@ -124,8 +124,8 @@ public class SftpUtils {
         } catch (FileNotFoundException e) {
             throw new SftpException(SSH_FX_NO_SUCH_FILE, "local no such file ", e);
         }
-        String srcFtpPath = path + "/" + remoteNameU;
-        String realFtpPath = path + "/" + remoteName;
+        String srcFtpPath = path + File.separator + remoteNameU;
+        String realFtpPath = path + File.separator + remoteName;
         this.sftp.rename(srcFtpPath, realFtpPath);
     }
 
@@ -137,7 +137,7 @@ public class SftpUtils {
      */
     private static String FtpFileName(String inFile) {
         inFile = inFile.replace('\\', '/');
-        int lastSlash = inFile.lastIndexOf("/");
+        int lastSlash = inFile.lastIndexOf(File.separator);
         return inFile.substring(lastSlash + 1, inFile.length());
     }
 
@@ -202,7 +202,7 @@ public class SftpUtils {
         if (!fileFold.exists()) {
             fileFold.mkdirs();
         }
-        String filePath = destinationFolder + "/" + fileName;
+        String filePath = destinationFolder + File.separator + fileName;
         sftp.cd(folder);
         File file = new File(filePath);
         try {
@@ -375,7 +375,7 @@ public class SftpUtils {
         char result[] = path.toCharArray();
         List<String> dirs = new ArrayList<String>();
         for (int i = 0; i < result.length; i++) {
-            if (result[i] == '/') {
+            if (result[i] == File.separatorChar) {
                 dirs.add(path.substring(0, i));
             }
         }
