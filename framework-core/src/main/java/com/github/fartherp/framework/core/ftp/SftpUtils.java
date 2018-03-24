@@ -12,6 +12,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -364,18 +367,34 @@ public class SftpUtils {
     }
 
     /**
-     * 创建远程目录（）
-     * @param path 远程路劲
+     * 级联创建远程目录（不存在的目录级联创建）
+     * @param path 远程路径
      * @throws SftpException
      */
     public void mkdir(String path) throws SftpException {
-        try {
-            sftp.cd(path);
-        } catch (SftpException e) {
-            if ("No such file".equals(e.getMessage())) {
-                // do nothing
+        char result[] = path.toCharArray();
+        List<String> dirs = new ArrayList<String>();
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] == '/') {
+                dirs.add(path.substring(0, i));
             }
-            sftp.mkdir(path);
+        }
+        // 如果没有自己
+        if (!dirs.contains(path)) {
+            dirs.add(path);
+        }
+        // 级联创建文件夹
+        for (String dir: dirs) {
+            try {
+                if (StringUtils.isNotBlank(dir)) {
+                    sftp.cd(dir);
+                }
+            } catch (SftpException e) {
+                if ("No such file".equals(e.getMessage())) {
+                    // do nothing
+                }
+                sftp.mkdir(dir);
+            }
         }
     }
 

@@ -32,8 +32,8 @@ public class SftpUtilsTest {
     public void testMkdir() throws Exception {
         SftpUtils sftpUtils = new SftpUtils();
         try {
-            sftpUtils.getSftpConnect("192.168.9.140", "testdsf", "testdsf", 22);
-            sftpUtils.mkdir("/opt/work/HelloWorld");
+            sftpUtils.getSftpConnect("192.168.9.141", "testdsf", "testdsf", 22);
+            sftpUtils.mkdir("/opt/work/HelloWorld/Log1/Log1_ContextTest1");
         } catch (JSchException e) {
             System.out.println(e.getMessage());
         } finally {
