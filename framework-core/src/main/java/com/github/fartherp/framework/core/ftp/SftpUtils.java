@@ -64,7 +64,7 @@ public class SftpUtils {
         sshSession.setConfig(sshConfig);
         sshSession.connect();
         log.info("host:{} connect success", host);
-        Channel channel = sshSession.openChannel("sftp");
+        Channel channel = sshSession.openChannel(ChannelType.SFTP.getType());
         channel.connect();
         log.info("host:{} create connect channel success", host);
         this.sftp = (ChannelSftp) channel;
