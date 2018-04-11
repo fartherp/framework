@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.common.util;
 
 import com.github.fartherp.framework.common.constant.Constant;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,7 +71,7 @@ public class DateUtil {
      * @return the new {@code String}
      */
     public static String format(String format, Date date) {
-        return DateEnum.getFormatByString(format).format(date);
+        return date != null ? DateEnum.getFormatByString(format).format(date) : null;
     }
 
     /**
@@ -81,6 +82,9 @@ public class DateUtil {
      * @return the new {@link Date}
      */
     public static Date parse(String format, String date) {
+        if (StringUtils.isBlank(date)) {
+            return null;
+        }
         Date d = null;
         try {
             d = DateEnum.getFormatByString(format).parse(date);
@@ -108,6 +112,9 @@ public class DateUtil {
      * @see Calendar#SECOND
      */
     public static String getDateStr(Date date, String format, int i, int j) {
+        if (date == null) {
+            return null;
+        }
         Date newDate = getDateByCalendar(date, i, j);
         return DateEnum.getFormatByString(format).format(newDate);
     }
