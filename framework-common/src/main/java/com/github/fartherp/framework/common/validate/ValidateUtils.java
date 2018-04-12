@@ -42,15 +42,7 @@ public class ValidateUtils {
     public static <T> void validate(T bean, boolean flag, Class<?>... groups) {
         StringBuilder sb = new StringBuilder();
 
-        Class<?>[] group;
-        if (groups == null) {
-            group = new Class<?>[1];
-            group[0] = Default.class;
-        } else {
-            group = new Class<?>[groups.length + 1];
-            System.arraycopy(groups, 0, group, 0, groups.length);
-            group[groups.length] = Default.class;
-        }
+        Class<?>[] group = (groups == null || groups.length ==0) ? new Class[]{Default.class} : groups;
 
         ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(flag).buildValidatorFactory();
         Validator validator = validatorFactory.getValidator();
@@ -77,15 +69,7 @@ public class ValidateUtils {
     public static <T> void validate(T bean, Locale locale, Class<?>... groups) {
         StringBuilder sb = new StringBuilder();
 
-        Class<?>[] group;
-        if (groups == null) {
-            group = new Class<?>[1];
-            group[0] = Default.class;
-        } else {
-            group = new Class<?>[groups.length + 1];
-            System.arraycopy(groups, 0, group, 0, groups.length);
-            group[groups.length] = Default.class;
-        }
+        Class<?>[] group = (groups == null || groups.length ==0) ? new Class[]{Default.class} : groups;
 
         ValidatorFactory validatorFactory = ExpandValidation.byProvider(ExpandValidator.class).configure(locale).buildValidatorFactory();
         Validator validator = validatorFactory.getValidator();

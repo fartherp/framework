@@ -18,6 +18,6 @@ public class ValueValidator implements ConstraintValidator<Value, Object> {
     }
 
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        return (Arrays.binarySearch(values, value) >= 0);
+        return (Arrays.binarySearch(values, value.toString()) >= 0);
     }
 }
