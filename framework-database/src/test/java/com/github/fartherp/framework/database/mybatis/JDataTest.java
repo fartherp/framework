@@ -1,10 +1,11 @@
+
 /*
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.util;
+package com.github.fartherp.framework.database.mybatis;
 
-import com.github.fartherp.framework.core.vo.BaseVo;
+import com.github.fartherp.framework.database.mybatis.plugin.page.BaseVo;
 import org.testng.annotations.Test;
 
 import java.io.Serializable;
