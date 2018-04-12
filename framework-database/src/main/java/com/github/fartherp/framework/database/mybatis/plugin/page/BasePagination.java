@@ -2,7 +2,7 @@
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.orm.mybatis.plugin.page;
+package com.github.fartherp.framework.database.mybatis.plugin.page;
 
 import java.io.Serializable;
 import java.util.List;
