@@ -24,8 +24,11 @@
         <module>framework-filter</module>
         <module>framework-poi</module>
         <module>framework-remoting</module>
+        <module>framework-database</module>
         <module>framework-security</module>
         <module>framework-tree</module>
+
+
     </modules>
 
     <properties>

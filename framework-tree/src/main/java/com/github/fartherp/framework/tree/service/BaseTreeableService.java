@@ -4,8 +4,8 @@
 
 package com.github.fartherp.framework.tree.service;
 
-import com.github.fartherp.framework.core.orm.mybatis.plugin.search.vo.Searchable;
-import com.github.fartherp.framework.core.service.GenericService;
+import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Searchable;
+import com.github.fartherp.framework.database.service.GenericService;
 import com.github.fartherp.framework.tree.bo.Treeable;
 
 import java.io.Serializable;
