@@ -20,11 +20,13 @@
         <module>framework-common</module>
         <module>framework-compress</module>
         <module>framework-core</module>
+        <module>framework-database</module>
         <module>framework-exception</module>
+        <module>framework-file</module>
         <module>framework-filter</module>
+        <module>framework-net</module>
         <module>framework-poi</module>
         <module>framework-remoting</module>
-        <module>framework-database</module>
         <module>framework-security</module>
         <module>framework-tree</module>
 

@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.ftp;
+package com.github.fartherp.framework.net.ftp;
 
 /**
  * FTP配置

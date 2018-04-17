@@ -2,9 +2,7 @@
  * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.ftp;
-
-import sun.management.resources.agent;
+package com.github.fartherp.framework.net.sftp;
 
 /**
  * Created by IntelliJ IDEA.

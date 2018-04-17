@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.file;
+package com.github.fartherp.framework.file.nfs;
 
 import com.github.fartherp.framework.common.util.PathUtils;
+import com.github.fartherp.framework.file.FileStore;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
 import org.apache.commons.io.IOUtils;

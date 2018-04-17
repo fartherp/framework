@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.ftp;
+package com.github.fartherp.framework.net.ftp;
 
-import com.google.common.base.Preconditions;
+import com.github.fartherp.framework.net.exception.FtpFailException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -33,7 +33,6 @@ public class FtpUtils {
      */
     private static void prepareConnection(FTPClient ftp, FtpConfig config) {
         log.info("prepare.connection:{}", config);
-        Preconditions.checkArgument(config.getPort() > 0);
 
         try {
             ftp.connect(config.getHost(), config.getPort());

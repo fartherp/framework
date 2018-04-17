@@ -1,20 +1,14 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.ftp;
+package com.github.fartherp.framework.net.sftp;
 
-import com.google.common.base.Preconditions;
-import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
-import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,19 +17,17 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 
 import static com.jcraft.jsch.ChannelSftp.SSH_FX_NO_SUCH_FILE;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/2/14
+ *
+ * @author: CK
+ * @date: 2018/4/17
  */
-public class SftpUtils {
-
-    public static final Logger log = LoggerFactory.getLogger(FtpUtils.class);
+public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
 
     public static final String FILE_NAME_SUFFIX = ".r";
 
@@ -43,52 +35,9 @@ public class SftpUtils {
 
     public static final String HMS_NAME_TYPE = "";
 
-    private ChannelSftp sftp = null;
-
-    /**
-     * 连接SFTP
-     *
-     * @param host     SFTP地址：如22.144.80.121
-     * @param username SFTP用户名：如forms
-     * @param password SFTP密码 如froms
-     * @param port     SFTP端口 如22
-     */
-    public void getSftpConnect(String host, String username, String password, int port) throws JSchException {
-        log.info("prepare host:{}, username:{}, password:{}, port:{}", host, username, password, port);
-        Preconditions.checkArgument(port > 0);
-        JSch jsch = new JSch();
-        Session sshSession = jsch.getSession(username, host, port);
-        sshSession.setPassword(password);
-        Properties sshConfig = new Properties();
-        sshConfig.put("StrictHostKeyChecking", "no");
-        sshSession.setConfig(sshConfig);
-        sshSession.connect();
-        log.info("host:{} connect success", host);
-        Channel channel = sshSession.openChannel(ChannelType.SFTP.getType());
-        channel.connect();
-        log.info("host:{} create connect channel success", host);
-        this.sftp = (ChannelSftp) channel;
-    }
-
-    /**
-     * 关闭连接
-     *
-     * @throws Exception
-     */
-    public void disconnect() {
-        try {
-            if (this.sftp != null) {
-                if (this.sftp.isConnected()) {
-                    this.sftp.disconnect();
-                } else {
-                    this.sftp.isClosed();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            this.sftp = null;
-        }
+    public void openChannel(ChannelType channelType) throws JSchException {
+        super.openChannel(channelType);
+        this.getChannel().connect();
     }
 
     /**
@@ -99,10 +48,10 @@ public class SftpUtils {
      * @param path           服务器上的目录
      */
     public void upload(String path, String localfilename, String remotefilename) throws SftpException {
-        this.sftp.cd(path);
+        this.getChannel().cd(path);
         File file = new File(localfilename);
         try {
-            this.sftp.put(new FileInputStream(file), remotefilename);
+            this.getChannel().put(new FileInputStream(file), remotefilename);
         } catch (FileNotFoundException e) {
             throw new SftpException(SSH_FX_NO_SUCH_FILE, "local no such file ", e);
         }
@@ -115,18 +64,18 @@ public class SftpUtils {
      * @param localfilename 本地的文件名称
      */
     public void upload(String localfilename, String path) throws SftpException {
-        this.sftp.cd(path);
+        this.getChannel().cd(path);
         String remoteName = FtpFileName(localfilename);
         String remoteNameU = remoteName + FILE_NAME_SUFFIX;
         File file = new File(localfilename);
         try {
-            this.sftp.put(new FileInputStream(file), remoteNameU);
+            this.getChannel().put(new FileInputStream(file), remoteNameU);
         } catch (FileNotFoundException e) {
             throw new SftpException(SSH_FX_NO_SUCH_FILE, "local no such file ", e);
         }
         String srcFtpPath = path + File.separator + remoteNameU;
         String realFtpPath = path + File.separator + remoteName;
-        this.sftp.rename(srcFtpPath, realFtpPath);
+        this.getChannel().rename(srcFtpPath, realFtpPath);
     }
 
     /**
@@ -152,7 +101,7 @@ public class SftpUtils {
      */
     public String getFile(String folder, String destinationFolder, String fileName, String nameType) throws SftpException {
         // 如果是模糊匹配，而且匹配正确，则需要将FTP上的文件名替代本地文件名。
-        Vector<LsEntry> files = sftp.ls(folder);
+        Vector<LsEntry> files = this.getChannel().ls(folder);
         Iterator<LsEntry> iter = files.iterator();
         if (BLUR_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
@@ -203,10 +152,10 @@ public class SftpUtils {
             fileFold.mkdirs();
         }
         String filePath = destinationFolder + File.separator + fileName;
-        sftp.cd(folder);
+        this.getChannel().cd(folder);
         File file = new File(filePath);
         try {
-            sftp.get(fileName, new FileOutputStream(file));
+            this.getChannel().get(fileName, new FileOutputStream(file));
         } catch (FileNotFoundException e) {
             throw new SftpException(SSH_FX_NO_SUCH_FILE, "local no such file ", e);
         }
@@ -224,7 +173,7 @@ public class SftpUtils {
      * @param nameType          文件类型
      */
     public void delFile(String folder, String destinationFolder, String fileName, String nameType) throws SftpException {
-        Vector<LsEntry> files = sftp.ls(folder);
+        Vector<LsEntry> files = this.getChannel().ls(folder);
         Iterator<LsEntry> iter = files.iterator();
         if (BLUR_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
@@ -267,8 +216,8 @@ public class SftpUtils {
                 }
             }
         }
-        sftp.cd(folder);
-        sftp.rm(fileName);
+        this.getChannel().cd(folder);
+        this.getChannel().rm(fileName);
     }
 
     /**
@@ -282,7 +231,7 @@ public class SftpUtils {
     public boolean isFileExist(String folder, String fileName, String nameType) throws SftpException {
         boolean flag = false;
         int count = 0;
-        Vector<LsEntry> files = sftp.ls(folder);
+        Vector<LsEntry> files = this.getChannel().ls(folder);
         if (files.size() > 0) {
             Iterator<LsEntry> iter = files.iterator();
             // 如果是模糊匹配类型的话
@@ -358,7 +307,7 @@ public class SftpUtils {
      */
     public boolean rename(String from, String to) {
         try {
-            sftp.rename(from, to);
+            this.getChannel().rename(from, to);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -375,7 +324,7 @@ public class SftpUtils {
         char result[] = path.toCharArray();
         List<String> dirs = new ArrayList<String>();
         for (int i = 0; i < result.length; i++) {
-            if (result[i] == File.separatorChar) {
+            if (result[i] == '/') {
                 dirs.add(path.substring(0, i));
             }
         }
@@ -387,18 +336,14 @@ public class SftpUtils {
         for (String dir: dirs) {
             try {
                 if (StringUtils.isNotBlank(dir)) {
-                    sftp.cd(dir);
+                    this.getChannel().cd(dir);
                 }
             } catch (SftpException e) {
                 if ("No such file".equals(e.getMessage())) {
                     // do nothing
                 }
-                sftp.mkdir(dir);
+                this.getChannel().mkdir(dir);
             }
         }
-    }
-
-    public ChannelSftp getSftp() {
-        return sftp;
     }
 }

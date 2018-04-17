@@ -1,13 +1,14 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.file;
+package com.github.fartherp.framework.file.ftp;
 
 import com.github.fartherp.framework.common.constant.Constant;
 import com.github.fartherp.framework.common.util.PathUtils;
-import com.github.fartherp.framework.core.ftp.FtpConfig;
-import com.github.fartherp.framework.core.ftp.FtpUtils;
+import com.github.fartherp.framework.file.FileStore;
+import com.github.fartherp.framework.net.ftp.FtpConfig;
+import com.github.fartherp.framework.net.ftp.FtpUtils;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
 import org.apache.commons.lang.StringUtils;

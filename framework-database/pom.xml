@@ -161,10 +161,12 @@
         <dependency>
             <groupId>com.github.fartherp</groupId>
             <artifactId>framework-common</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.fartherp</groupId>
             <artifactId>framework-exception</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

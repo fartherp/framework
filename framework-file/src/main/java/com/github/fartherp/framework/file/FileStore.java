@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2018. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.core.file;
+package com.github.fartherp.framework.file;
 
 import java.io.InputStream;
 import java.io.OutputStream;
