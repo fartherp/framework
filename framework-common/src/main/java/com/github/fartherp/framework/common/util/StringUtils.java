@@ -6,7 +6,7 @@
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
-package com.github.fartherp.framework.database.util;
+package com.github.fartherp.framework.common.util;
 
 import java.text.ParseException;
 import java.util.*;

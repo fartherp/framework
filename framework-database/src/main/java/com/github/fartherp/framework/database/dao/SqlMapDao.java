@@ -105,6 +105,8 @@ public interface SqlMapDao<T, ID extends Serializable> {
 
     long countBySearchable(Searchable searchable);
 
+    void insertBatch(List<T> entitys);
+
     /**
      * sql call back interface.
      */
@@ -122,5 +124,6 @@ public interface SqlMapDao<T, ID extends Serializable> {
          * @return the paramters with sql id
          */
         Object getParameters();
+
     }
 }

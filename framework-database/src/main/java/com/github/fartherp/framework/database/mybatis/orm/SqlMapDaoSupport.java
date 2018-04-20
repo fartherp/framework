@@ -9,15 +9,14 @@
 package com.github.fartherp.framework.database.mybatis.orm;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.dao.support.DaoSupport;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 /**
  * 扩展dao支持
  * Author: CK
  * Date: 2015/6/5.
  */
-public abstract class SqlMapDaoSupport extends DaoSupport {
+public abstract class SqlMapDaoSupport  {
 
     private BatchSqlSupportSession sqlSession;
 
@@ -25,13 +24,14 @@ public abstract class SqlMapDaoSupport extends DaoSupport {
         this.sqlSession = new BatchSqlSessionTemplateWrapper(sqlSessionFactory);
     }
 
+
     public abstract void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory);
 
     /**
      * {@inheritDoc}
      */
     protected void checkDaoConfig() {
-        Assert.notNull(this.sqlSession, "Property 'sqlSessionFactory' are required");
+        Assert.assertNotNull( "Property 'sqlSessionFactory' are required",this.sqlSession);
     }
 
     /**

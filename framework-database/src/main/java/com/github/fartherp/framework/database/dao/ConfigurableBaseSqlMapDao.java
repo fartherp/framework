@@ -2,9 +2,6 @@
  * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
  */
 
-/*
- * Copyright (c) 2017. CK. All rights reserved.
- */
 
 package com.github.fartherp.framework.database.dao;
 
@@ -26,38 +23,38 @@ import java.util.List;
 public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID extends Serializable>
         extends SqlMapDaoSupport {
 
+    public abstract SqlMapDao<T,ID> getSqlMapDao();
     public void flush() {
         getSqlSession().clearCache();
     }
 
-    public abstract DaoMapper<T, ID> getDaoMapper();
 
     public void delete(ID id) {
-        getDaoMapper().deleteByPrimaryKey(id);
+        getSqlMapDao().delete(id);
     }
 
     public List<T> findAll() {
-        return getDaoMapper().selectAll();
+        return getSqlMapDao().findAll();
     }
 
     public T findById(ID id) {
-        return getDaoMapper().selectByPrimaryKey(id);
+        return getSqlMapDao().findById(id);
     }
 
     public void save(T entity) {
-        getDaoMapper().insert(entity);
+        getSqlMapDao().save(entity);
     }
 
     public void saveSelective(T entity) {
-        getDaoMapper().insertSelective(entity);
+        getSqlMapDao().saveSelective(entity);
     }
 
     public void update(T entity) {
-        getDaoMapper().updateByPrimaryKey(entity);
+        getSqlMapDao().updateSelective(entity);
     }
 
     public void updateSelective(T entity) {
-        getDaoMapper().updateByPrimaryKeySelective(entity);
+        getSqlMapDao().saveOrUpdateSelective(entity);
     }
 
     public void saveOrUpdate(T entity) {
@@ -87,12 +84,12 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
     }
 
     public void saveBatch(List<T> entitys) {
-        getDaoMapper().insertBatch(entitys);
+        getSqlMapDao().insertBatch(entitys);
     }
 
     @SuppressWarnings("unchecked")
     public Pagination page(Pagination pagination, SqlMapDao.SqlCallback selectCount, SqlMapDao.SqlCallback select) {
-        int totalCount = (Integer) getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
+        int totalCount = getSqlSession().selectOne(selectCount.getSqlId(), selectCount.getParameters());
 
         List dataList = getSqlSession().selectList(select.getSqlId(), select.getParameters());
         pagination.init(totalCount, pagination.getLimit(), pagination.getCurrentPage());
@@ -100,25 +97,27 @@ public abstract class ConfigurableBaseSqlMapDao<T extends FieldAccessVo, ID exte
         return pagination;
     }
 
-    public void deleteBatch(ID... ids) {
-        getDaoMapper().deleteBatch(ids);
+    public void deleteBatch(ID[] ids) {
+        getSqlMapDao().deleteBatch(ids);
     }
 
     @SuppressWarnings("unchecked")
     public Pagination<T> findBySearchable(Searchable searchable) {
-        List<T> content = getDaoMapper().findBySearchable(searchable);
+        Pagination<T> content = getSqlMapDao().findBySearchable(searchable);
         int currentPage = searchable.hasPageable() ? searchable.getPage().getCurrentPage() : 1;
         Pagination pagination = searchable.getPage();
-        long total = searchable.hasPageable() ? countBySearchable(searchable.setPage(null)) : content.size();
+        long total = searchable.hasPageable() ? countBySearchable(searchable.setPage(null)) : content.getTotal();
         searchable.setPage(pagination);
-        return new BasePagination<T>(content, Integer.parseInt(String.valueOf(total)), currentPage);
+        return new BasePagination<T>(content.getRows(), Integer.parseInt(String.valueOf(total)), currentPage);
     }
 
     public List<T> findBySort(Sort sort) {
-        return getDaoMapper().findBySort(sort);
+        return getSqlMapDao().findBySort(sort);
     }
 
     public long countBySearchable(Searchable searchable) {
-        return getDaoMapper().countBySearchable(searchable);
+        return getSqlMapDao().countBySearchable(searchable);
     }
+
+
 }

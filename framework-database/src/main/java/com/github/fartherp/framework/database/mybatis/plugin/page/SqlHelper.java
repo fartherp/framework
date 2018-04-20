@@ -12,8 +12,8 @@
 
 package com.github.fartherp.framework.database.mybatis.plugin.page;
 
+import com.github.fartherp.framework.common.util.ReflectUtil;
 import com.github.fartherp.framework.database.mybatis.plugin.page.dialect.Dialect;
-import com.github.fartherp.framework.database.util.ReflectUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +39,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * Created by IntelliJ IDEA .
