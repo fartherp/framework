@@ -11,12 +11,12 @@ import com.github.fartherp.framework.database.mybatis.plugin.search.exception.Se
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.CustomCondition;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.SearchFilter;
 import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Searchable;
-import com.google.common.collect.Lists;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -128,11 +128,12 @@ public final class SearchableConvertUtils {
         boolean isCollection = value instanceof Collection;
         boolean isArray = value != null && value.getClass().isArray();
         if (isCollection || isArray) {
-            List<Object> list = Lists.newArrayList();
+            List<Object> list;
             if (isCollection) {
+                list = new ArrayList<Object>();
                 list.addAll((Collection) value);
             } else {
-                list = Lists.newArrayList(CollectionUtils.arrayToList(value));
+                list = CollectionUtils.arrayToList(value);
             }
             int length = list.size();
             for (int i = 0; i < length; i++) {

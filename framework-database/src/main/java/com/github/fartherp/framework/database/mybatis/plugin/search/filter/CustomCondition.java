@@ -7,10 +7,10 @@ import com.github.fartherp.framework.database.mybatis.plugin.search.enums.Relati
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.InvlidSearchOperatorException;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.SearchException;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +28,8 @@ public class CustomCondition implements SearchFilter {
     private SearchOperator operator;
     private Object value;
 
-    private List<CustomCondition> andFilters = Lists.newArrayList();
-    private List<CustomCondition> orFilters = Lists.newArrayList();
+    private List<CustomCondition> andFilters = new ArrayList<CustomCondition>();
+    private List<CustomCondition> orFilters = new ArrayList<CustomCondition>();
 
     public void addCustomCondition(RelationEnum value, List<CustomCondition> others) {
         if (value.getValue().equalsIgnoreCase("and")) {

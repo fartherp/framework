@@ -12,12 +12,12 @@ import com.github.fartherp.framework.database.mybatis.plugin.search.filter.Custo
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.CustomConditionFactory;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.SearchFilter;
 import com.github.fartherp.framework.database.mybatis.plugin.search.utils.SearchableConvertUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +30,11 @@ import java.util.Map;
 
 public class SearchRequest extends Searchable {
 
-    private Map<String, SearchFilter> searchFilterMap = Maps.newHashMap();
+    private Map<String, SearchFilter> searchFilterMap = new HashMap<String, SearchFilter>();
     /**
      * 使用这个的目的是保证拼sql的顺序是按照添加时的顺序
      */
-    private List<SearchFilter> searchFilters = Lists.newArrayList();
+    private List<SearchFilter> searchFilters = new ArrayList<SearchFilter>();
 
     public SearchRequest(Map<String, Object> searchParams) {
         this(searchParams, null, null);

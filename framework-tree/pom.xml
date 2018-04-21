@@ -21,6 +21,11 @@
     <dependencies>
         <dependency>
             <groupId>com.github.fartherp</groupId>
+            <artifactId>framework-database</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fartherp</groupId>
             <artifactId>framework-core</artifactId>
             <version>${project.version}</version>
         </dependency>

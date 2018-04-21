@@ -5,12 +5,11 @@
 package com.github.fartherp.framework.tree.service;
 
 
-import com.github.fartherp.framework.database.dao.SqlMapDao;
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.CustomConditionFactory;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.SearchFilter;
 import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Searchable;
-import com.github.fartherp.framework.database.service.impl.GenericSqlMapServiceImpl;
+import com.github.fartherp.framework.database.service.impl.ExtendGenericSqlMapServiceImpl;
 import com.github.fartherp.framework.tree.bo.Treeable;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -32,28 +31,26 @@ import java.util.Set;
  * Date: 2016/9/7
  */
 public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends Serializable>
-        extends GenericSqlMapServiceImpl {
-
-    public abstract SqlMapDao<T, ID> getDao();
+        extends ExtendGenericSqlMapServiceImpl<T, ID> {
 
     public T save(T m) {
         if (m.getWeight() == null) {
             m.setWeight(nextWeight(m.getParentId()));
         }
-        getDao().saveOrUpdate(m);
+        saveOrUpdate(m);
         return m;
     }
 
     @Transactional
     public void deleteSelfAndChild(T m) {
-        List<T> ms = getDao().findAll();
+        List<T> ms = getDao().selectAll();
         List<T> results = new ArrayList<T>();
         for (T t : ms) {
             if (t.getParentId().equals(m.getId())) {
-                getDao().delete((ID) t.getId());
+                getDao().deleteByPrimaryKey((ID) t.getId());
             }
         }
-        getDao().delete((ID) m.getId());
+        getDao().deleteByPrimaryKey((ID) m.getId());
     }
 
     public void deleteSelfAndChild(List<T> mList) {
@@ -70,7 +67,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     }
 
     public int nextWeight(ID id) {
-        return getDao().findById(id).getWeight();
+        return getDao().selectByPrimaryKey(id).getWeight();
     }
 
     /**
@@ -161,7 +158,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         source.setParentId(newParentId);
         source.setParentIds(newParentIds);
         source.setWeight(newWeight);
-        getDao().saveOrUpdate(source);
+        saveOrUpdate(source);
         String newSourceChildrenParentIds = source.makeSelfAsNewParentIds();
     }
 
@@ -174,7 +171,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
      */
     public List<T> findSelfAndNextSiblings(String parentIds, int currentWeight) {
         List<T> result = new ArrayList<T>();
-        List<T> all = getDao().findAll();
+        List<T> all = getDao().selectAll();
         for (T part : all) {
             if (part.getParentIds().equalsIgnoreCase(parentIds) && part.getWeight() == currentWeight) {
                 result.add(part);
@@ -190,7 +187,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
      * @return
      */
     public Set<String> findNames(Searchable searchable, String name, ID excludeId) throws InvocationTargetException, IllegalAccessException {
-        T excludeM = getDao().findById(excludeId);
+        T excludeM = getDao().selectByPrimaryKey(excludeId);
 
         searchable.addSearchFilter("name", SearchOperator.like, name);
         addExcludeSearchFilter(searchable, excludeM);
@@ -272,7 +269,7 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
 
     public Set<ID> findAncestorIds(ID currentId) {
         Set ids = Sets.newHashSet();
-        T m = getDao().findById(currentId);
+        T m = getDao().selectByPrimaryKey(currentId);
         if (StringUtils.isEmpty(m)) {
             return ids;
         }

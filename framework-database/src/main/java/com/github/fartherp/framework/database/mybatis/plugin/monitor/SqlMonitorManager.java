@@ -6,8 +6,6 @@ package com.github.fartherp.framework.database.mybatis.plugin.monitor;
 
 import com.github.fartherp.framework.database.mybatis.orm.SqlEvent;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.mapping.BoundSql;
@@ -23,6 +21,8 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.sql.SQLException;
@@ -55,8 +55,7 @@ public class SqlMonitorManager implements Interceptor {
     /**
      * log this class
      */
-    protected static Log log = LogFactory.getLog(SqlMonitorManager.class);
-  //  private static final Logger LOGGER = Logger.getLogger(SqlMonitorManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SqlMonitorManager.class);
 
     /**
      * show SQL property name
@@ -159,11 +158,11 @@ public class SqlMonitorManager implements Interceptor {
             try {
                 sql = setParameters(ms, boundSql, args[1]);
             } catch (Exception e) {
-                log.debug(e.getMessage(), e);
+                LOGGER.debug(e.getMessage(), e);
             }
             sql = formatSql(sql);
             if (showSql) {
-                log.info(sql);
+                LOGGER.info(sql);
                 System.out.println(sql);
             }
 
@@ -248,7 +247,7 @@ public class SqlMonitorManager implements Interceptor {
         String sql = boundSql.getSql();
         if (parameterMappings != null) {
             if (parameterMappings.size() > this.maxParameters) {
-                log.warn("ingore set parameters due to too much parameters for sql id[" + mappedStatement.getId()
+                LOGGER.warn("ingore set parameters due to too much parameters for sql id[" + mappedStatement.getId()
                         + "] max is " + maxParameters + " current is " + parameterMappings.size());
                 return sql;
             }

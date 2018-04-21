@@ -8,11 +8,6 @@
 
 package com.github.fartherp.framework.database.service;
 
-
-import com.github.fartherp.framework.database.mybatis.plugin.page.Pagination;
-import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Searchable;
-import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Sort;
-
 import java.util.List;
 
 /**
@@ -20,7 +15,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public interface GenericService<T, ID > {
+public interface GenericService<T, ID> {
     /**
      * 删除对象
      *
@@ -48,6 +43,12 @@ public interface GenericService<T, ID > {
     T findById(ID id);
 
     /**
+     * 查找所有记录数量
+     * @return 数量
+     */
+    long count();
+
+    /**
      * 保存对象
      *
      * @param entity entity
@@ -61,6 +62,12 @@ public interface GenericService<T, ID > {
      * @return ID
      */
     ID saveEntitySelective(T entity);
+
+    /**
+     * 批量保存
+     * @param entitys entitys
+     */
+    void saveBatch(List<T> entitys);
 
     /**
      * 更新对象的所有属性
@@ -91,33 +98,4 @@ public interface GenericService<T, ID > {
      * @return object
      */
     T saveOrUpdateSelective(T entity);
-
-    /**
-     * 批量保存
-     * @param entitys entitys
-     */
-    void saveBatch(List<T> entitys);
-
-    /**
-     * 条件查询 searchable
-     * @param searchable
-     * @return
-     */
-
-    public Pagination<T> findBySearchable(Searchable searchable);
-
-    /**
-     * 条件查询 sort
-     * @param sort
-     * @return
-     */
-    public List<T> findBySort(Sort sort);
-
-    /**
-     * 根据条件统计所有记录数
-     *
-     * @param searchable
-     * @return
-     */
-    public long countBySearchable(Searchable searchable);
 }

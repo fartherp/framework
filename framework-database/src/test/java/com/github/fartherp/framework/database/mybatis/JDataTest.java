@@ -5,6 +5,7 @@
 
 package com.github.fartherp.framework.database.mybatis;
 
+import com.github.fartherp.framework.common.util.JsonUtil;
 import com.github.fartherp.framework.database.mybatis.plugin.page.BaseVo;
 import org.testng.annotations.Test;
 
@@ -22,13 +23,7 @@ public class JDataTest {
         map.put("1", "name1");
         map.put("2", "name2");
         map.put("3", "name3");
-        String json = JsonResp.asData().addAll(map).toJson();
-        System.out.println(json);
-    }
-
-    @Test
-    public void testAdd() throws Exception {
-        String json = JsonResp.asData().add("4", "name4").add("5", "name5").toJson();
+        String json = JsonUtil.toJson(map);
         System.out.println(json);
     }
 
@@ -41,7 +36,7 @@ public class JDataTest {
             list.add(bo);
         }
         vo.setRows(list);
-        String json = JsonResp.asData(vo).toJson();
+        String json = JsonUtil.toJson(vo);
         System.out.println(json);
     }
 

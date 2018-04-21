@@ -15,7 +15,9 @@ import org.springframework.util.ReflectionUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字段操作类
@@ -49,7 +51,7 @@ public class FieldAccessVo implements Cloneable, Serializable {
      */
     @SuppressWarnings("unchecked")
     public <T> T getPrimaryKey() {
-        final List<Field> FIELDS = new ArrayList<Field>(1);
+        final List<Field> FIELDS = new ArrayList<Field>();
         ReflectionUtils.doWithFields(getClass(), new ReflectionUtils.FieldCallback() {
             public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
                 if (field.getAnnotation(Id.class) != null) {
@@ -61,7 +63,12 @@ public class FieldAccessVo implements Cloneable, Serializable {
         if (FIELDS.size() == 1) {
             Field field = FIELDS.get(0);
             return (T) ReflectionUtils.getField(field, this);
+        } else {
+            Map<String, Object> map = new HashMap<String, Object>();
+            for (Field field : FIELDS) {
+                map.put(field.getName(), ReflectionUtils.getField(field, this));
+            }
+            return (T) map;
         }
-        return null;
     }
 }

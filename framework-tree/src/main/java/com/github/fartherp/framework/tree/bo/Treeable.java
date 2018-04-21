@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.tree.bo;
 
-import com.github.fartherp.framework.core.dao.FieldAccessVo;
+import com.github.fartherp.framework.database.dao.FieldAccessVo;
 
 import java.io.Serializable;
 
