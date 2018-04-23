@@ -4,6 +4,7 @@
 package com.github.fartherp.framework.database.mybatis.plugin.search.utils;
 
 
+import com.github.fartherp.framework.core.bean.ServiceLocator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.InvalidSearchPropertyException;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.InvalidSearchValueException;

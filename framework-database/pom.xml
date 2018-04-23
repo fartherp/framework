@@ -57,7 +57,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.fartherp</groupId>
-            <artifactId>framework-common</artifactId>
+            <artifactId>framework-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
