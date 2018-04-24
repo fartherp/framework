@@ -19,7 +19,7 @@ public class WeatherSecurityTest {
     public void testExecuteGet() {
         try {
             String type = "forecast_f"; // forecast_f index_f
-            String appid = "0efe9e3c08151b8d";
+            String appid = "0efe9e3c081.1.8-SNAPSHOTd";
             String date = "201503030741";
             String areaid = "101010100";
             //密钥
