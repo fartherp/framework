@@ -21,6 +21,8 @@ import com.github.fartherp.framework.database.dao.DaoMapper;
 import com.github.fartherp.framework.database.dao.FieldAccessVo;
 import com.github.fartherp.framework.database.service.GenericService;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -35,13 +37,15 @@ import java.util.List;
 public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID extends Serializable>
         implements GenericService<T, ID> {
 
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public abstract DaoMapper<T, ID> getDao();
 
     @Transactional(rollbackFor = {Exception.class})
     @SuppressWarnings("unchecked")
-    public void delete(T entity) {
-        Assert.notNull(entity, "delete failed due to entity is null");
-        getDao().deleteByPrimaryKey((ID) entity.getPrimaryKey());
+    public void delete(ID id) {
+        Assert.notNull(id, "delete failed due to PrimaryKey is null");
+        getDao().deleteByPrimaryKey(id);
     }
 
     @Transactional(rollbackFor = {Exception.class})
