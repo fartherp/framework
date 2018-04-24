@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.net.sftp;
 
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
 import org.testng.annotations.Test;
 
 /**
@@ -13,9 +15,9 @@ import org.testng.annotations.Test;
  * @date: 2018/4/17
  */
 public class SftpChannelWrapperTest {
-    @Test
+//    @Test
     public void testMkdir() {
-       /* SftpChannelWrapper channelWrapper = null;
+        SftpChannelWrapper channelWrapper = null;
         try {
             channelWrapper = ChannelWrapperFactory.create("192.168.9.141", "testdsf", "testdsf",
                     22, ChannelType.SFTP);
@@ -28,7 +30,7 @@ public class SftpChannelWrapperTest {
             if (channelWrapper != null) {
                 channelWrapper.disconnect();
             }
-        }*/
+        }
     }
 
 }
