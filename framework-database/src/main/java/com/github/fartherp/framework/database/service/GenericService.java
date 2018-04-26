@@ -19,9 +19,9 @@ public interface GenericService<T, ID> {
     /**
      * 删除对象
      *
-     * @param entity entity
+     * @param id id
      */
-    void delete(T entity);
+    void delete(ID id);
 
     /**
      * 批量删除对象
