@@ -7,6 +7,7 @@ package com.github.fartherp.framework.common.util;
 import com.github.fartherp.framework.common.constant.Constant;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,17 +32,7 @@ public class DateUtil {
     public static final String HHmmss = "HHmmss";
     public static final String HH_mm = "HH:mm";
 
-    public static final SimpleDateFormat dateFormat = new SimpleDateFormat(yyyyMMdd);
-    public static final SimpleDateFormat dateFormat2 = new SimpleDateFormat(yyyy_MM_dd);
-    public static final SimpleDateFormat dateFormat3 = new SimpleDateFormat(ddMMyy);
-    public static final SimpleDateFormat dateFormat4 = new SimpleDateFormat(yyyyMM);
-    public static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(yyyy_MM_dd_HH_mm_ss);
-    public static final SimpleDateFormat dateTimeFormat2 = new SimpleDateFormat(yyMMddHHmmss);
-    public static final SimpleDateFormat dateTimeFormat3 = new SimpleDateFormat(yyyyMMddHH);
-    public static final SimpleDateFormat dateTimeFormat4 = new SimpleDateFormat(yyyyMMddHHmmss);
-    public static final SimpleDateFormat timeFormat = new SimpleDateFormat(HH_mm_ss);
-    public static final SimpleDateFormat timeFormat2 = new SimpleDateFormat(HHmmss);
-    public static final SimpleDateFormat timeFormat3 = new SimpleDateFormat(HH_mm);
+    private final static ThreadLocal<DateFormat> threadLocal = new ThreadLocal<DateFormat>();
 
     /**
      * second
@@ -63,6 +54,15 @@ public class DateUtil {
      */
     public static final long DAY_TIME = HOUR_TIME * 24;
 
+    public static DateFormat getDateFormat(String format) {
+        DateFormat df = threadLocal.get();
+        if (df == null) {
+            df = new SimpleDateFormat(format);
+            threadLocal.set(df);
+        }
+        return df;
+    }
+
     /**
      * The format {@link Date} to {@code String}.
      *
@@ -71,7 +71,7 @@ public class DateUtil {
      * @return the new {@code String}
      */
     public static String format(String format, Date date) {
-        return date != null ? DateEnum.getFormatByString(format).format(date) : null;
+        return date != null ? getDateFormat(format).format(date) : null;
     }
 
     /**
@@ -87,7 +87,7 @@ public class DateUtil {
         }
         Date d = null;
         try {
-            d = DateEnum.getFormatByString(format).parse(date);
+            d = getDateFormat(format).parse(date);
         } catch (ParseException e) {
             // ignore
         }
@@ -116,7 +116,7 @@ public class DateUtil {
             return null;
         }
         Date newDate = getDateByCalendar(date, i, j);
-        return DateEnum.getFormatByString(format).format(newDate);
+        return getDateFormat(format).format(newDate);
     }
 
     /**
@@ -405,69 +405,5 @@ public class DateUtil {
         }
         String dbDefault = format(yyyy_MM_dd_HH_mm_ss, date);
         return Constant.DB_DEFAULT_DATE.equals(dbDefault);
-    }
-
-    /**
-     * Date Enum
-     */
-    public static enum DateEnum {
-        yyyyMMdd(DateUtil.yyyyMMdd, DateUtil.dateFormat),
-        yyyy_MM_dd(DateUtil.yyyy_MM_dd, DateUtil.dateFormat2),
-        ddMMyy(DateUtil.ddMMyy, DateUtil.dateFormat3),
-        yyyyMM(DateUtil.yyyyMM, DateUtil.dateFormat4),
-        yyyy_MM_dd_HH_mm_ss(DateUtil.yyyy_MM_dd_HH_mm_ss, DateUtil.dateTimeFormat),
-        yyMMddHHmmss(DateUtil.yyMMddHHmmss, DateUtil.dateTimeFormat2),
-        yyyyMMddHH(DateUtil.yyyyMMddHH, DateUtil.dateTimeFormat3),
-        yyyyMMddHHmmss(DateUtil.yyyyMMddHHmmss, DateUtil.dateTimeFormat4),
-        HH_mm_ss(DateUtil.HH_mm_ss, DateUtil.timeFormat),
-        HHmmss(DateUtil.HHmmss, DateUtil.timeFormat2),
-        HH_mm(DateUtil.HH_mm, DateUtil.timeFormat3);
-
-        private String dateEnum;
-
-        private SimpleDateFormat simpleDateFormat;
-
-        private DateEnum(String dateEnum, SimpleDateFormat simpleDateFormat) {
-            this.dateEnum = dateEnum;
-            this.simpleDateFormat = simpleDateFormat;
-        }
-
-        /**
-         * Get the {@link SimpleDateFormat} through the specify date {@link Enum}
-         *
-         * @param format the specify date enum
-         * @return the {@code SimpleDateFormat}
-         */
-        public static SimpleDateFormat getFormatByDateEnum(DateEnum format) {
-            for (DateEnum dateEnum : DateEnum.values()) {
-                if (dateEnum.getDateEnum().equals(format.dateEnum)) {
-                    return dateEnum.simpleDateFormat;
-                }
-            }
-            return DateEnum.yyyy_MM_dd_HH_mm_ss.simpleDateFormat;
-        }
-
-        /**
-         * Get the {@link SimpleDateFormat} through the specify format.
-         *
-         * @param format the specify format
-         * @return the {@code SimpleDateFormat}
-         */
-        public static SimpleDateFormat getFormatByString(String format) {
-            for (DateEnum dateEnum : DateEnum.values()) {
-                if (dateEnum.getDateEnum().equals(format)) {
-                    return dateEnum.simpleDateFormat;
-                }
-            }
-            return DateEnum.yyyy_MM_dd_HH_mm_ss.simpleDateFormat;
-        }
-
-        public String getDateEnum() {
-            return dateEnum;
-        }
-
-        public SimpleDateFormat getSimpleDateFormat() {
-            return simpleDateFormat;
-        }
     }
 }
