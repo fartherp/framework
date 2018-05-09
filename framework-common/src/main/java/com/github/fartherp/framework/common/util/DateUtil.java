@@ -34,7 +34,7 @@ public class DateUtil {
     public static final String HHmmss = "HHmmss";
     public static final String HH_mm = "HH:mm";
 
-    public final static ThreadLocal<Map<String, DateFormat>> threadLocal = new ThreadLocal<Map<String, DateFormat>>();
+    private final static ThreadLocal<Map<String, DateFormat>> threadLocal = new ThreadLocal<Map<String, DateFormat>>();
 
     /**
      * second
