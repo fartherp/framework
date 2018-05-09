@@ -38,8 +38,9 @@ public class FileExcelWriteTest {
                         return result;
                     }
                 });
-        excelDtoExcelWrite.list(ExcelWriteStyleTest.getList());
-        excelDtoExcelWrite.list(ExcelWriteStyleTest.getList1());
-        excelDtoExcelWrite.write();
+        // 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
+        excelDtoExcelWrite.list(ExcelWriteStyleTest.getList())
+                .list(ExcelWriteStyleTest.getList1())
+                .write();
     }
 }

@@ -45,9 +45,9 @@ public class ExcelWriteStyleTest {
                         return result;
                     }
                 });
-        writeStyle.list(ExcelWriteStyleTest.getList());
-        writeStyle.list(ExcelWriteStyleTest.getList1());
-        writeStyle.write();
+        writeStyle.list(ExcelWriteStyleTest.getList())
+                .list(ExcelWriteStyleTest.getList1())
+                .write();
     }
 
     public static List<ExcelDto> getList() {
