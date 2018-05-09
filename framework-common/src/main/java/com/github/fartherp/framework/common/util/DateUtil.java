@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The date tools
@@ -32,7 +34,7 @@ public class DateUtil {
     public static final String HHmmss = "HHmmss";
     public static final String HH_mm = "HH:mm";
 
-    private final static ThreadLocal<DateFormat> threadLocal = new ThreadLocal<DateFormat>();
+    public final static ThreadLocal<Map<String, DateFormat>> threadLocal = new ThreadLocal<Map<String, DateFormat>>();
 
     /**
      * second
@@ -55,12 +57,18 @@ public class DateUtil {
     public static final long DAY_TIME = HOUR_TIME * 24;
 
     public static DateFormat getDateFormat(String format) {
-        DateFormat df = threadLocal.get();
-        if (df == null) {
-            df = new SimpleDateFormat(format);
-            threadLocal.set(df);
+        Map<String, DateFormat> formatMap = threadLocal.get();
+        if (formatMap == null) {
+            formatMap = new HashMap<String, DateFormat>();
+            threadLocal.set(formatMap);
         }
-        return df;
+        // 不同类型日期标识
+        DateFormat dateFormat = formatMap.get(format);
+        if (dateFormat == null) {
+            dateFormat = new SimpleDateFormat(format);
+            formatMap.put(format, dateFormat);
+        }
+        return dateFormat;
     }
 
     /**
