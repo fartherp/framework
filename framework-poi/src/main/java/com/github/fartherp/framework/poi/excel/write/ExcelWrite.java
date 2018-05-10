@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
+import com.github.fartherp.framework.poi.Constant;
 import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -18,16 +19,45 @@ import java.util.List;
  */
 public interface ExcelWrite<T> {
 
+    /**
+     * 当前excel文件类型
+     * <pre>
+     * {@link Constant#OFFICE_EXCEL_2003_POSTFIX}
+     * {@link Constant#OFFICE_EXCEL_2003_POSTFIX}
+     * </pre>
+     *
+     * @return 文件类型
+     */
     String getType();
 
+    /**
+     * 标题
+     * @return 标题
+     */
     String[] getTitle();
 
+    /**
+     * 文件名
+     * @return 文件名
+     */
     String getFileName();
 
+    /**
+     * 输出流
+     * @return 输出流
+     */
     OutputStream getOutputStream();
 
+    /**
+     *
+     * @return
+     */
     WriteDeal<T> getDeal();
 
+    /**
+     * 当前处理的Workbook
+     * @return Workbook
+     */
     Workbook getWb();
 
     int getTotal();
@@ -46,13 +76,45 @@ public interface ExcelWrite<T> {
 
     void setCurrentRow(int currentRow);
 
+    /**
+     * 创建工作薄
+     */
     void createWb();
 
+    /**
+     * 添加实际数据
+     * @param list 实际数据
+     * @return ExcelWrite
+     */
     ExcelWrite<T> list(List<T> list);
 
+    /**
+     * 写数据
+     */
     void write();
 
+    /**
+     * 创建输出流
+     * @return ExcelWrite
+     */
     ExcelWrite<T> createOutputStream();
 
+    /**
+     * 具体操作
+     * @param deal 操作回调
+     * @return ExcelWrite
+     */
     ExcelWrite<T> deal(WriteDeal<T> deal);
+
+    /**
+     * 设置大数据模式（SXSSFWorkbook）
+     * @param largeDataMode true/false
+     */
+    void setLargeDataMode(boolean largeDataMode);
+
+    /**
+     * 大数据模式
+     * @return true/false
+     */
+    boolean getLargeDataMode();
 }

@@ -6,13 +6,17 @@ package com.github.fartherp.framework.poi.excel;
 
 import com.github.fartherp.framework.poi.Constant;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -34,13 +38,13 @@ public class ExcelUtils {
     @SuppressWarnings("all")
     public static CellStyle setStyleNoColor(Workbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setAlignment(CellStyle.ALIGN_CENTER); // 居中
-        cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER); // 居中
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 垂直
 
-        cellStyle.setBorderBottom(CellStyle.BORDER_THIN); //下边框
-        cellStyle.setBorderLeft(CellStyle.BORDER_THIN);//左边框
-        cellStyle.setBorderTop(CellStyle.BORDER_THIN);//上边框
-        cellStyle.setBorderRight(CellStyle.BORDER_THIN);//右边框
+        cellStyle.setBorderBottom(BorderStyle.THIN); //下边框
+        cellStyle.setBorderLeft(BorderStyle.THIN);//左边框
+        cellStyle.setBorderTop(BorderStyle.THIN);//上边框
+        cellStyle.setBorderRight(BorderStyle.THIN);//右边框
         cellStyle.setWrapText(true);
         return cellStyle;
     }
@@ -55,16 +59,16 @@ public class ExcelUtils {
     public static CellStyle setStyleColorStrong(Workbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
 
-        cellStyle.setAlignment(CellStyle.ALIGN_CENTER); // 居中
-        cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER); // 居中
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 垂直
 
-        cellStyle.setBorderBottom(CellStyle.BORDER_THIN); //下边框
-        cellStyle.setBorderLeft(CellStyle.BORDER_THIN);//左边框
-        cellStyle.setBorderTop(CellStyle.BORDER_THIN);//上边框
-        cellStyle.setBorderRight(CellStyle.BORDER_THIN);//右边框
+        cellStyle.setBorderBottom(BorderStyle.THIN); //下边框
+        cellStyle.setBorderLeft(BorderStyle.THIN);//左边框
+        cellStyle.setBorderTop(BorderStyle.THIN);//上边框
+        cellStyle.setBorderRight(BorderStyle.THIN);//右边框
 
         cellStyle.setFillForegroundColor(IndexedColors.TAN.getIndex());
-        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         cellStyle.setWrapText(true);
         return cellStyle;
@@ -80,20 +84,20 @@ public class ExcelUtils {
     @SuppressWarnings("all")
     public static CellStyle setStyleLightColorStrong(Workbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
-        cellStyle.setAlignment(CellStyle.ALIGN_CENTER); // 居中
-        cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER); // 居中
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-        cellStyle.setBorderBottom(CellStyle.BORDER_THIN); //下边框
-        cellStyle.setBorderLeft(CellStyle.BORDER_THIN);//左边框
-        cellStyle.setBorderTop(CellStyle.BORDER_THIN);//上边框
-        cellStyle.setBorderRight(CellStyle.BORDER_THIN);//右边框
+        cellStyle.setBorderBottom(BorderStyle.THIN); //下边框
+        cellStyle.setBorderLeft(BorderStyle.THIN);//左边框
+        cellStyle.setBorderTop(BorderStyle.THIN);//上边框
+        cellStyle.setBorderRight(BorderStyle.THIN);//右边框
 
         cellStyle.setFillForegroundColor(IndexedColors.TAN.getIndex());
-        cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         Font font = workbook.createFont();
         font.setFontName("黑体");
-        font.setBoldweight(Font.BOLDWEIGHT_BOLD);//粗体显示
+        font.setBold(true);//粗体显示
         cellStyle.setFont(font);
 
         cellStyle.setWrapText(true);
@@ -125,11 +129,15 @@ public class ExcelUtils {
         }
     }
 
-    public static RichTextString setRichTextString(String type, String value) {
-        if (Constant.OFFICE_EXCEL_2003_POSTFIX.equals(type)) {
-            return new HSSFRichTextString(value);
-        } else if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(type)) {
+    public static RichTextString setRichTextString(boolean largeDataMode,String type, String value) {
+        if (largeDataMode) {
             return new XSSFRichTextString(value);
+        } else {
+            if (Constant.OFFICE_EXCEL_2003_POSTFIX.equals(type)) {
+                return new HSSFRichTextString(value);
+            } else if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(type)) {
+                return new XSSFRichTextString(value);
+            }
         }
         throw new IllegalArgumentException("不是Excel文件");
     }

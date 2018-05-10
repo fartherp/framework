@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.excel.ExcelDto;
+import org.apache.commons.lang3.time.StopWatch;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.List;
 public class ExcelWriteStyleTest {
 //    @Test
     public void writeExcel() throws Exception {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         String[] title = new String [6];
         title[0] = "登录时间";
         title[1] = "用户名";
@@ -31,6 +34,7 @@ public class ExcelWriteStyleTest {
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
         FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
+//        excelDtoExcelWrite.setLargeDataMode(false);
         ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
         writeStyle.condition(condition).head(head).deal(
                 new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
@@ -48,6 +52,8 @@ public class ExcelWriteStyleTest {
         writeStyle.list(ExcelWriteStyleTest.getList())
                 .list(ExcelWriteStyleTest.getList1())
                 .write();
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
     }
 
     public static List<ExcelDto> getList() {

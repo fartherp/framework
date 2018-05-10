@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileNotFoundException;
@@ -77,6 +78,16 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
      */
     protected int currentRow;
 
+    /**
+     * 大数据模式
+     */
+    protected boolean largeDataMode = true;
+
+    /**
+     * 内存中保留 5000 条数据，以免内存溢出，其余写入硬盘
+     */
+    protected int rowAccessWindowSize = 5000;
+
     public AbstractExcelWrite(String[] title, String fileName) {
         this.title = title;
         this.fileName = fileName;
@@ -138,16 +149,35 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         this.currentRow = currentRow;
     }
 
+    public void setLargeDataMode(boolean largeDataMode) {
+        this.largeDataMode = largeDataMode;
+    }
+
+    public boolean getLargeDataMode() {
+        return largeDataMode;
+    }
+
     public void createWb() {
-        // 创建Excel文档
-        if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2003_POSTFIX)) {
-            this.wb = new HSSFWorkbook();
-            this.type = Constant.OFFICE_EXCEL_2003_POSTFIX;
-        } else if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2010_POSTFIX)) {
-            this.wb = new XSSFWorkbook();
-            this.type = Constant.OFFICE_EXCEL_2010_POSTFIX;
+        if (this.largeDataMode) {
+            if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2003_POSTFIX)) {
+                this.type = Constant.OFFICE_EXCEL_2003_POSTFIX;
+            } else if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2010_POSTFIX)) {
+                this.type = Constant.OFFICE_EXCEL_2010_POSTFIX;
+            } else {
+                throw new IllegalArgumentException("不是Excel文件");
+            }
+            wb = new SXSSFWorkbook(rowAccessWindowSize);
         } else {
-            throw new IllegalArgumentException("不是Excel文件");
+            // 创建Excel文档
+            if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2003_POSTFIX)) {
+                this.wb = new HSSFWorkbook();
+                this.type = Constant.OFFICE_EXCEL_2003_POSTFIX;
+            } else if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2010_POSTFIX)) {
+                this.wb = new XSSFWorkbook();
+                this.type = Constant.OFFICE_EXCEL_2010_POSTFIX;
+            } else {
+                throw new IllegalArgumentException("不是Excel文件");
+            }
         }
     }
 

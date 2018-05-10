@@ -69,7 +69,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
             for (int k = 0; k < data.length; k++) {
                 // 在一行内循环
                 Cell cell = dataRow.createCell(k);
-                cell.setCellValue(setRichTextString(excelWrite.getType(), data[k]));
+                cell.setCellValue(setRichTextString(excelWrite.getLargeDataMode(), excelWrite.getType(), data[k]));
                 cell.setCellStyle(noColor);
             }
             excelWrite.setCurrentRow(excelWrite.getCurrentRow() + 1);
@@ -95,7 +95,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
             excelWrite.setCurrentRow(excelWrite.getCurrentRow() + 1);
 
             Cell cell0 = row0.createCell(0);
-            cell0.setCellValue(setRichTextString(excelWrite.getType(), head));
+            cell0.setCellValue(setRichTextString(excelWrite.getLargeDataMode(), excelWrite.getType(), head));
 
             if (lightColorStrong == null) {
                 lightColorStrong = setStyleLightColorStrong(excelWrite.getWb());
@@ -110,7 +110,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
             excelWrite.setCurrentRow(excelWrite.getCurrentRow() + 1);
 
             Cell cell1 = row1.createCell(0);
-            cell1.setCellValue(setRichTextString(excelWrite.getType(), condition));
+            cell1.setCellValue(setRichTextString(excelWrite.getLargeDataMode(), excelWrite.getType(), condition));
 
             setRegionStyle(excelWrite.getCurrentSheet(), region1, lightColorStrong);
 
@@ -124,7 +124,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
             int[] columnWidth = excelWrite.getDeal().setColumnWidth(excelWrite.getTitle());
             for (int i = 0; i < excelWrite.getTitle().length; i++) {
                 Cell cell = titleRow.createCell(i);
-                cell.setCellValue(setRichTextString(excelWrite.getType(), excelWrite.getTitle()[i]));
+                cell.setCellValue(setRichTextString(excelWrite.getLargeDataMode(), excelWrite.getType(), excelWrite.getTitle()[i]));
                 cell.setCellStyle(colorStrong);
                 excelWrite.getCurrentSheet().setColumnWidth(i, columnWidth[i]);
             }
