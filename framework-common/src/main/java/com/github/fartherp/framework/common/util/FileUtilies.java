@@ -58,6 +58,16 @@ public class FileUtilies {
      *
      * @param file         the file
      * @param content      the content
+     */
+    public static void writeFile(File file, String content) {
+        writeFile(file, content, "UTF-8");
+    }
+
+    /**
+     * Writes, or overwrites, the contents of the specified file.
+     *
+     * @param file         the file
+     * @param content      the content
      * @param fileEncoding the file encoding
      */
     public static void writeFile(File file, String content, String fileEncoding) {
