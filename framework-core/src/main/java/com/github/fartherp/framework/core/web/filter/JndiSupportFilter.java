@@ -19,10 +19,13 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertySourcesPropertyResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.Assert;
+import org.springframework.web.context.support.ServletContextPropertySource;
 import org.springframework.web.context.support.ServletContextResourceLoader;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.util.NestedServletException;
@@ -59,6 +62,8 @@ public abstract class JndiSupportFilter implements Filter {
      */
     public static final String JNDI_PROPERTY_PREFIX = "jndi:";
 
+    public static final String NAME = JndiSupportFilter.class.getName();
+
     /**
      * place holder resovler
      */
@@ -83,7 +88,12 @@ public abstract class JndiSupportFilter implements Filter {
             PropertyValues pvs = new JndiSupportFilterConfigPropertyValues(filterConfig, this.requiredProperties);
             BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
             ResourceLoader resourceLoader = new ServletContextResourceLoader(filterConfig.getServletContext());
-            bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader));
+            ServletContextPropertySource servletContextPropertySource
+                    = new ServletContextPropertySource(NAME + "_ServletContextPropertySource", filterConfig.getServletContext());
+            MutablePropertySources propertySources = new MutablePropertySources();
+            propertySources.addFirst(servletContextPropertySource);
+            PropertySourcesPropertyResolver propertySourcesPropertyResolver = new PropertySourcesPropertyResolver(propertySources);
+            bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, propertySourcesPropertyResolver));
             bw.setPropertyValues(pvs, true);
         } catch (BeansException ex) {
             String msg = "Failed to set bean properties on filter '" +
