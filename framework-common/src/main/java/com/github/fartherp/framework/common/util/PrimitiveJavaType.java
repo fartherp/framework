@@ -52,13 +52,9 @@ public enum PrimitiveJavaType {
         PrimitiveJavaType javaType = map.get(clazz.getSimpleName());
         try {
             if (javaType != null) {
-                return Class.forName(javaType.clazz.getName())
-                        .getMethod(javaType.method, String.class).invoke(null, value.toString());
-            } else {
-                return value;
+                return clazz.getMethod(javaType.method, String.class).invoke(null, value.toString());
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("no found class: " + javaType.clazz.getName(), e);
+            throw new IllegalArgumentException("not base type");
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("no found method: " + javaType.method, e);
         } catch (InvocationTargetException e) {
