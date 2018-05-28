@@ -29,7 +29,7 @@ public enum PrimitiveJavaType {
 
     public final String method;
 
-    private static Map<String, PrimitiveJavaType> map = new HashMap<String, PrimitiveJavaType>();
+    public final static Map<String, PrimitiveJavaType> map = new HashMap<String, PrimitiveJavaType>();
 
     PrimitiveJavaType(Class clazz, String lower, String method) {
         this.clazz = clazz;
@@ -41,6 +41,7 @@ public enum PrimitiveJavaType {
         for (PrimitiveJavaType javaType : PrimitiveJavaType.values()) {
             map.put(javaType.clazz.getSimpleName(), javaType);
             map.put(javaType.lower, javaType);
+            map.put(javaType.clazz.getName(), javaType);
         }
     }
 
@@ -65,5 +66,13 @@ public enum PrimitiveJavaType {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static PrimitiveJavaType getByFullyQualifiedName(String fullyQualifiedName) {
+        return map.get(fullyQualifiedName);
+    }
+
+    public static PrimitiveJavaType getByShortName(String shortName) {
+        return map.get(shortName);
     }
 }
