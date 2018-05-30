@@ -45,6 +45,7 @@ public enum PrimitiveJavaType {
         }
     }
 
+    @SuppressWarnings("all")
     public static Object covertValue(Class clazz, Object value) {
         if (value == null) {
             return null;
@@ -52,13 +53,10 @@ public enum PrimitiveJavaType {
         PrimitiveJavaType javaType = map.get(clazz.getSimpleName());
         try {
             if (javaType != null) {
-                return Class.forName(javaType.clazz.getName())
-                        .getMethod(javaType.method, String.class).invoke(null, value.toString());
+                return javaType.clazz.getMethod(javaType.method, String.class).invoke(null, value.toString());
             } else {
                 return value;
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("no found class: " + javaType.clazz.getName(), e);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("no found method: " + javaType.method, e);
         } catch (InvocationTargetException e) {
