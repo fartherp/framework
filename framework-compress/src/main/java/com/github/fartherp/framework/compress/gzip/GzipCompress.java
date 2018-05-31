@@ -28,8 +28,6 @@ public class GzipCompress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
-    private CommonCompress commonCompress;
-
     public void compress() {
         if (2 == commonCompress.getFlag()) {
             startCompress(commonCompress.getSourceFile(), commonCompress.getHttpServletResponse());

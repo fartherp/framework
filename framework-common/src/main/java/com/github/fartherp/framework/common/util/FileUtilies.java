@@ -96,17 +96,16 @@ public class FileUtilies {
         }
     }
 
-    public static String getFileName(String filename, HttpServletRequest request) {
+    public static String getFileName(String fileName, HttpServletRequest request) {
         try {
-            String fileName = URLEncoder.encode(filename, Constant.UTF_8);
             // 根据浏览器代理获取浏览器内核类型
             UserAgent userAgent = UserAgentUtil.getUserAgent(request.getHeader("USER-AGENT"));
-            String browserType = userAgent == null ? "" : userAgent.getBrowserType();
-            if ("Firefox".equals(browserType)) {
+            if (userAgent != null && "Firefox".equals(userAgent.getBrowserType())) {
                 // 针对火狐浏览器处理方式不一样了,解决Firefox下载文件名编码问题
-                fileName = new String(filename.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
+                return new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
+            } else {
+                return URLEncoder.encode(fileName, Constant.UTF_8);
             }
-            return fileName;
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("charset no support UTF-8", e);
         }

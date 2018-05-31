@@ -63,11 +63,10 @@ public class OutputUtils {
      * @return 字符串
      */
     public static String replaceXMLStr(String xmlStr) {
-        if (null != xmlStr) {
-            xmlStr.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-                    .replaceAll("&", "&amp;").replaceAll("'", "&apos;")
-                    .replaceAll("\"", "&quot;");
-        }
-        return xmlStr;
+        return xmlStr == null ? null : xmlStr.replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("&", "&amp;")
+                .replaceAll("'", "&apos;")
+                .replaceAll("\"", "&quot;");
     }
 }

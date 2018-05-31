@@ -26,7 +26,7 @@ public class ZLibUtils {
      * @return byte[] 压缩后的数据
      */
     public static byte[] compress(byte[] data) {
-        byte[] output = new byte[0];
+        byte[] output;
 
         Deflater compresser = new Deflater();
 
@@ -70,6 +70,12 @@ public class ZLibUtils {
             dos.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                dos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -80,7 +86,7 @@ public class ZLibUtils {
      * @return byte[] 解压缩后的数据
      */
     public static byte[] decompress(byte[] data) {
-        byte[] output = new byte[0];
+        byte[] output;
 
         Inflater decompresser = new Inflater();
         decompresser.reset();
@@ -118,6 +124,7 @@ public class ZLibUtils {
     public static byte[] decompress(InputStream is) {
         InflaterInputStream iis = new InflaterInputStream(is);
         ByteArrayOutputStream o = new ByteArrayOutputStream(1024);
+        byte[] bytes = null;
         try {
             int i = 1024;
             byte[] buf = new byte[i];
@@ -125,10 +132,17 @@ public class ZLibUtils {
             while ((i = iis.read(buf, 0, i)) > 0) {
                 o.write(buf, 0, i);
             }
-
+            bytes = o.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                o.close();
+                iis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return o.toByteArray();
+        return bytes;
     }
 }

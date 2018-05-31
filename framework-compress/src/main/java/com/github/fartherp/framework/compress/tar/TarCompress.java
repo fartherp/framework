@@ -74,14 +74,17 @@ public class TarCompress extends CommonCompress {
     public void doCompress(TarArchiveOutputStream tarArchiveOutputStream, File sourceFile, String path) throws Exception {
         if (sourceFile.isDirectory()) {
             File[] listFiles = sourceFile.listFiles();
+            if (listFiles == null) {
+                throw new RuntimeException("源文件下没有文件可压缩");
+            }
             if (listFiles.length < 1) {
                 TarArchiveEntry entry = new TarArchiveEntry(path + File.separator);
                 tarArchiveOutputStream.putArchiveEntry(entry);
                 tarArchiveOutputStream.closeArchiveEntry();
             }
             path = path.equals(NULL_STR) ? NULL_STR : path + File.separator;
-            for (int i = 0; i < listFiles.length; i++) {
-                doCompress(tarArchiveOutputStream, listFiles[i], path + listFiles[i].getName());
+            for (File listFile : listFiles) {
+                doCompress(tarArchiveOutputStream, listFile, path + listFile.getName());
             }
         } else {
             TarArchiveEntry tarArchiveEntry = new TarArchiveEntry(path);
