@@ -33,7 +33,7 @@ public class FieldAccessVo implements Cloneable, Serializable {
      * @return column description
      * @see ColumnDescription
      */
-    public String getColumnDesc(String name) {
+    public String columnDesc(String name) {
         Field field = ReflectionUtils.findField(getClass(), name);
         if (field == null) {
             return null;
@@ -50,7 +50,7 @@ public class FieldAccessVo implements Cloneable, Serializable {
      * @return primary value
      */
     @SuppressWarnings("unchecked")
-    public <T> T getPrimaryKey() {
+    public <T> T primaryKey() {
         final List<Field> FIELDS = new ArrayList<Field>();
         ReflectionUtils.doWithFields(getClass(), new ReflectionUtils.FieldCallback() {
             public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {

@@ -70,7 +70,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     public ID saveEntity(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insert(entity);
-        return (ID) entity.getPrimaryKey();
+        return (ID) entity.primaryKey();
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -78,7 +78,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     public ID saveEntitySelective(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insertSelective(entity);
-        return (ID) entity.getPrimaryKey();
+        return (ID) entity.primaryKey();
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -104,7 +104,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     @Transactional(rollbackFor = {Exception.class})
     public T saveOrUpdate(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
-        ID id = entity.getPrimaryKey();
+        ID id = entity.primaryKey();
         if (id == null) {
             saveEntity(entity);
         } else {
@@ -120,7 +120,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     @Transactional(rollbackFor = {Exception.class})
     public T saveOrUpdateSelective(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
-        ID id = entity.getPrimaryKey();
+        ID id = entity.primaryKey();
         if (id == null) {
             saveEntitySelective(entity);
         } else {
