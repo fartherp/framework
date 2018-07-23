@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
  * @author: CK
  * @date: 2017/12/13
  */
-public class IPUtils {
+public class IPUtil {
     // 新浪地址
     public static final String SINA_PATH = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=";
 
@@ -58,7 +58,7 @@ public class IPUtils {
     }
 
     public static RemoteIpInfo getAddress(String ip) {
-        String resp = HttpClientUtils.executeGet(SINA_PATH + ip);
+        String resp = HttpClientUtil.executeGet(SINA_PATH + ip);
         return JsonUtil.fromJson(resp, RemoteIpInfo.class);
     }
 }

@@ -16,7 +16,7 @@ import java.net.URLEncoder;
  * Author: CK
  * Date: 2016/1/6
  */
-public class WebUtils {
+public class WebUtil {
     /**
      * Guess content type.
      *

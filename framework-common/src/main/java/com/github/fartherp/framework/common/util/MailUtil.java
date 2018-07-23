@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 发送邮件工具类
  */
-public class MailUtils {
+public class MailUtil {
 
     public static boolean sendEmail(MailInfo mailInfo) {
         try {

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.core.validate;
 
-import com.github.fartherp.framework.common.util.OutputUtils;
+import com.github.fartherp.framework.common.util.OutputUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -50,7 +50,7 @@ public class ValidUtils {
         if (!fieldErrors.isEmpty()) {
             for (FieldError fieldError: fieldErrors) {
                 sb.append(fieldError.getDefaultMessage());
-                OutputUtils.newLine(sb);
+                OutputUtil.newLine(sb);
             }
         }
 
@@ -61,7 +61,7 @@ public class ValidUtils {
             if (!constraintViolations.isEmpty()) {
                 for (ConstraintViolation<T> constraint : constraintViolations) {
                     sb.append(constraint.getMessage());
-                    OutputUtils.newLine(sb);
+                    OutputUtil.newLine(sb);
                 }
             }
         }

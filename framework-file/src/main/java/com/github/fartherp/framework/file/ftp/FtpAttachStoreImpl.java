@@ -5,7 +5,7 @@
 package com.github.fartherp.framework.file.ftp;
 
 import com.github.fartherp.framework.common.constant.Constant;
-import com.github.fartherp.framework.common.util.PathUtils;
+import com.github.fartherp.framework.common.util.PathUtil;
 import com.github.fartherp.framework.file.FileStore;
 import com.github.fartherp.framework.net.ftp.FtpConfig;
 import com.github.fartherp.framework.net.ftp.FtpUtils;
@@ -63,7 +63,7 @@ public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
         } catch (UnsupportedEncodingException e) {
             log.error("URLEncoder.encode(rawName,utf-8) error: ", e);
         }
-        String path = PathUtils.join(dir, fileName);
+        String path = PathUtil.join(dir, fileName);
         FtpUtils.fetch(config, path, output);
     }
 

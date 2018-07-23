@@ -28,7 +28,7 @@ import java.util.Map;
  * Auth: CK
  * Date: 2016/4/28
  */
-public class HttpClientUtils {
+public class HttpClientUtil {
 
     /**
      * send http post

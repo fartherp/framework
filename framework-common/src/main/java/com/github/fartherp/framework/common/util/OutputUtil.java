@@ -9,7 +9,7 @@ package com.github.fartherp.framework.common.util;
  * Author: CK
  * Date: 2015/8/15
  */
-public class OutputUtils {
+public class OutputUtil {
 
     /** 行分割符 */
     private static final String lineSeparator;

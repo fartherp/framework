@@ -13,7 +13,7 @@ import javax.naming.NamingException;
  * Auth: CK
  * Date: 2016/8/29
  */
-public class JndiUtils {
+public class JndiUtil {
     /**
      * jave env prefix
      */

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.core.web.filter;
 
-import com.github.fartherp.framework.common.util.JndiUtils;
+import com.github.fartherp.framework.common.util.JndiUtil;
 import com.github.fartherp.framework.core.bean.config.PlaceholderResolver;
 import com.github.fartherp.framework.core.bean.config.PropertyPlaceholderConfigurerTool;
 import org.apache.commons.collections.CollectionUtils;
@@ -173,7 +173,7 @@ public abstract class JndiSupportFilter implements Filter {
         if (isMarkJndiProperty(strRet)) {
             strRet = StringUtils.removeStart(strRet, JNDI_PROPERTY_PREFIX);
             try {
-                strRet = JndiUtils.getValue(strRet);
+                strRet = JndiUtil.getValue(strRet);
             } catch (NamingException e) {
                 LOGGER.warn(e.getMessage(), e);
             }

@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapUtilsTest {
+public class MapUtilTest {
 
     @Test
     public void testToObject() throws Exception {
@@ -17,7 +17,7 @@ public class MapUtilsTest {
         params.put("name", "name");
         params.put("age", 25L);
         A a = new A();
-        MapUtils.toObject(params, a);
+        MapUtil.toObject(params, a);
         System.out.println(a.getName() + "|" + a.getAge());
     }
 

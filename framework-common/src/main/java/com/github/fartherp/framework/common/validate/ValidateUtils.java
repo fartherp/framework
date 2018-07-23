@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.common.validate;
 
-import com.github.fartherp.framework.common.util.OutputUtils;
+import com.github.fartherp.framework.common.util.OutputUtil;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -50,7 +50,7 @@ public class ValidateUtils {
         if (!constraintViolations.isEmpty()) {
             for (ConstraintViolation<T> constraint : constraintViolations) {
                 sb.append(constraint.getMessage());
-                OutputUtils.newLine(sb);
+                OutputUtil.newLine(sb);
             }
         }
 
@@ -77,7 +77,7 @@ public class ValidateUtils {
         if (!constraintViolations.isEmpty()) {
             for (ConstraintViolation<T> constraint : constraintViolations) {
                 sb.append(constraint.getMessage());
-                OutputUtils.newLine(sb);
+                OutputUtil.newLine(sb);
             }
         }
 

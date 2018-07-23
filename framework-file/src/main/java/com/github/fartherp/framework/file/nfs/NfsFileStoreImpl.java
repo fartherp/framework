@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.file.nfs;
 
-import com.github.fartherp.framework.common.util.PathUtils;
+import com.github.fartherp.framework.common.util.PathUtil;
 import com.github.fartherp.framework.file.FileStore;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
@@ -55,7 +55,7 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
             throw new RuntimeException("Path is not directory." + dir);
         }
 
-        String path = PathUtils.join(dir, fileName);
+        String path = PathUtil.join(dir, fileName);
         File file = new File(path);
         if (file.exists()) {
             // 基本不可能出现, 除非时间戳重叠.
@@ -80,7 +80,7 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
     }
 
     public void fetch(String dir, String fileName, OutputStream output) {
-        File f = new File(PathUtils.join(dir, fileName));
+        File f = new File(PathUtil.join(dir, fileName));
         if (!f.exists()) {
             log.error("nfsAttachStore.fetch[dir={},fileName={}]:not exists.", dir, fileName);
             throw new RuntimeException("file not exists." + f.getAbsolutePath());

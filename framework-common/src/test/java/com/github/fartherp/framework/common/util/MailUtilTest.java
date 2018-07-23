@@ -17,7 +17,7 @@ import static org.testng.Assert.*;
  * @author: CK
  * @date: 2018/5/21
  */
-public class MailUtilsTest {
+public class MailUtilTest {
 //    @Test
     public void testSendEmail() throws Exception {
         MailInfo mailInfo = new MailInfo();
@@ -30,7 +30,7 @@ public class MailUtilsTest {
         List<String> list = new ArrayList<String>();
         list.add("214722930@qq.com");
         mailInfo.setToAddress(list);
-        MailUtils.sendEmail(mailInfo);
+        MailUtil.sendEmail(mailInfo);
     }
 
 }

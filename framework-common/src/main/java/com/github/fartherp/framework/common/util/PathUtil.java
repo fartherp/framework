@@ -11,7 +11,7 @@ import java.io.File;
  * Author: CK
  * Date: 2016/1/17
  */
-public class PathUtils {
+public class PathUtil {
 
     /**
      * Join.

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import com.github.fartherp.framework.common.util.HttpClientUtils;
+import com.github.fartherp.framework.common.util.HttpClientUtil;
 import org.testng.annotations.Test;
 
 /**
@@ -28,7 +28,7 @@ public class WeatherSecurityTest {
             String data = "http://open.weather.com.cn/data/?areaid=" + areaid + "&type=" + type + "&date=" + date + "&appid=";
             String str = WeatherSecurity.standardURLEncoder(data + appid, key);
             String result = data + appid.substring(0, 6);
-            String json = HttpClientUtils.executeGet(result + "&key=" + str);
+            String json = HttpClientUtil.executeGet(result + "&key=" + str);
             System.out.println(json);
         } catch (Exception e) {
             e.printStackTrace();

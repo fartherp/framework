@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.core.kv.vo;
 
-import com.github.fartherp.framework.common.util.MapUtils;
+import com.github.fartherp.framework.common.util.MapUtil;
 
 import java.util.Map;
 
@@ -43,6 +43,6 @@ public class KvVo {
     }
 
     public Map<String, Object> convertMap() {
-        return MapUtils.toMap(this, "class", "key", "module", "defaultValue");
+        return MapUtil.toMap(this, "class", "key", "module", "defaultValue");
     }
 }

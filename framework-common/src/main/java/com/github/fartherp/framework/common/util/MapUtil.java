@@ -18,7 +18,7 @@ import java.util.Map;
  * Author: CK
  * Date: 2015/11/13
  */
-public class MapUtils<K, V> {
+public class MapUtil<K, V> {
     /**
      * 辅助容器类
      *

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.core.kv.service.impl;
 
-import com.github.fartherp.framework.common.util.MapUtils;
+import com.github.fartherp.framework.common.util.MapUtil;
 import com.github.fartherp.framework.core.kv.dao.KvDao;
 import com.github.fartherp.framework.core.kv.handler.KvHandler;
 import com.github.fartherp.framework.core.kv.handler.KvHandlerSupport;
@@ -62,12 +62,12 @@ public class KvServiceImpl implements KvService {
         }
 
         Map<String, Object> context =
-                MapUtils.<String, Object> build().put("inset", keys).putAll(extraConds).get();
+                MapUtil.<String, Object> build().put("inset", keys).putAll(extraConds).get();
         return execute(support, context);
     }
 
     public List<Map<Object, Object>> all(KvHandlerSupport support, Map<String, Object> extraConds) {
-        Map<String, Object> context = MapUtils.<String, Object> build().putAll(extraConds).get();
+        Map<String, Object> context = MapUtil.<String, Object> build().putAll(extraConds).get();
         return execute(support, context);
     }
 
@@ -98,7 +98,7 @@ public class KvServiceImpl implements KvService {
         }
 
         Map<String, Object> context =
-                MapUtils.<String, Object> build().put("prefix", key).put("maxLimit", maxLimit)
+                MapUtil.<String, Object> build().put("prefix", key).put("maxLimit", maxLimit)
                         .putAll(extraConds).get();
         return execute(support, context);
     }

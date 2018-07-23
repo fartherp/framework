@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpClientUtilsTest {
+public class HttpClientUtilTest {
 
     @Test
     public void testExecute() throws Exception {
@@ -18,7 +18,7 @@ public class HttpClientUtilsTest {
         params.put("location", "30.548397,104.04701");
         params.put("output", "json");
         params.put("pois", 0);
-        String message = HttpClientUtils.execute(params, "http://api.map.baidu.com/geocoder/v2/");
+        String message = HttpClientUtil.execute(params, "http://api.map.baidu.com/geocoder/v2/");
         System.out.println(message);
     }
 }
