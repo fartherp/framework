@@ -4,9 +4,9 @@
 
 package com.github.fartherp.framework.core.web.interceptor;
 
+import com.github.fartherp.framework.core.util.SpringProxyUtils;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -33,13 +33,14 @@ public class MockInterceptor implements MethodInterceptor, Serializable, Applica
 
     public Object invoke(MethodInvocation invocation) throws Throwable {
         if (mock) {
-            Class<?> targetClass = AopUtils.getTargetClass(invocation.getThis());
+            Object o = SpringProxyUtils.getRealTarget(invocation.getThis());
+            Class<?> targetClass = o.getClass();
             Class<?>[] interfaces = targetClass.getInterfaces();
             Map<String, ?> map = applicationContext.getBeansOfType(interfaces[0]);
             for (Map.Entry<String, ?> m : map.entrySet()) {
                 try {
                     // 拦截把自己除去
-                    if (m.getValue().equals(invocation.getThis())) {
+                    if (SpringProxyUtils.getRealTarget(m.getValue()) == o) {
                         continue;
                     }
                     return ReflectionUtils.invokeMethod(invocation.getMethod(), m.getValue(), invocation.getArguments());
