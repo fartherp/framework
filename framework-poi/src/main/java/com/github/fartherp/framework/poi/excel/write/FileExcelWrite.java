@@ -6,7 +6,6 @@ package com.github.fartherp.framework.poi.excel.write;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.List;
 
 /**
  * 文件流
@@ -15,16 +14,15 @@ import java.util.List;
  * @date: 2017/11/25
  */
 public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
-    public <T> FileExcelWrite(String[] title, String fileName) {
+    public FileExcelWrite(String[] title, String fileName) {
         super(title, fileName);
-        this.createOutputStream();
     }
 
     public ExcelWrite<T> createOutputStream() {
         try {
             this.outputStream = new FileOutputStream(this.fileName);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException("文件不存在", e);
         }
         return this;
     }

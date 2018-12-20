@@ -185,6 +185,7 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         if (fileName == null) {
             throw new IllegalArgumentException("文件名不存在");
         }
+        this.createOutputStream();
         // 创建excel
         createWb();
         this.deal = deal;

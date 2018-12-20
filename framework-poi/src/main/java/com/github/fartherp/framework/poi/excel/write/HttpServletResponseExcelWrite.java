@@ -20,17 +20,16 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
 
     private HttpServletResponse response;
 
-    public <T> HttpServletResponseExcelWrite(String[] title, String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public HttpServletResponseExcelWrite(String[] title, String fileName, HttpServletRequest request, HttpServletResponse response) {
         super(title, fileName);
         this.setResponse(request, response);
-        this.createOutputStream();
     }
 
     public ExcelWrite<T> createOutputStream() {
         try {
             this.outputStream = this.response.getOutputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("响应流异常", e);
         }
         return this;
     }

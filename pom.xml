@@ -97,6 +97,7 @@
         <javax.el.version>2.2.5</javax.el.version>
         <protostuff.version>1.0.9</protostuff.version>
         <objenesis.version>2.6</objenesis.version>
+        <html2pdf.version>2.1.1</html2pdf.version>
     </properties>
 
     <scm>
@@ -717,6 +718,11 @@
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>html2pdf</artifactId>
+                <version>${html2pdf.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
