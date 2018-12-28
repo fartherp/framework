@@ -12,7 +12,7 @@ import com.github.fartherp.framework.poi.ReadDeal;
  * @author: CK
  * @date: 2017/12/22
  */
-public interface CSVReaderDeal<E> extends ReadDeal<E> {
+public interface CSVReadDeal<E> extends ReadDeal<E> {
     /**
      * 一行CSV数据返回业务BEAN
      * @param arr 一行CSV数据

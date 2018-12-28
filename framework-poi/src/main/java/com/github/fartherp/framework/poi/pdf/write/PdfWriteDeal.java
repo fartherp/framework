@@ -10,6 +10,7 @@ package com.github.fartherp.framework.poi.pdf.write;
  * @author: CK
  * @date: 2018/12/19
  */
+@FunctionalInterface
 public interface PdfWriteDeal<R> {
     R deal();
 }

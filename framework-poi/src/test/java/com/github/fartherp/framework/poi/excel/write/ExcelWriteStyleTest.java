@@ -37,17 +37,15 @@ public class ExcelWriteStyleTest {
 //        excelDtoExcelWrite.setLargeDataMode(false);
         ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
         writeStyle.condition(condition).head(head).deal(
-                new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
-                    public String[] dealBean(ExcelDto obj) {
-                        String[] result = new String[6];
-                        result[0] = obj.getTime();
-                        result[1] = obj.getName();
-                        result[2] = obj.getClient();
-                        result[3] = obj.getVersion();
-                        result[4] = obj.getIp();
-                        result[5] = obj.getStatus() + "";
-                        return result;
-                    }
+                obj -> {
+                    String[] result = new String[6];
+                    result[0] = obj.getTime();
+                    result[1] = obj.getName();
+                    result[2] = obj.getClient();
+                    result[3] = obj.getVersion();
+                    result[4] = obj.getIp();
+                    result[5] = obj.getStatus() + "";
+                    return result;
                 });
         writeStyle.list(ExcelWriteStyleTest.getList())
                 .list(ExcelWriteStyleTest.getList1())

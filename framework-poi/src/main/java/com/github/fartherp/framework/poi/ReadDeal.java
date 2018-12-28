@@ -11,17 +11,24 @@ import java.util.List;
  * Author: CK
  * Date: 2016/1/17
  */
+@FunctionalInterface
 public interface ReadDeal<E> {
     /**
      * 批处理数量
      * @return 批处理数量
      */
-    int getBatchCount();
+    default int getBatchCount() {
+        return 1000;
+    }
+
     /**
      * 跳过开始行数
      * @return 跳过行数
      */
-    int skipLine();
+    default int skipLine() {
+        return 1;
+    }
+
     /**
      * 批处理List
      * @param list List

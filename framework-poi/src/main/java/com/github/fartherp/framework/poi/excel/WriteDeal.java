@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.poi.excel;
 
-import com.github.fartherp.framework.poi.excel.write.ExcelWrite;
+import com.github.fartherp.framework.poi.Constant;
 
 /**
  * Excel写接口
@@ -12,6 +12,7 @@ import com.github.fartherp.framework.poi.excel.write.ExcelWrite;
  * @author: CK
  * @date: 2017/11/25
  */
+@FunctionalInterface
 public interface WriteDeal<T> {
     /**
      * 一行excel数据返回业务BEAN
@@ -26,19 +27,30 @@ public interface WriteDeal<T> {
      * @param title 标题
      * @return 宽度
      */
-    int[] setColumnWidth(String[] title);
+    default int[] setColumnWidth(String[] title) {
+        int[] columnWidth = new int[title.length];
+        for (int i = 0; i < title.length; i++) {
+            columnWidth[i] = Constant.WIDTH_DEFAULT;
+        }
+        return columnWidth;
+    }
 
     /**
      * 设置高度
      * @return 高度
      */
-    short setHeight();
+    default short setHeight() {
+        return Constant.HEIGHT_DEFAULT;
+    }
 
     /**
      * 设置最大行数
      * @return 最大行数
      */
-    int setMaxRows();
-
-    void setExcelWrite(ExcelWrite excelWrite);
+    default int setMaxRows(String type) {
+        if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(type)) {
+            return 1048576;
+        }
+        return 65536;
+    }
 }

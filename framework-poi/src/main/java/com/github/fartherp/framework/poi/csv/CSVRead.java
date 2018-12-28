@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 2016/1/17
  */
 public class CSVRead<E> {
-    public void read(InputStream inputStream, CSVReaderDeal<E> deal) {
+    public void read(InputStream inputStream, CSVReadDeal<E> deal) {
         CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)));
         try {
             int tmp = deal.getBatchCount();

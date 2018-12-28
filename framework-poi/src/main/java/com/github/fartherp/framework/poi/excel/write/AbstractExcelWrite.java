@@ -189,7 +189,6 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         // 创建excel
         createWb();
         this.deal = deal;
-        this.deal.setExcelWrite(this);
         return this;
     }
 
@@ -216,7 +215,7 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
 
     public void createSheet(List<T> list, boolean flag) {
         // excel处理的最大行数
-        int maxRows = deal.setMaxRows();
+        int maxRows = deal.setMaxRows(this.getType());
         if ((flag && total == list.size()) || (total > maxRows && currentRow == maxRows)) {
             total += 1;
             // 第一个sheet(数量相等), 第二个及以后(超过最大行)
@@ -250,32 +249,6 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
                     e.printStackTrace();
                 }
             }
-        }
-    }
-
-    public static abstract class DefaultWriteDeal<T> implements WriteDeal<T> {
-        private ExcelWrite excelWrite;
-        public int[] setColumnWidth(String[] title) {
-            int[] columnWidth = new int[title.length];
-            for (int i = 0; i < title.length; i++) {
-                columnWidth[i] = Constant.WIDTH_DEFAULT;
-            }
-            return columnWidth;
-        }
-
-        public short setHeight() {
-            return Constant.HEIGHT_DEFAULT;
-        }
-
-        public int setMaxRows() {
-            if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(excelWrite.getType())) {
-                return 1048576;
-            }
-            return 65536;
-        }
-
-        public void setExcelWrite(ExcelWrite excelWrite) {
-            this.excelWrite = excelWrite;
         }
     }
 }

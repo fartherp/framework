@@ -79,7 +79,7 @@ public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
 
     public void createSheet(List<T> list, boolean flag) {
         // excel处理的最大行数
-        int maxRows = excelWrite.getDeal().setMaxRows();
+        int maxRows = excelWrite.getDeal().setMaxRows(this.getType());
         if ((flag && excelWrite.getTotal() == list.size()) || (excelWrite.getTotal() > maxRows && excelWrite.getCurrentRow() == maxRows)) {
             excelWrite.setTotal(excelWrite.getTotal() + 3);
             excelWrite.setCurrentRow(0);

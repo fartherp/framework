@@ -19,7 +19,7 @@ public class CSVReadTest {
     @Test
     public void testRead() throws Exception {
         CSVRead<CsvReadDto> excelRead = new CSVRead<CsvReadDto>();
-        excelRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new DefaultCSVReaderDeal<CsvReadDto>() {
+        excelRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();
@@ -34,16 +34,6 @@ public class CSVReadTest {
                 Assert.assertEquals("name1", list.get(0).getName());
                 Assert.assertEquals("name2", list.get(1).getName());
                 Assert.assertEquals("name3", list.get(2).getName());
-            }
-
-            // 批量加载多少数据，统一处理（默认1000）
-            public int getBatchCount() {
-                return super.getBatchCount();
-            }
-
-            // 从第几行开始加载（默认跳过第一行）
-            public int skipLine() {
-                return super.skipLine();
             }
         });
     }

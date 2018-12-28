@@ -30,17 +30,15 @@ public class FileExcelWriteTest {
         FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
 //        excelDtoExcelWrite.setLargeDataMode(false);
         excelDtoExcelWrite.deal(
-                new ExcelWriteStyle.DefaultWriteDeal<ExcelDto>() {
-                    public String[] dealBean(ExcelDto obj) {
-                        String[] result = new String[6];
-                        result[0] = obj.getTime();
-                        result[1] = obj.getName();
-                        result[2] = obj.getClient();
-                        result[3] = obj.getVersion();
-                        result[4] = obj.getIp();
-                        result[5] = obj.getStatus() + "";
-                        return result;
-                    }
+                obj -> {
+                    String[] result = new String[6];
+                    result[0] = obj.getTime();
+                    result[1] = obj.getName();
+                    result[2] = obj.getClient();
+                    result[3] = obj.getVersion();
+                    result[4] = obj.getIp();
+                    result[5] = obj.getStatus() + "";
+                    return result;
                 });
         // 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
         excelDtoExcelWrite.list(ExcelWriteStyleTest.getList())
