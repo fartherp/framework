@@ -99,6 +99,7 @@
         <protostuff.version>1.0.9</protostuff.version>
         <objenesis.version>2.6</objenesis.version>
         <html2pdf.version>2.1.1</html2pdf.version>
+        <redisson.version>3.9.1</redisson.version>
     </properties>
 
     <scm>
@@ -727,6 +728,11 @@
                 <groupId>com.itextpdf</groupId>
                 <artifactId>html2pdf</artifactId>
                 <version>${html2pdf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

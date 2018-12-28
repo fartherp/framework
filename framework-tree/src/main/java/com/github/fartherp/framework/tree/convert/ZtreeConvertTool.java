@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.tree.convert;
 
-import com.github.fartherp.framework.common.util.JsonUtil;
 import com.github.fartherp.framework.tree.bo.Treeable;
 import com.github.fartherp.framework.tree.model.ztree.SimpleZtree;
 
@@ -12,24 +11,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Created by framework .
  * Auth: hyssop
  * Date: 2016-09-09-17:29
  */
-public class ZtreeConvertTool<T extends SimpleZtree, S extends Treeable, ID> implements ConvertTool {
+public class ZtreeConvertTool<T extends SimpleZtree, S extends Treeable, ID> implements ConvertTool<T, S> {
     public boolean[] booleans = new boolean[2];
 
-    public String findTreeStr(List list, ModelCall mc) {
-        return JsonUtil.toJson(findModel(list, mc).getChildren());
-    }
-
-    public List findChildren(List list, ModelCall mc) {
+    public List<T> findChildren(List<S> list, Function<S, T> mc) {
         return findModel(list, mc).getChildren();
     }
 
-    private T findModel(List<S> list, ConvertTool.ModelCall<S, T> mc) {
+    private T findModel(List<S> list, Function<S, T> mc) {
         if (null == list) {
             throw new RuntimeException("没有属性结构");
         }
@@ -50,7 +46,7 @@ public class ZtreeConvertTool<T extends SimpleZtree, S extends Treeable, ID> imp
      * @param p    最终的菜单map
      * @param mc   具体业务回调
      */
-    private void findModel(List<S> list, Map<ID, T> p, ConvertTool.ModelCall<S, T> mc) {
+    private void findModel(List<S> list, Map<ID, T> p, Function<S, T> mc) {
         if (null == list || list.isEmpty()) {
             return;
         }
@@ -73,8 +69,8 @@ public class ZtreeConvertTool<T extends SimpleZtree, S extends Treeable, ID> imp
      * @param mc   自己实现的业务回调接口
      * @param fail 没有找到父菜单的菜单列表
      */
-    private void setTreeModel(S t, Map<ID, T> p, ConvertTool.ModelCall<S, T> mc, List<S> fail) {
-        T model = mc.convert(t);
+    private void setTreeModel(S t, Map<ID, T> p, Function<S, T> mc, List<S> fail) {
+        T model = mc.apply(t);
         if (model == null) {
             throw new RuntimeException("回调方法生成SimpleZtree错误");
         }

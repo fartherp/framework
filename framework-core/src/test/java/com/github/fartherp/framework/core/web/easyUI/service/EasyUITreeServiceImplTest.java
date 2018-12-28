@@ -26,14 +26,12 @@ public class EasyUITreeServiceImplTest {
 
     @Test
     public void testFindModel() throws Exception {
-        String json = service.findTreeStr(getList(), new EasyUITreeService.ModelCall<Param>() {
-            public EasyUITreeModel convert(Param p) {
-                EasyUITreeModel m = new EasyUITreeModel();
-                m.setId(p.getParamId());
-                m.setText(p.getParamName());
-                m.setPid(p.getParamType());
-                return m;
-            }
+        List<EasyUITreeModel> json = service.findChildren(getList(), p -> {
+            EasyUITreeModel m = new EasyUITreeModel();
+            m.setId(p.getParamId());
+            m.setText(p.getParamName());
+            m.setPid(p.getParamType());
+            return m;
         });
         Assert.assertNotNull(json);
     }

@@ -48,5 +48,9 @@
             <artifactId>framework-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+        </dependency>
     </dependencies>
 </project>

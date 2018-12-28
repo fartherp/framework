@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.core.web.easyUI.service;
 
-import com.github.fartherp.framework.common.util.JsonUtil;
 import com.github.fartherp.framework.core.web.easyUI.model.EasyUITreeModel;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,15 +20,12 @@ import java.util.Set;
  * Date: 2016/1/23
  */
 public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
-    public String findTreeStr(List<T> list, ModelCall<T> mc) {
-        return JsonUtil.toJson(findModel(list, mc).getChildren());
-    }
 
-    public List<EasyUITreeModel> findChildren(List<T> list, ModelCall<T> mc) {
+    public List<EasyUITreeModel> findChildren(List<T> list, Function<T, EasyUITreeModel> mc) {
         return findModel(list, mc).getChildren();
     }
 
-    private EasyUITreeModel findModel(List<T> list, ModelCall<T> mc) {
+    private EasyUITreeModel findModel(List<T> list, Function<T, EasyUITreeModel> mc) {
         if (null == list) {
             throw new RuntimeException("没有EasyUI菜单");
         }
@@ -49,7 +46,7 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
      * @param p 最终的菜单map
      * @param mc 具体业务回调
      */
-    private void findModel(List<T> list, Map<Integer, EasyUITreeModel> p, ModelCall<T> mc) {
+    private void findModel(List<T> list, Map<Integer, EasyUITreeModel> p, Function<T, EasyUITreeModel> mc) {
         if (null == list || list.isEmpty()) {
             return;
         }
@@ -71,8 +68,8 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
      * @param mc 自己实现的业务回调接口
      * @param fail 没有找到父菜单的菜单列表
      */
-    private void setTreeModel(T t, Map<Integer, EasyUITreeModel> p, ModelCall<T> mc, List<T> fail) {
-        EasyUITreeModel model = mc.convert(t);
+    private void setTreeModel(T t, Map<Integer, EasyUITreeModel> p, Function<T, EasyUITreeModel> mc, List<T> fail) {
+        EasyUITreeModel model = mc.apply(t);
         if (model == null) {
             throw new RuntimeException("回调方法生成EasyUITreeModel错误");
         }

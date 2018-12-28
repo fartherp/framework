@@ -9,11 +9,11 @@ import com.github.fartherp.framework.common.constant.Constant;
 import java.math.BigDecimal;
 
 /**
- * The amount calculate tool. the default scale is two precision.
+ * The BigDecimal calculate tool. the default scale is two precision.
  * Author: CK
  * Date: 2015/3/27.
  */
-public class AmountCountUtil {
+public class BigDecimalUtil {
 
     /**
      * the add calculate by params is {@code double} type.

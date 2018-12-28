@@ -19,7 +19,7 @@ public class Test {
         for (int i = 0; i < arrays.length; i++) {
             Tran tran = new Tran(1,0.78,0,0,4,1,1,2, 3846.15,0.78, 30, "2016-07-10 00:00:02",arrays[i]);
             BigDecimal t = calculateAcqFee(tran, "2016-07-10 11:05:02");
-            acquirer_trans_fee = AmountCountUtil.add(acquirer_trans_fee, t);
+            acquirer_trans_fee = BigDecimalUtil.add(acquirer_trans_fee, t);
         }
         System.out.println(acquirer_trans_fee.longValue());
 
@@ -50,8 +50,8 @@ public class Test {
      */
     public static BigDecimal calculateFeeRate(Data tran) {
         // 交易金额(分) 费率(0.38)
-        BigDecimal tmp_amount = AmountCountUtil.mul(tran.amount, tran.fee_rate);
-        BigDecimal acquirer_trans_fee = AmountCountUtil.div(tmp_amount, hundred);
+        BigDecimal tmp_amount = BigDecimalUtil.mul(tran.amount, tran.fee_rate);
+        BigDecimal acquirer_trans_fee = BigDecimalUtil.div(tmp_amount, hundred);
         return acquirer_trans_fee;
     }
 
@@ -62,16 +62,16 @@ public class Test {
      */
     public static BigDecimal calculateMaxFeeRate(Data tran) {
         // 交易金额(分) 临界值(元)->分
-        BigDecimal limit_val_amount = AmountCountUtil.mul(tran.limit_val, hundred);
+        BigDecimal limit_val_amount = BigDecimalUtil.mul(tran.limit_val, hundred);
         boolean flag = tran.amount.compareTo(limit_val_amount) > 0;
         BigDecimal acquirer_trans_fee = null;
         if (flag) {
             // 封顶(元)->分
-            acquirer_trans_fee = AmountCountUtil.mul(tran.max_fee, hundred);
+            acquirer_trans_fee = BigDecimalUtil.mul(tran.max_fee, hundred);
         } else {
             // 交易金额(分)
-            BigDecimal tmp_amount = AmountCountUtil.mul(tran.amount, tran.fee_rate);
-            acquirer_trans_fee = AmountCountUtil.div(tmp_amount, hundred);
+            BigDecimal tmp_amount = BigDecimalUtil.mul(tran.amount, tran.fee_rate);
+            acquirer_trans_fee = BigDecimalUtil.div(tmp_amount, hundred);
         }
         return acquirer_trans_fee;
     }
@@ -92,7 +92,7 @@ public class Test {
 
     public static BigDecimal calculateThreeOneCondition(Data tran, boolean flag) {
         // 交易金额(分) 临界值(元)->分
-        BigDecimal limit_val_amount = AmountCountUtil.mul(tran.zone_fee, hundred);
+        BigDecimal limit_val_amount = BigDecimalUtil.mul(tran.zone_fee, hundred);
         int diff = tran.amount.compareTo(limit_val_amount);
         BigDecimal acquirer_trans_fee = BigDecimal.ZERO;
         if (flag) {
@@ -135,24 +135,24 @@ public class Test {
             if (tran.three_flag_one == 1) {
                 // 按比例
                 // 交易金额(分)
-                BigDecimal tmp_amount = AmountCountUtil.mul(tran.amount, tran.zone_fee_one);
-                acquirer_trans_fee = AmountCountUtil.div(tmp_amount, hundred);
+                BigDecimal tmp_amount = BigDecimalUtil.mul(tran.amount, tran.zone_fee_one);
+                acquirer_trans_fee = BigDecimalUtil.div(tmp_amount, hundred);
                 return acquirer_trans_fee;
             } else {
                 // 固定值
-                acquirer_trans_fee = AmountCountUtil.mul(tran.zone_fee_one, hundred);
+                acquirer_trans_fee = BigDecimalUtil.mul(tran.zone_fee_one, hundred);
                 return acquirer_trans_fee;
             }
         } else {
             if (tran.three_flag_two == 1) {
                 // 按比例
                 // 交易金额(分)
-                BigDecimal tmp_amount = AmountCountUtil.mul(tran.amount, tran.zone_fee_two);
-                acquirer_trans_fee = AmountCountUtil.div(tmp_amount, hundred);
+                BigDecimal tmp_amount = BigDecimalUtil.mul(tran.amount, tran.zone_fee_two);
+                acquirer_trans_fee = BigDecimalUtil.div(tmp_amount, hundred);
                 return acquirer_trans_fee;
             } else {
                 // 固定值
-                acquirer_trans_fee = AmountCountUtil.mul(tran.zone_fee_two, hundred);
+                acquirer_trans_fee = BigDecimalUtil.mul(tran.zone_fee_two, hundred);
                 return acquirer_trans_fee;
             }
         }

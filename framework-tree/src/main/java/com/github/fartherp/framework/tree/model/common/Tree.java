@@ -9,5 +9,5 @@ package com.github.fartherp.framework.tree.model.common;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public interface Tree<ID> {
+public interface Tree {
 }

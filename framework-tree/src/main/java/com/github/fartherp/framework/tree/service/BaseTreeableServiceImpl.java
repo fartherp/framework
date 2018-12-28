@@ -44,7 +44,6 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
     @Transactional
     public void deleteSelfAndChild(T m) {
         List<T> ms = getDao().selectAll();
-        List<T> results = new ArrayList<T>();
         for (T t : ms) {
             if (t.getParentId().equals(m.getId())) {
                 getDao().deleteByPrimaryKey((ID) t.getId());
@@ -249,8 +248,8 @@ public abstract class BaseTreeableServiceImpl<T extends Treeable<ID>, ID extends
         if (ListUtils.isEqualList(models, null))
             return models;
         List<String> ids = Lists.newArrayList();
-        for (int i = 0; i < models.size(); i++) {
-            ids.add(String.valueOf(models.get(i).getId()));
+        for (T model : models) {
+            ids.add(String.valueOf(model.getId()));
         }
         searchable.removeSearchFilter("parent_id_eq");
         String[] array = ids.toArray(new String[ids.size()]);

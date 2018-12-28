@@ -6,6 +6,7 @@ package com.github.fartherp.framework.tree.model.easyui;
 
 import com.github.fartherp.framework.tree.model.common.BaseTree;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public abstract class EasyUiTree<T extends EasyUiTree, ID> extends BaseTree {
+public abstract class EasyUiTree<T extends EasyUiTree, ID extends Serializable> extends BaseTree {
 
     // 树节点的标识，必需
     private ID id;

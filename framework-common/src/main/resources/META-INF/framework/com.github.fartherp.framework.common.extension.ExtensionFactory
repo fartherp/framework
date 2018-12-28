@@ -1,2 +1,0 @@
-adaptive=com.github.fartherp.framework.common.extension.factory.AdaptiveExtensionFactory
-spi=com.github.fartherp.framework.common.extension.factory.SpiExtensionFactory

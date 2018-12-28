@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public abstract class BaseTree<ID extends Serializable> implements Tree {
+public abstract class BaseTree implements Tree {
     /**
      * URL
      */

@@ -4,6 +4,7 @@
 
 package com.github.fartherp.framework.tree.model.easyui;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Auth: hyssop
  * Date: 2016-09-09
  */
-public class SimpleEasyUiTree<T extends EasyUiTree, ID> extends EasyUiTree {
+public class SimpleEasyUiTree<T extends EasyUiTree, ID extends Serializable> extends EasyUiTree<T, ID> {
     private List<T> children;
 
     public List getChildren() {
