@@ -6,7 +6,7 @@ package com.github.fartherp.framework.core.kv.handler;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.stringtemplate.v4.ST;
 
 import java.util.List;

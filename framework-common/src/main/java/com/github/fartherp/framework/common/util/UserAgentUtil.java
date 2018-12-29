@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.common.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 根据 user agent string 判断用户的平台、浏览器 参考资料

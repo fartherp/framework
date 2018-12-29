@@ -18,6 +18,7 @@ import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
 import javax.validation.MessageInterpolator;
 import javax.validation.ValidationException;
+import java.lang.invoke.MethodHandles;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +36,7 @@ import static org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.R
  * @date: 2018/3/22
  */
 public abstract class ExpandAbstractMessageInterpolator implements MessageInterpolator {
-    private static final Log log = LoggerFactory.make();
+    private static final Log log = LoggerFactory.make(MethodHandles.lookup());
 
     /**
      * The default initial capacity for this cache.

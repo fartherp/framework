@@ -8,10 +8,9 @@
 
 package com.github.fartherp.framework.database.mybatis.plugin.page;
 
-
 import com.github.fartherp.framework.database.mybatis.plugin.page.dialect.Dialect;
 import com.github.fartherp.framework.database.mybatis.plugin.page.dialect.DialectType;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;

@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.database.mybatis.plugin.page.dialect;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by IntelliJ IDEA.

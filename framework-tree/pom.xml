@@ -39,10 +39,6 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
@@ -59,11 +55,11 @@
 
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>net.sf.opencsv</groupId>
+            <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
         </dependency>
     </dependencies>

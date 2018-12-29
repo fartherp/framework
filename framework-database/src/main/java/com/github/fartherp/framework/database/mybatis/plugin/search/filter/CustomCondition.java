@@ -7,7 +7,7 @@ import com.github.fartherp.framework.database.mybatis.plugin.search.enums.Relati
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.InvlidSearchOperatorException;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.SearchException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;

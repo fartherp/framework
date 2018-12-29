@@ -14,6 +14,7 @@ import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
 import javax.el.ExpressionFactory;
 import javax.validation.MessageInterpolator;
+import java.lang.invoke.MethodHandles;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Locale;
@@ -25,7 +26,7 @@ import java.util.Locale;
  * @date: 2018/3/22
  */
 public class ExpandResourceBundleMessageInterpolator extends ExpandAbstractMessageInterpolator {
-    private static final Log LOG = LoggerFactory.make();
+    private static final Log LOG = LoggerFactory.make(MethodHandles.lookup());
 
     private final ExpressionFactory expressionFactory;
 

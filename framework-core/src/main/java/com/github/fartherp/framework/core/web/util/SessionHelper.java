@@ -7,7 +7,7 @@ package com.github.fartherp.framework.core.web.util;
 import com.github.fartherp.framework.core.web.ThreadLocalInfo;
 import com.github.fartherp.framework.core.web.filter.auth.AuthWrapper;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

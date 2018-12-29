@@ -5,7 +5,7 @@
 package com.github.fartherp.framework.database.mybatis.plugin.monitor;
 
 import com.github.fartherp.framework.database.mybatis.orm.SqlEvent;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.mapping.BoundSql;

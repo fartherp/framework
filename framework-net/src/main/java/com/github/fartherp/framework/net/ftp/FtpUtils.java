@@ -5,7 +5,7 @@
 package com.github.fartherp.framework.net.ftp;
 
 import com.github.fartherp.framework.net.exception.FtpFailException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;

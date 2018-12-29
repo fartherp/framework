@@ -5,7 +5,7 @@
 package com.github.fartherp.framework.compress;
 
 import com.github.fartherp.framework.common.util.FileUtilies;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

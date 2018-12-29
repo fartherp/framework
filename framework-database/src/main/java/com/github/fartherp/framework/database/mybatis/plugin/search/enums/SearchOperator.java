@@ -5,7 +5,7 @@ package com.github.fartherp.framework.database.mybatis.plugin.search.enums;
 
 
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.SearchException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 

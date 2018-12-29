@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.common.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.mail.internet.MimeUtility;
 import java.io.UnsupportedEncodingException;

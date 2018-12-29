@@ -6,7 +6,7 @@ package com.github.fartherp.framework.core.web.filter;
 
 import com.github.fartherp.framework.core.web.util.RequestUtils;
 import com.github.fartherp.framework.core.web.util.UrlUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;

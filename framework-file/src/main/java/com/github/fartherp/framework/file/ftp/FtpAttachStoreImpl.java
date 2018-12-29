@@ -11,7 +11,7 @@ import com.github.fartherp.framework.net.ftp.FtpConfig;
 import com.github.fartherp.framework.net.ftp.FtpUtils;
 import com.google.common.base.Joiner;
 import com.google.common.io.Files;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

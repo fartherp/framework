@@ -10,7 +10,7 @@ import com.github.fartherp.framework.core.kv.handler.KvHandler;
 import com.github.fartherp.framework.core.kv.handler.KvHandlerSupport;
 import com.github.fartherp.framework.core.kv.service.KvService;
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;

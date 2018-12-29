@@ -7,8 +7,8 @@ package com.github.fartherp.framework.database.mybatis.plugin.search.filter;
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.RelationEnum;
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.exception.SearchException;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Arrays;
 
@@ -36,7 +36,7 @@ public class CustomConditionFactory {
      * 拼or条件
      */
     public static SearchFilter or(SearchFilter first, SearchFilter... others) {
-        if (ObjectUtils.notEqual(first,ObjectUtils.NULL)&&ArrayUtils.isNotEmpty(others)) {
+        if (ObjectUtils.notEqual(first,ObjectUtils.NULL)&& ArrayUtils.isNotEmpty(others)) {
             if(others instanceof CustomCondition[]){
                 ((CustomCondition)first).addCustomCondition(RelationEnum.valueOf("or"),Arrays.asList((CustomCondition[])others));
             }

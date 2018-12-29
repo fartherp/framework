@@ -9,7 +9,7 @@ import com.github.fartherp.framework.database.mybatis.plugin.page.dialect.Dialec
 import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Param;
 import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Searchable;
 import com.github.fartherp.framework.database.mybatis.plugin.search.vo.Sort;
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**

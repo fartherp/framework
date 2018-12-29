@@ -8,7 +8,7 @@ import com.github.fartherp.framework.core.web.filter.auth.AuthWrapper;
 import com.github.fartherp.framework.core.web.util.RequestUtils;
 import com.github.fartherp.framework.core.web.util.SessionHelper;
 import com.github.fartherp.framework.core.web.util.UrlUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;

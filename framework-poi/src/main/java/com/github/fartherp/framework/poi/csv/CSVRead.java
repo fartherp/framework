@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.poi.csv;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 
 import java.io.DataInputStream;
 import java.io.IOException;
