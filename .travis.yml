@@ -6,8 +6,6 @@ jdk:
 install: ./mvnw install-DskipTests=true -B -V
 script: ./mvnw test -B
 
-sudo: false
-
 cache:
   directories:
     - $HOME/.m2
