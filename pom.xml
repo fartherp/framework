@@ -108,6 +108,14 @@
         </license>
     </licenses>
 
+    <issueManagement>
+        <system>GitHub Issue Management</system>
+        <url>https://github.com/fartherp/framework/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.com/fartherp/framework</url>
+    </ciManagement>
     <distributionManagement>
         <repository>
             <id>oss</id>
@@ -125,7 +133,7 @@
         <developer>
             <id>ck</id>
             <name>ck</name>
-            <email>yuqiang.cui@gmail.com</email>
+            <email>214722930@qq.com</email>
         </developer>
         <developer>
             <id>wyzhangjie</id>
@@ -309,6 +317,14 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/../</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                </includes>
             </resource>
         </resources>
     </build>
