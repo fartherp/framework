@@ -3,8 +3,16 @@ language: java
 jdk:
   - oraclejdk8
 
+before_install:
+  - chmod +x mvnw
+
 install: ./mvnw install-DskipTests=true -B -V
 script: ./mvnw test -B
+
+notifications:
+  email: false
+
+sudo: false
 
 cache:
   directories:
