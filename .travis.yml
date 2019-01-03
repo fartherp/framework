@@ -1,0 +1,15 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+script: mvn -f pom.xml test
+
+notifications:
+  email: false
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.m2
