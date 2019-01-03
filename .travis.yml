@@ -6,7 +6,7 @@ jdk:
 before_install:
   - chmod +x mvnw
 
-install: ./mvnw install-DskipTests=true -B -V
+install: ./mvnw install -DskipTests=true -B -V
 script: ./mvnw test -B
 
 notifications:
