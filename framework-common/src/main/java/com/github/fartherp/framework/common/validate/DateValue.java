@@ -28,7 +28,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Constraint(validatedBy = DateValueValidator.class)
 @Documented
 public @interface DateValue {
-    String message() default "";
+    String message() default "{com.github.fartherp.framework.common.validate.DateValue.message}";
 
     Class<?>[] groups() default {};
 
