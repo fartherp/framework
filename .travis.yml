@@ -3,8 +3,8 @@ language: java
 jdk:
   - oraclejdk8
 
-install: mvn -f pom.xml -DskipTests=true
-script: mvn -f pom.xml test
+install: ./mvnw install-DskipTests=true -B -V
+script: ./mvnw test -B
 
 sudo: false
 
