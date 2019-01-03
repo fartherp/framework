@@ -5,7 +5,6 @@
 package com.github.fartherp.framework.poi.pdf.write;
 
 import org.apache.commons.io.FileUtils;
-import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +12,6 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static org.testng.Assert.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +21,7 @@ import static org.testng.Assert.*;
  */
 public class FilePdfWriteTest {
 
-    @Test
+//    @Test
     public void write() throws Exception {
         String fileName = "D:\\pdf1.pdf";
         FilePdfWrite filePdfWrite = new FilePdfWrite(fileName);
