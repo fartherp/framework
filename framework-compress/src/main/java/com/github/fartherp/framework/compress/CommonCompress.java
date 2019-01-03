@@ -110,7 +110,7 @@ public abstract class CommonCompress implements Compress {
         File source = getSourceFile();
         if (StringUtils.isBlank(getTarget())) {
             // 目标路径不存在,(压缩/解压)设置目标目录为父目录
-            setTarget(source.getParent());
+            this.target = source.getParent();
             File target = null;
             if (flag) {
                 // 解压
@@ -134,7 +134,7 @@ public abstract class CommonCompress implements Compress {
                     throw new RuntimeException("target file exist");
                 } else {
                     // 目标不存在,创建
-                    setTarget(target.getAbsolutePath());
+                    this.target = target.getAbsolutePath();
                     setTargetFile(target);
                 }
             } else {
@@ -143,7 +143,7 @@ public abstract class CommonCompress implements Compress {
                     // 目标不存在,创建
                     File file = new File(target, File.separator);
                     file.mkdirs();
-                    setTarget(target.getAbsolutePath());
+                    this.target = target.getAbsolutePath();
                     setTargetFile(target);
                 }
             }
@@ -165,7 +165,7 @@ public abstract class CommonCompress implements Compress {
      * @param target 目标名称
      */
     public CommonCompress target(String target) {
-        setTarget(target);
+        this.target = target;
         setTargetFile(new File(target));
         return this;
     }
@@ -224,10 +224,6 @@ public abstract class CommonCompress implements Compress {
 
     public String getTarget() {
         return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
     }
 
     public File getSourceFile() {

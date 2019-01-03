@@ -21,7 +21,7 @@ public class BaseConfig {
     }
 
     private void init(String path) {
-        InputStream in = BaseConfig.class.getClassLoader().getResourceAsStream(path);
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(path);
         try {
             properties.load(in);
         } catch (IOException e) {

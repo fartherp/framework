@@ -63,19 +63,19 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
                     dir, fileName, file.getAbsolutePath());
             throw new RuntimeException("File is exists." + file.getAbsolutePath());
         }
-
-        OutputStream out = null;
         try {
             file.createNewFile();
-            out = new FileOutputStream(file);
+        } catch (IOException e) {
+            throw new RuntimeException("File create error." + file.getAbsolutePath());
+        }
+
+        try (OutputStream out = new FileOutputStream(file)) {
             IOUtils.copy(fileStream, out);
             out.flush();
         } catch (IOException e) {
             log.error("nfsAttachStore.store[dir={},fileName={},filePath={}]:{}",
                     dir, fileName, file.getAbsolutePath(), e);
             throw new RuntimeException("IOExcepiton." + e.getMessage());
-        } finally {
-            IOUtils.closeQuietly(out);
         }
     }
 
@@ -86,9 +86,7 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
             throw new RuntimeException("file not exists." + f.getAbsolutePath());
         }
 
-        InputStream in = null;
-        try {
-            in = new FileInputStream(f);
+        try (InputStream in = new FileInputStream(f)) {
             IOUtils.copy(in, output);
         } catch (FileNotFoundException e) {
             log.error("nfsAttachStore.fetch[dir={},fileName={}]:{}", dir, fileName, e);
@@ -96,8 +94,6 @@ public class NfsFileStoreImpl implements FileStore<NfsConfig> {
         } catch (IOException e) {
             log.error("nfsAttachStore.fetch[dir={},fileName={}]:{}", dir, fileName, e);
             throw new RuntimeException("IOException." + f.getAbsolutePath());
-        } finally {
-            IOUtils.closeQuietly(in);
         }
     }
 

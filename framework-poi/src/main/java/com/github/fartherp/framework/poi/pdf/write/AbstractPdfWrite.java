@@ -61,12 +61,15 @@ public abstract class AbstractPdfWrite implements PdfWrite {
     public void write() {
         this.createOutputStream();
 
-        PdfWriter writer = new PdfWriter(this.outputStream);
-        PdfDocument pdfDoc = new PdfDocument(writer);
+        try (PdfWriter writer = new PdfWriter(this.outputStream)) {
+            PdfDocument pdfDoc = new PdfDocument(writer);
 
-        Object o = this.deal.deal();
+            Object o = this.deal.deal();
 
-        convertToPdf(o, pdfDoc);
+            convertToPdf(o, pdfDoc);
+        } catch (IOException e) {
+            throw new RuntimeException("PDF写入错误", e);
+        }
     }
 
     public PdfWrite deal(PdfWriteDeal<?> deal) {
@@ -77,11 +80,7 @@ public abstract class AbstractPdfWrite implements PdfWrite {
     /**
      * 目前只提供html转换，其他需要自己实现
      */
-    protected <R> void convertToPdf(R r, PdfDocument pdfDoc) {
-        try {
-            HtmlConverter.convertToPdf((String) r, pdfDoc, this.converterProperties);
-        } catch (IOException e) {
-            throw new RuntimeException("PDF写入错误", e);
-        }
+    protected <R> void convertToPdf(R r, PdfDocument pdfDoc) throws IOException {
+        HtmlConverter.convertToPdf((String) r, pdfDoc, this.converterProperties);
     }
 }

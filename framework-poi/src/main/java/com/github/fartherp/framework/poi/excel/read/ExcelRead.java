@@ -63,6 +63,14 @@ public class ExcelRead<E> {
         } catch (Exception e) {
             // ignore
         } finally {
+            if (wb != null) {
+                try {
+                    wb.close();
+                } catch (IOException e) {
+                    // ignore
+                    wb = null;
+                }
+            }
             if (inputStream != null) {
                 try {
                     inputStream.close();

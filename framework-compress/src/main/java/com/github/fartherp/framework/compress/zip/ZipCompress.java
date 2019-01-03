@@ -55,15 +55,11 @@ public class ZipCompress extends CommonCompress {
      * @param targetFile 目标文件
      */
     public void startCompress(File sourceFile, File targetFile) {
-        ZipOutputStream outputStream = null;
-        try {
-            outputStream = new ZipOutputStream(new BufferedOutputStream(
-                    new CheckedOutputStream(new FileOutputStream(targetFile), new CRC32())));
+        try (ZipOutputStream outputStream = new ZipOutputStream(new BufferedOutputStream(
+                new CheckedOutputStream(new FileOutputStream(targetFile), new CRC32())))) {
             doCompress(outputStream, sourceFile, sourceFile.getName());
         } catch (IOException e) {
             throw new RuntimeException("ZIP 压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(outputStream);
         }
     }
 
@@ -74,15 +70,11 @@ public class ZipCompress extends CommonCompress {
      * @param httpServletResponse 响应
      */
     public void startCompress(File sourceFile, HttpServletResponse httpServletResponse) {
-        ZipOutputStream outputStream = null;
-        try {
-            outputStream = new ZipOutputStream(new BufferedOutputStream(
-                    new CheckedOutputStream(httpServletResponse.getOutputStream(), new CRC32())));
+        try (ZipOutputStream outputStream = new ZipOutputStream(new BufferedOutputStream(
+                new CheckedOutputStream(httpServletResponse.getOutputStream(), new CRC32())));) {
             doCompress(outputStream, sourceFile, sourceFile.getName());
         } catch (IOException e) {
             throw new RuntimeException("ZIP 压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(outputStream);
         }
     }
 
@@ -118,9 +110,7 @@ public class ZipCompress extends CommonCompress {
     }
 
     protected void startUnCompress(File sourceFile, File target) {
-        ZipArchiveInputStream is = null;
-        try {
-            is = new ZipArchiveInputStream(new BufferedInputStream(new FileInputStream(sourceFile)));
+        try (ZipArchiveInputStream is = new ZipArchiveInputStream(new BufferedInputStream(new FileInputStream(sourceFile)))) {
             ZipArchiveEntry entry = null;
             while ((entry = is.getNextZipEntry()) != null) {
                 if (entry.isDirectory()) {
@@ -129,20 +119,13 @@ public class ZipCompress extends CommonCompress {
                         f.mkdirs();
                     }
                 } else {
-                    OutputStream os = null;
-                    try {
-                        File file = new File(target, entry.getName());
-                        os = new BufferedOutputStream(new FileOutputStream(file));
+                    try (OutputStream os = new BufferedOutputStream(new FileOutputStream(new File(target, entry.getName())))) {
                         IOUtils.copy(is, os);
-                    } finally {
-                        IOUtils.closeQuietly(os);
                     }
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException("ZIP 解压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(is);
         }
     }
 }

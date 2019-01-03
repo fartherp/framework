@@ -20,8 +20,7 @@ import java.util.List;
  */
 public class CSVRead<E> {
     public void read(InputStream inputStream, CSVReadDeal<E> deal) {
-        CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)));
-        try {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)))) {
             int tmp = deal.getBatchCount();
             List<E> l = new ArrayList<E>(tmp);
             int i = 0;
@@ -45,13 +44,6 @@ public class CSVRead<E> {
             }
         } catch (IOException e) {
             // ignore
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                // ignore
-                reader = null;
-            }
         }
     }
 }

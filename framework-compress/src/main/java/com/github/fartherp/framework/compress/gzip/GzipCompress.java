@@ -43,47 +43,29 @@ public class GzipCompress extends CommonCompress {
     }
 
     public void startCompress(File sourceFile, HttpServletResponse httpServletResponse) {
-        GzipCompressorOutputStream outputStream = null;
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(sourceFile);
-            outputStream = new GzipCompressorOutputStream(httpServletResponse.getOutputStream());
+        try (GzipCompressorOutputStream outputStream = new GzipCompressorOutputStream(httpServletResponse.getOutputStream());
+             FileInputStream inputStream = new FileInputStream(sourceFile)) {
             IOUtils.copy(inputStream, outputStream);
         } catch (Exception e) {
             throw new RuntimeException("TAR 压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
-            IOUtils.closeQuietly(outputStream);
         }
     }
 
     public void startCompress(File sourceFile, File targetFile) {
-        GzipCompressorOutputStream outputStream = null;
-        FileInputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(sourceFile);
-            outputStream = new GzipCompressorOutputStream(new FileOutputStream(targetFile));
+        try (GzipCompressorOutputStream outputStream = new GzipCompressorOutputStream(new FileOutputStream(targetFile));
+             FileInputStream inputStream = new FileInputStream(sourceFile)) {
             IOUtils.copy(inputStream, outputStream);
         } catch (Exception e) {
             throw new RuntimeException("TAR 压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
-            IOUtils.closeQuietly(outputStream);
         }
     }
 
     protected void startUnCompress(File sourceFile, File target) {
-        GzipCompressorInputStream inputStream = null;
-        FileOutputStream outputStream = null;
-        try {
-            inputStream = new GzipCompressorInputStream(new FileInputStream(sourceFile));
-            outputStream = new FileOutputStream(target);
+        try (FileOutputStream outputStream = new FileOutputStream(target);
+             GzipCompressorInputStream inputStream = new GzipCompressorInputStream(new FileInputStream(sourceFile))) {
             IOUtils.copy(inputStream, outputStream);
         } catch (Exception e) {
             throw new RuntimeException("TAR 解压缩文件或文件夹错误", e);
-        } finally {
-            IOUtils.closeQuietly(inputStream);
-            IOUtils.closeQuietly(inputStream);
         }
     }
 }

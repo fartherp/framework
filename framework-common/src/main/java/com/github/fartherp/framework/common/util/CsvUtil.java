@@ -30,12 +30,11 @@ public class CsvUtil {
      */
     public static void writeCsvFile(HttpServletResponse response, HttpServletRequest request,
                                     String filename, String[] title, List<String[]> bodyList) {
-        CSVWriter writer = null;
-        try {
-            response.setContentType("application/octet-stream;charset=GBK");
-            String fileName = FileUtilies.getFileName(filename, request);
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".csv");
-            writer = new CSVWriter(response.getWriter());
+        response.setContentType("application/octet-stream;charset=GBK");
+        String fileName = FileUtilies.getFileName(filename, request);
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".csv");
+
+        try (CSVWriter writer = new CSVWriter(response.getWriter())) {
             if (title != null && title.length > 0) {
                 writer.writeNext(title);
             }
@@ -44,14 +43,6 @@ public class CsvUtil {
             }
         } catch (IOException e) {
             throw new RuntimeException("write csv file of response fail ", e);
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                // ignore
-            }
         }
     }
 
@@ -62,11 +53,7 @@ public class CsvUtil {
      * @param bodyList this body content of the csv file
      */
     public static void writeCsvFile(String filename, String[] title, List<String[]> bodyList) {
-        CSVWriter writer = null;
-        OutputStreamWriter osw = null;
-        try {
-            osw = new OutputStreamWriter(new FileOutputStream(new File(filename + ".csv")), "GBK");
-            writer = new CSVWriter(osw);
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File(filename + ".csv")), "GBK"))) {
             if (title != null && title.length > 0) {
                 writer.writeNext(title);
             }
@@ -75,17 +62,6 @@ public class CsvUtil {
             }
         } catch (IOException e) {
             throw new RuntimeException("write csv file fail ", e);
-        } finally {
-            try {
-                if (osw != null) {
-                    osw.close();
-                }
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                // ignore
-            }
         }
     }
 
@@ -95,14 +71,14 @@ public class CsvUtil {
      * @return the new {@code String}
      */
     public static String createCsvFile(List<List<Object>> outputList) {
-        StringBuilder os = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         // enter symbol
-        char returnChar = 13;
+        char returnChar = '\r';
         // newline symbol
-        char lineChar = 10;
+        char lineChar = '\n';
         for (List<Object> unitList : outputList) {
             if (unitList != null && !unitList.isEmpty()) {
-                StringBuilder sb = new StringBuilder();
+                sb.setLength(0);
                 for (Object unitOb : unitList) {
                     String unit = "";
                     if (unitOb != null) {
@@ -114,10 +90,9 @@ public class CsvUtil {
                 sb.deleteCharAt(sb.length() - 1);
                 sb.append(returnChar);
                 sb.append(lineChar);
-                os.append(sb);
             }
         }
-        return os.toString();
+        return sb.toString();
     }
 
 }
