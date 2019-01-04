@@ -4,8 +4,6 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import base64.Base64Utils;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -33,6 +31,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 import java.util.Date;
 
 /**
@@ -270,7 +269,7 @@ public class CertificateCoder {
             Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());
             signature.initSign(privateKey);
             signature.update(sign);
-            return Base64Utils.encode(signature.sign());
+            return Base64.getEncoder().encodeToString(signature.sign());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
         } catch (SignatureException e) {
@@ -298,7 +297,7 @@ public class CertificateCoder {
             Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());
             signature.initVerify(publicKey);
             signature.update(data);
-            return signature.verify(Base64Utils.decode(sign));
+            return signature.verify(Base64.getDecoder().decode(sign));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
         } catch (SignatureException e) {
