@@ -146,8 +146,12 @@ public class SpringProxyUtils {
             proxyFactory = findCglibProxyFactory(proxy);
         }
 
+        if (proxyFactory == null) {
+            return;
+        }
+
         Advisor[] advisors = proxyFactory.getAdvisors();
-        if (advisors == null || advisors.length == 0) {
+        if (advisors.length == 0) {
             return;
         }
 
@@ -176,8 +180,12 @@ public class SpringProxyUtils {
             proxyFactory = findCglibProxyFactory(proxy);
         }
 
+        if (proxyFactory == null) {
+            return false;
+        }
+
         Advisor[] advisors = proxyFactory.getAdvisors();
-        if (advisors == null || advisors.length == 0) {
+        if (advisors.length == 0) {
             return false;
         }
 

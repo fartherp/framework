@@ -4,7 +4,7 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import base64.Base64Utils;
+import java.util.Base64;
 
 /**
  * <pre>
@@ -30,20 +30,20 @@ public class RSATest {
         byte[] publicKey = disSymmetryKey.getPublicKey();
         byte[] privateKey = disSymmetryKey.getPrivateKey();
 
-        System.out.println("公钥: " + Base64Utils.encode(publicKey));
-        System.out.println("私钥: " + Base64Utils.encode(privateKey));
+        System.out.println("公钥: " + Base64.getEncoder().encodeToString(publicKey));
+        System.out.println("私钥: " + Base64.getEncoder().encodeToString(privateKey));
 
         // 产生签名
         byte[] data = inputStr.getBytes();
         byte[] sign = RSA.sign(data, privateKey);
-        System.out.println("签名: " + Base64Utils.encode(sign));
+        System.out.println("签名: " + Base64.getEncoder().encodeToString(sign));
 
         // 验证签名
         boolean status = RSA.verify(data, publicKey, sign);
         System.out.println("状态: " + status);
         byte[] encryptData = RSA.encryptByPublicKey(data, publicKey);
         System.out.println("源数据: " + inputStr);
-        System.out.println("加密数据: " + Base64Utils.encode(encryptData));
+        System.out.println("加密数据: " + Base64.getEncoder().encodeToString(encryptData));
         System.out.println("解密数据: " + new String(RSA.decryptByPrivateKey(encryptData, privateKey)));
 
 

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.github.fartherp.framework.poi.Constant.EXCEL_CONTENT_TYPE;
+
 /**
  * 响应流
  *
@@ -37,7 +39,7 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
     public ExcelWrite<T> setResponse(HttpServletRequest request, HttpServletResponse response) {
         this.response = response;
         response.reset();
-        response.setContentType("application/msexcel;charset=GBK");
+        response.setContentType(EXCEL_CONTENT_TYPE);
         String filename = FileUtilies.getFileName(this.fileName, request);
         response.setHeader("content-disposition", "attachment; filename=" + filename);
         return this;

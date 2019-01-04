@@ -22,7 +22,7 @@ public class CSVRead<E> {
     public void read(InputStream inputStream, CSVReadDeal<E> deal) {
         try (CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)))) {
             int tmp = deal.getBatchCount();
-            List<E> l = new ArrayList<E>(tmp);
+            List<E> l = new ArrayList<>(tmp);
             int i = 0;
             String [] arr;
             while ((arr = reader.readNext()) != null) {

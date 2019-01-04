@@ -105,7 +105,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
         Iterator<LsEntry> iter = files.iterator();
         if (BLUR_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 String name = file.getFilename().toLowerCase();
                 String fileNameStart = null;
                 if (fileName.contains(".")) {
@@ -119,7 +119,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             }
         } else if (HMS_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 int length = Integer.parseInt(nameType.trim());
                 String name = file.getFilename().toLowerCase();
                 String fileNameStart = fileName.toLowerCase();
@@ -136,7 +136,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             }
         } else {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 String name = file.getFilename();
                 // 判断FTP文件名和数据库配置的文件名是否相等
                 if (fileName.trim().equalsIgnoreCase(name)) {
@@ -177,7 +177,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
         Iterator<LsEntry> iter = files.iterator();
         if (BLUR_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 String name = file.getFilename().toLowerCase();
                 String fileNameStart = null;
                 if (fileName.contains(".")) {
@@ -191,7 +191,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             }
         } else if (HMS_NAME_TYPE.equals(nameType.trim())) {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 int length = Integer.parseInt(nameType.trim());
                 String name = file.getFilename().toLowerCase();
                 String fileNameStart = fileName.toLowerCase();
@@ -208,7 +208,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             }
         } else {
             while (iter.hasNext()) {
-                LsEntry file = (LsEntry) iter.next();
+                LsEntry file = iter.next();
                 String name = file.getFilename();
                 // 判断FTP文件名和数据库配置的文件名是否相等
                 if (fileName.trim().equalsIgnoreCase(name)) {
@@ -237,7 +237,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             // 如果是模糊匹配类型的话
             if (BLUR_NAME_TYPE.equals(nameType.trim())) {
                 while (iter.hasNext()) {
-                    LsEntry file = (LsEntry) iter.next();
+                    LsEntry file = iter.next();
                     String name = file.getFilename().toLowerCase();
                     String fileNameStart = null;
                     // 如果数据库配置的文件名含有"."的话
@@ -260,7 +260,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
                 }
             } else if (HMS_NAME_TYPE.equals(nameType.trim())) {
                 while (iter.hasNext()) {
-                    LsEntry file = (LsEntry) iter.next();
+                    LsEntry file = iter.next();
                     int length = Integer.parseInt(nameType.trim());
                     String name = file.getFilename().toLowerCase();
                     String fileNameStart = fileName.toLowerCase();
@@ -285,7 +285,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
                 }
             } else {// 如果不是模糊匹配的话
                 while (iter.hasNext()) {
-                    LsEntry file = (LsEntry) iter.next();
+                    LsEntry file = iter.next();
                     String name = file.getFilename();
                     // 判断FTP文件名和数据库配置的文件名是否相等
                     if (fileName.trim().equalsIgnoreCase(name)) {

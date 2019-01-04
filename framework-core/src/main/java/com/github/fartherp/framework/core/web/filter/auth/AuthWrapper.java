@@ -65,7 +65,7 @@ public class AuthWrapper {
 
     public void addUrl(String url) {
         if (authUrlSet == null) {
-            authUrlSet = new TreeSet<String>();
+            authUrlSet = new TreeSet<>();
         }
         authUrlSet.add(url);
     }

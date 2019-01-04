@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.github.fartherp.framework.poi.Constant.PDF_CONTENT_TYPE;
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -36,7 +38,7 @@ public class HttpServletResponsePdfWrite extends AbstractPdfWrite {
     public PdfWrite setResponse(HttpServletRequest request, HttpServletResponse response) {
         this.response = response;
         response.reset();
-        response.setContentType("application/pdf;charset=GBK");
+        response.setContentType(PDF_CONTENT_TYPE);
         String filename = FileUtilies.getFileName(this.fileName, request);
         response.setHeader("content-disposition", "attachment; filename=" + filename);
         return this;

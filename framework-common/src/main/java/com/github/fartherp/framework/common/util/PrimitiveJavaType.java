@@ -29,7 +29,7 @@ public enum PrimitiveJavaType {
 
     public final String method;
 
-    public final static Map<String, PrimitiveJavaType> map = new HashMap<String, PrimitiveJavaType>();
+    public final static Map<String, PrimitiveJavaType> map = new HashMap<>();
 
     PrimitiveJavaType(Class clazz, String lower, String method) {
         this.clazz = clazz;

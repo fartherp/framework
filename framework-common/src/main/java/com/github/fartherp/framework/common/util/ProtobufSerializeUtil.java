@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ProtobufSerializeUtil {
 
-    private final static Map<String, Schema<?>> cachedSchema = new ConcurrentHashMap<String, Schema<?>>();
+    private final static Map<String, Schema<?>> cachedSchema = new ConcurrentHashMap<>();
 
     private final static Objenesis objenesis = new ObjenesisStd(true);
 
@@ -153,7 +153,7 @@ public class ProtobufSerializeUtil {
             i++;
         }
         Arrays.sort(strs);
-        return new ArrayList<String>(Arrays.asList(strs));
+        return new ArrayList<>(Arrays.asList(strs));
     }
 
     private static <T> Schema<T> getSchema(Class<T> cls) {
@@ -185,7 +185,7 @@ public class ProtobufSerializeUtil {
         @SuppressWarnings("unchecked")
         Schema<T> schema = (Schema<T>) cachedSchema.get(key);
         if (schema == null) {
-            Map<String, String> map = new LinkedHashMap<String, String>();
+            Map<String, String> map = new LinkedHashMap<>();
             for (String field : fields) {
                 map.put(field, field);
             }

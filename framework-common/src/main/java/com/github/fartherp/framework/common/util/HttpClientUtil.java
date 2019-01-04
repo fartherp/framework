@@ -5,11 +5,8 @@
 package com.github.fartherp.framework.common.util;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +15,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +35,7 @@ public class HttpClientUtil {
      */
     public static String execute(Map<String, Object> params, String url) {
         try {
-            List<NameValuePair> form = new ArrayList<NameValuePair>();
+            List<NameValuePair> form = new ArrayList<>();
             if (params != null) {
                 for (Map.Entry<String, Object> entry : params.entrySet()) {
                     if (entry.getValue() != null) {
@@ -55,12 +52,9 @@ public class HttpClientUtil {
             HttpPost post = new HttpPost(url);
             post.setEntity(reqEntity);
             post.setConfig(requestConfig);
-            HttpClient client = HttpClientBuilder.create().build();
-            return client.execute(post, new ResponseHandler<String>() {
-                public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                    HttpEntity entity = response.getEntity();
-                    return EntityUtils.toString(entity, "utf-8");
-                }
+            return HttpClientBuilder.create().build().execute(post, response -> {
+                HttpEntity entity = response.getEntity();
+                return EntityUtils.toString(entity, StandardCharsets.UTF_8.name());
             });
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -81,12 +75,9 @@ public class HttpClientUtil {
                     .build();
             HttpGet post = new HttpGet(url);
             post.setConfig(requestConfig);
-            HttpClient client = HttpClientBuilder.create().build();
-            return client.execute(post, new ResponseHandler<String>() {
-                public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-                    HttpEntity entity = response.getEntity();
-                    return EntityUtils.toString(entity, "utf-8");
-                }
+            return HttpClientBuilder.create().build().execute(post, response -> {
+                HttpEntity entity = response.getEntity();
+                return EntityUtils.toString(entity, StandardCharsets.UTF_8.name());
             });
         } catch (Exception e) {
             throw new RuntimeException(e);

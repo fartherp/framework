@@ -17,7 +17,7 @@ public class EasyUITreeModel extends SimpleTreeModel {
 
     public List<EasyUITreeModel> getChildren() {
         if (this.children == null) {
-            children = new ArrayList<EasyUITreeModel>(0);
+            children = new ArrayList<>();
         }
         return children;
     }
@@ -28,7 +28,7 @@ public class EasyUITreeModel extends SimpleTreeModel {
 
     public void addChildren(EasyUITreeModel model) {
         if (null == children) {
-            children = new ArrayList<EasyUITreeModel>();
+            children = new ArrayList<>();
         }
         children.add(model);
     }

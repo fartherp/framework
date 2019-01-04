@@ -4,8 +4,6 @@
 
 package com.github.fartherp.framework.common.util;
 
-import com.github.fartherp.framework.common.constant.Constant;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
 
 /**
@@ -102,9 +101,9 @@ public class FileUtilies {
             UserAgent userAgent = UserAgentUtil.getUserAgent(request.getHeader("USER-AGENT"));
             if (userAgent != null && "Firefox".equals(userAgent.getBrowserType())) {
                 // 针对火狐浏览器处理方式不一样了,解决Firefox下载文件名编码问题
-                return new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
+                return new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
             } else {
-                return URLEncoder.encode(fileName, Constant.UTF_8);
+                return URLEncoder.encode(fileName, StandardCharsets.UTF_8.name());
             }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("charset no support UTF-8", e);

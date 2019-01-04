@@ -38,7 +38,7 @@ public class ProcessTimeFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
         excludePath = filterConfig.getInitParameter("excludePath");
-        excludePathSet = new TreeSet<String>();
+        excludePathSet = new TreeSet<>();
         if (excludePath != null) {
             String[] paths = excludePath.split(";");
             for (String p : paths) {

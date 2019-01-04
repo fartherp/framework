@@ -54,7 +54,7 @@ public class MapDistance {
      * @return Map
      */
     public static Map<String, String> getAround(double lng, double lat, double raidusMile) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
 
         Double degree = (24901 * 1609) / 360.0; // 获取每度
 

@@ -180,7 +180,7 @@ public class UserAgentUtil {
                 return judgeBrowser(userAgentStr, PLATFORM_WINDOWS, null, null);
             }
         } else if (userAgentStr.contains("Mac OS X")) {
-            /**
+            /*
              * ******** 苹果系列 ******** iPod - Mozilla/5.0 (iPod; U; CPU iPhone OS
              * 4_3_1 like Mac OS X; zh-cn) AppleWebKit/533.17.9 (KHTML, like
              * Gecko) Version/5.0.2 Mobile/8G4 Safari/6533.18.5 iPad -
@@ -232,7 +232,7 @@ public class UserAgentUtil {
     private static UserAgent judgeBrowser(String userAgentStr, String platformType,
                                           String platformSeries, String platformVersion) {
         if (userAgentStr.contains(BROWSER_CHROME)) {
-            /**
+            /*
              * *********** Chrome 系列 *********** Chrome 24.0.1295.0 -
              * Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.15 (KHTML,
              * like Gecko) Chrome/24.0.1295.0 Safari/537.15 Chrome 24.0.1292.0 -
@@ -249,14 +249,14 @@ public class UserAgentUtil {
             // "Chrome/"
             // 之后的字符串,结果形如"24.0.1295.0 Safari/537.15"或"24.0.1295.0"
             String chromeVersion = null;
-            if (temp.indexOf(" ") < 0) { // temp形如"24.0.1295.0"
+            if (!temp.contains(" ")) { // temp形如"24.0.1295.0"
                 chromeVersion = temp;
             } else { // temp形如"24.0.1295.0 Safari/537.15"
                 chromeVersion = temp.substring(0, temp.indexOf(" "));
             }
             return new UserAgent(BROWSER_CHROME, chromeVersion, platformType, platformSeries, platformVersion);
         } else if (userAgentStr.contains(BROWSER_FIREFOX)) {
-            /**
+            /*
              * ******* FF 系列 ******* Firefox 16.0.1 - Mozilla/5.0 (Windows NT
              * 6.2; Win64; x64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1 Firefox
              * 15.0a2 - Mozilla/5.0 (Windows NT 6.1; rv:15.0) Gecko/20120716
@@ -271,14 +271,14 @@ public class UserAgentUtil {
             // "Firefox/"
             // 之后的字符串,结果形如"16.0.1 Gecko/20121011"或"16.0.1"
             String ffVersion = null;
-            if (temp.indexOf(" ") < 0) { // temp形如"16.0.1"
+            if (!temp.contains(" ")) { // temp形如"16.0.1"
                 ffVersion = temp;
             } else { // temp形如"16.0.1 Gecko/20121011"
                 ffVersion = temp.substring(0, temp.indexOf(" "));
             }
             return new UserAgent(BROWSER_FIREFOX, ffVersion, platformType, platformSeries, platformVersion);
         } else if (userAgentStr.contains("MSIE")) {
-            /**
+            /*
              * ******* IE 系列 ******* MSIE 10.0 - Internet Explorer 10 MSIE 9.0 -
              * Internet Explorer 9 MSIE 8.0 - Internet Explorer 8 or IE8
              * Compatibility View/Browser Mode MSIE 7.0 - Windows Internet

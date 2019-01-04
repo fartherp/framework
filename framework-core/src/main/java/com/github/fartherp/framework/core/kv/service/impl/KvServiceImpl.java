@@ -35,7 +35,7 @@ public class KvServiceImpl implements KvService {
     /**
      * kv配置记录表
      */
-    Map<Integer, KvHandler> kvHandlers = new HashMap<Integer, KvHandler>();
+    private Map<Integer, KvHandler> kvHandlers = new HashMap<>();
 
     /**
      * Adds the kv handler.
@@ -131,7 +131,7 @@ public class KvServiceImpl implements KvService {
 
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = list.get(i);
-            Map<Object, Object> m = new HashMap<Object, Object>();
+            Map<Object, Object> m = new HashMap<>();
             Object text = map.get(support.getKvHandler().getKeyField());
             m.put("text", text);
             Object value = map.get(support.getKvHandler().getValueField());

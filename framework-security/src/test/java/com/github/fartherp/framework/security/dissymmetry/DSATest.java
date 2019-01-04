@@ -4,9 +4,7 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import base64.Base64Utils;
-
-import java.util.Map;
+import java.util.Base64;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,12 +22,12 @@ public class DSATest {
         byte[] publicKey = disSymmetryKey.getPublicKey();
         byte[] privateKey = disSymmetryKey.getPrivateKey();
 
-        System.out.println("公钥:" + Base64Utils.encode(publicKey));
-        System.out.println("私钥:" + Base64Utils.encode(privateKey));
+        System.out.println("公钥:" + Base64.getEncoder().encodeToString(publicKey));
+        System.out.println("私钥:" + Base64.getEncoder().encodeToString(privateKey));
 
         // 产生签名
         byte[] sign = DSA.sign(inputStr.getBytes(), privateKey);
-        System.out.println("签名:" + Base64Utils.encode(sign));
+        System.out.println("签名:" + Base64.getEncoder().encodeToString(sign));
 
         // 验证签名
         boolean status = DSA.verify(inputStr.getBytes(), publicKey, sign);

@@ -4,8 +4,6 @@
 
 package com.github.fartherp.framework.file.ftp;
 
-import com.github.fartherp.framework.common.constant.Constant;
-import com.github.fartherp.framework.common.util.PathUtil;
 import com.github.fartherp.framework.file.FileStore;
 import com.github.fartherp.framework.net.ftp.FtpConfig;
 import com.github.fartherp.framework.net.ftp.FtpUtils;
@@ -18,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,11 +44,7 @@ public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
     }
 
     public void store(String dir, InputStream fileStream, String fileName) {
-        try {
-            fileName = new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
-        } catch (UnsupportedEncodingException e) {
-            log.error("URLEncoder.encode(rawName,utf-8) error: ", e);
-        }
+        fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         FtpUtils.store(config, dir, fileStream, fileName);
     }
 
@@ -58,12 +52,8 @@ public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
         if (StringUtils.isBlank(dir)) {
             dir = config.getDefaultDir();
         }
-        try {
-            fileName = new String(fileName.getBytes(Constant.UTF_8), Constant.ISO_8859_1);
-        } catch (UnsupportedEncodingException e) {
-            log.error("URLEncoder.encode(rawName,utf-8) error: ", e);
-        }
-        String path = PathUtil.join(dir, fileName);
+        fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+        String path = new File(dir, fileName).getPath();
         FtpUtils.fetch(config, path, output);
     }
 

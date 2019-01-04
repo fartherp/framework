@@ -18,7 +18,7 @@ import java.util.Map;
  * Author: CK
  * Date: 2015/11/13
  */
-public class MapUtil<K, V> {
+public class MapUtil {
     /**
      * 辅助容器类
      *
@@ -37,7 +37,7 @@ public class MapUtil<K, V> {
         }
 
         public MapPlain(int cap) {
-            map = new HashMap<K, V>(cap);
+            map = new HashMap<>(cap);
         }
 
         /**
@@ -84,7 +84,7 @@ public class MapUtil<K, V> {
      * @return 新的辅助处理类
      */
     public static <K, V> MapPlain<K, V> build() {
-        return new MapPlain<K, V>();
+        return new MapPlain<>();
     }
 
     /**
@@ -95,7 +95,7 @@ public class MapUtil<K, V> {
      * @return 新的辅助处理类
      */
     public static <K, V> MapPlain<K, V> build(int cap) {
-        return new MapPlain<K, V>(cap);
+        return new MapPlain<>(cap);
     }
 
     /**
@@ -108,7 +108,7 @@ public class MapUtil<K, V> {
     public static Map<String, Object> toMap(Object o, Map<String, String> map, String... ignoreProperties) {
         PropertyDescriptor[] ts = ReflectUtil.getPropertyDescriptors(o);
         List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
-        Map<String,Object> m = new HashMap<String, Object>(ts.length);
+        Map<String,Object> m = new HashMap<>(ts.length);
         for (PropertyDescriptor t : ts) {
             Method r = t.getReadMethod();
             if (r != null && (ignoreList == null || (!ignoreList.contains(t.getName())))) {
@@ -178,14 +178,14 @@ public class MapUtil<K, V> {
      * @return list
      */
     public static <K, V> List<Map<String, Object>> mapConvertToList(Map<K, V> map, Object defaultValue) {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> list = new ArrayList<>();
 
         if (null == map || map.isEmpty()) {
             return list;
         }
 
         for (Map.Entry<K, V> entry : map.entrySet()) {
-            Map<String, Object> result = new HashMap<String, Object>();
+            Map<String, Object> result = new HashMap<>();
             result.put("text", entry.getValue().toString());
             result.put("value", entry.getKey());
             if (null != defaultValue && entry.getKey().toString().equals(defaultValue.toString())) {

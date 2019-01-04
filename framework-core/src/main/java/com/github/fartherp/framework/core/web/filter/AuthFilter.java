@@ -53,7 +53,7 @@ public class AuthFilter extends JndiSupportFilter {
     private boolean open;
 
     public void doInit(FilterConfig filterConfig) throws ServletException {
-        excludePathv = new TreeSet<String>();
+        excludePathv = new TreeSet<>();
         if (excludePath != null) {
             String[] paths = excludePath.split(";");
             for (String p : paths) {

@@ -29,7 +29,7 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
         if (null == list) {
             throw new RuntimeException("没有EasyUI菜单");
         }
-        Map<Integer, EasyUITreeModel> p = new HashMap<Integer, EasyUITreeModel>(list.size() + 1);
+        Map<Integer, EasyUITreeModel> p = new HashMap<>(list.size() + 1);
         // 最外层,默认为0
         EasyUITreeModel root = new EasyUITreeModel();
         root.setId(0);
@@ -50,7 +50,7 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
         if (null == list || list.isEmpty()) {
             return;
         }
-        List<T> fail = new ArrayList<T>();
+        List<T> fail = new ArrayList<>();
         for (T t : list) {
             // 当前菜单没添加到map中
             setTreeModel(t, p, mc, fail);
@@ -87,7 +87,7 @@ public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
     }
 
     public void setCheck(List<EasyUITreeModel> easyUITreeModels) {
-        Set<Integer> set = new HashSet<Integer>();
+        Set<Integer> set = new HashSet<>();
         for (EasyUITreeModel model : easyUITreeModels) {
             setCheck(set, model);
         }

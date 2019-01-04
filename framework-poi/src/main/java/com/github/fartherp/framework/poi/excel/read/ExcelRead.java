@@ -41,7 +41,7 @@ public class ExcelRead<E> {
                 }
                 int tmp = deal.getBatchCount();
                 int index = 0;
-                List<E> l = new ArrayList<E>(tmp);
+                List<E> l = new ArrayList<>(tmp);
                 for (Row row : sheet) {
                     ++index;
                     if (index <= deal.skipLine()) {

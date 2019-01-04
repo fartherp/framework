@@ -37,7 +37,7 @@ public class PackageNameAutoProxyCreator extends BeanNameAutoProxyCreator {
      */
     public void setPackageNames(String... packageNames) {
         Assert.notEmpty(packageNames, "'packageNames' must not be empty");
-        this.packageNames = new ArrayList<String>(packageNames.length);
+        this.packageNames = new ArrayList<>(packageNames.length);
         for (String mappedName : packageNames) {
             this.packageNames.add(StringUtils.trimWhitespace(mappedName));
         }
