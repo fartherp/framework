@@ -14,6 +14,15 @@ import com.github.fartherp.framework.poi.Constant;
  */
 @FunctionalInterface
 public interface WriteDeal<T> {
+
+    /**
+     * 跳过开始行数
+     * @return 跳过行数
+     */
+    default int skipLine() {
+        return 0;
+    }
+
     /**
      * 一行excel数据返回业务BEAN
      *

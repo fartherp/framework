@@ -92,6 +92,7 @@
         <objenesis.version>3.0.1</objenesis.version>
         <html2pdf.version>2.1.1</html2pdf.version>
         <redisson.version>3.9.1</redisson.version>
+        <commons-text.version>1.6</commons-text.version>
     </properties>
 
     <scm>
@@ -721,6 +722,11 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons-text.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -6,19 +6,24 @@ package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.Constant;
 import com.github.fartherp.framework.poi.excel.WriteDeal;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Excel模板抽象类
@@ -88,6 +93,21 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
      */
     protected int rowAccessWindowSize = 5000;
 
+    /**
+     * 文件输入流
+     */
+    private InputStream inputStream;
+
+    /**
+     * 额外参数
+     */
+    private Map<String, Object> params;
+
+    public AbstractExcelWrite(InputStream inputStream, String fileName) {
+        this.inputStream = inputStream;
+        this.fileName = fileName;
+    }
+
     public AbstractExcelWrite(String[] title, String fileName) {
         this.title = title;
         this.fileName = fileName;
@@ -149,15 +169,29 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         this.currentRow = currentRow;
     }
 
-    public void setLargeDataMode(boolean largeDataMode) {
+    public ExcelWrite<T> setLargeDataMode(boolean largeDataMode) {
         this.largeDataMode = largeDataMode;
+        return this;
     }
 
     public boolean getLargeDataMode() {
         return largeDataMode;
     }
 
+    public ExcelWrite<T> additional(Map<String, Object> params) {
+        this.params = params;
+        return this;
+    }
+
     public void createWb() {
+        if (this.inputStream != null) {
+            try {
+                this.wb = WorkbookFactory.create(this.inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         if (this.largeDataMode) {
             if (StringUtils.endsWith(fileName, Constant.OFFICE_EXCEL_2003_POSTFIX)) {
                 this.type = Constant.OFFICE_EXCEL_2003_POSTFIX;
@@ -217,13 +251,35 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
         // excel处理的最大行数
         int maxRows = deal.setMaxRows(this.getType());
         if ((flag && total == list.size()) || (total > maxRows && currentRow == maxRows)) {
+            currentRow = deal.skipLine();
+            if (this.inputStream != null) {
+                if (currentSheetNumber >= wb.getNumberOfSheets()) {
+                    throw new RuntimeException("数据太大，超过设置的sheet数");
+                }
+                currentSheet = wb.getSheetAt(currentSheetNumber++);
+
+                // 处理跳过的行数据
+                int lastRowNum = currentSheet.getLastRowNum();
+                for (int i = 0; i <= lastRowNum; i++) {
+                    Row row = currentSheet.getRow(i);
+                    int lastCellNum = row.getLastCellNum();
+                    for (int j = 0; j < lastCellNum; j++) {
+                        Cell cell = row.getCell(j);
+                        String stringCellValue = cell.getStringCellValue();
+                        if (StringUtils.isBlank(stringCellValue) || MapUtils.isEmpty(params)) {
+                            continue;
+                        }
+                        stringCellValue =  new StringSubstitutor(params).replace(stringCellValue);
+                        cell.setCellValue(stringCellValue);
+                    }
+                }
+
+                return;
+            }
             total += 1;
             // 第一个sheet(数量相等), 第二个及以后(超过最大行)
             // sheet 对应一个工作页
-            currentSheet = wb.createSheet("sheet" + currentSheetNumber);
-            currentSheetNumber++;
-            // 从当前行开始
-            currentRow = 0;
+            currentSheet = wb.createSheet("sheet" + currentSheetNumber++);
             Row dataRow = currentSheet.createRow(currentRow);
             for (int i = 0; i < title.length; i++) {
                 Cell cell = dataRow.createCell(i);
@@ -245,6 +301,13 @@ public abstract class AbstractExcelWrite<T> implements ExcelWrite<T> {
             if (this.outputStream != null) {
                 try {
                     this.outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (this.inputStream != null) {
+                try {
+                    this.inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

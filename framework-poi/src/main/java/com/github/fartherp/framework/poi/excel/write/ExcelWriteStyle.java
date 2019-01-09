@@ -24,7 +24,9 @@ import static com.github.fartherp.framework.poi.excel.ExcelUtils.setStyleNoColor
  * 自定义风格输出
  * Author: CK
  * Date: 2016/5/29
+ * @deprecated Please use the {@link FileExcelWrite#FileExcelWrite(java.io.InputStream, java.lang.String)}.
  */
+@Deprecated
 public class ExcelWriteStyle<T> extends AbstractExcelWrite<T> {
 
     private ExcelWrite<T> excelWrite;

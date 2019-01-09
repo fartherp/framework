@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Excel写接口
@@ -110,11 +111,18 @@ public interface ExcelWrite<T> {
      * 设置大数据模式（SXSSFWorkbook）
      * @param largeDataMode true/false
      */
-    void setLargeDataMode(boolean largeDataMode);
+    ExcelWrite<T> setLargeDataMode(boolean largeDataMode);
 
     /**
      * 大数据模式
      * @return true/false
      */
     boolean getLargeDataMode();
+
+    /**
+     * 额外数据
+     * @param params map
+     * @return ExcelWrite
+     */
+    ExcelWrite<T> additional(Map<String, Object> params);
 }
