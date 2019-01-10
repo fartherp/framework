@@ -27,7 +27,7 @@ public class FilePdfWriteTest {
         FilePdfWrite filePdfWrite = new FilePdfWrite(fileName);
         filePdfWrite.addFontPath("D:\\project\\githubnew\\framework\\framework-poi\\src\\test\\resources")
                 .deal(() -> {
-                    String path = FilePdfWriteTest.class.getClassLoader().getResource("contractTemplate.html").getPath();
+                    String path = FilePdfWriteTest.class.getClassLoader().getResource("/d.html").getPath();
                     File file = new File(path);
                     String html = null;
                     try {

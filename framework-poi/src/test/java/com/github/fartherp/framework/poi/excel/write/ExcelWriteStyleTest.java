@@ -33,9 +33,9 @@ public class ExcelWriteStyleTest {
         String fileName = "D:\\style.xls";
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-        FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
+        FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<>(title, fileName);
 //        excelDtoExcelWrite.setLargeDataMode(false);
-        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<ExcelDto>(excelDtoExcelWrite);
+        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<>(excelDtoExcelWrite);
         writeStyle.condition(condition).head(head).deal(
                 obj -> {
                     String[] result = new String[6];
