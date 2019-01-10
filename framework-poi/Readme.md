@@ -1,5 +1,5 @@
 # poi框架 framework-poi
-> 简单、好用且轻量级的海量excel，csv文件导入导出解决方案。
+> 简单、好用且轻量级的海量excel，csv文件导入导出解决方案。解决火狐浏览器中文编码问题。
 > 注：excel的合并功能及复杂功能，使用代码实现比较复杂，框架只提供单行的导入导出。
 
 # 如何使用？
@@ -19,7 +19,7 @@
 ``` java
     CSVRead<CsvReadDto> csvRead = new CSVRead<>();
     csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
-        // 单条数据处理（每个excel一行对应一个javabean）
+        // 单条数据处理（每一行对应一个javabean）
         public CsvReadDto dealBean(String[] arr) {
             CsvReadDto dto = new CsvReadDto();
             dto.setId(Long.valueOf(arr[0]));
@@ -51,7 +51,6 @@
 ``` java
     String filename = "TEST";
     String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
-    // 导出数据
     List<String[]> bodyList = new ArrayList<>();
     CsvUtil.writeCsvFile(filename, title, bodyList);
 ```
@@ -62,7 +61,6 @@
     HttpServletRequest request = null;
     String filename = "TEST";
     String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
-    // 导出数据
     List<String[]> bodyList = new ArrayList<>();
     CsvUtil.writeCsvFile(response, request, filename, title, bodyList);
 ```
@@ -70,10 +68,9 @@
 ## Excel常用例子：
 1.Excel文件导入：
 ``` java
-    // 需要导入类的泛型
     ExcelRead<ExcelReadDto> excelRead = new ExcelRead<>();
     excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
-        // 单条数据处理（每个excel一行对应一个javabean）
+        // 单条数据处理（每一行对应一个javabean）
         public ExcelReadDto dealBean(Row row) {
             ExcelReadDto dto = new ExcelReadDto();
             dto.setId(new BigDecimal(row.getCell(0).toString()).longValue());
