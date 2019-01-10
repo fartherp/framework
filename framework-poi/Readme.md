@@ -76,7 +76,7 @@
         // 单条数据处理（每个excel一行对应一个javabean）
         public ExcelReadDto dealBean(Row row) {
             ExcelReadDto dto = new ExcelReadDto();
-            dto.setId(Long.valueOf(row.getCell(0).toString()));
+            dto.setId(new BigDecimal(row.getCell(0).toString()).longValue());
             dto.setName(row.getCell(1).toString());
             dto.setAge(Integer.valueOf(row.getCell(2).toString()));
             return dto;
