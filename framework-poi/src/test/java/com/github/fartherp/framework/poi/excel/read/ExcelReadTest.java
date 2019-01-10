@@ -8,18 +8,20 @@ import org.apache.poi.ss.usermodel.Row;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ExcelReadTest {
 
     @Test
     public void testRead() throws Exception {
-        ExcelRead<ExcelReadDto> excelRead = new ExcelRead<ExcelReadDto>();
-        excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), "a.xls", new ExcelReadDeal<ExcelReadDto>() {
+        ExcelRead<ExcelReadDto> excelRead = new ExcelRead<>();
+        // a.xls/a.xlsx
+        excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
             // 单条数据处理（每个excel一行对应一个对象）
             public ExcelReadDto dealBean(Row row) {
                 ExcelReadDto dto = new ExcelReadDto();
-                dto.setId(Long.valueOf(row.getCell(0).toString()));
+                dto.setId(new BigDecimal(row.getCell(0).toString()).longValue());
                 dto.setName(row.getCell(1).toString());
                 dto.setAge(Integer.valueOf(row.getCell(2).toString()));
                 return dto;

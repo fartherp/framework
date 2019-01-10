@@ -22,6 +22,19 @@ import java.util.List;
 public class CsvUtil {
     /**
      * The csv file is output through the response of the page
+     *
+     * <p>
+     * Example code:
+     * </p>
+     * <pre>
+     * HttpServletResponse response = null;
+     * HttpServletRequest request = null;
+     * String filename = "TEST";
+     * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
+     * List<String[]> bodyList = new ArrayList<>();
+     * CsvUtil.writeCsvFile(response, request, filename, title, bodyList);
+     * </pre>
+     *
      * @param response the response of the page
      * @param request the request of the page
      * @param filename the file name of user-defined
@@ -48,6 +61,17 @@ public class CsvUtil {
 
     /**
      * The csv file wrote through user-defined
+     *
+     * <p>
+     * Example code:
+     * </p>
+     * <pre>
+     * String filename = "TEST";
+     * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
+     * List<String[]> bodyList = new ArrayList<>();
+     * CsvUtil.writeCsvFile(filename, title, bodyList);
+     * </pre>
+     *
      * @param filename the file name
      * @param title the title content of the csv file
      * @param bodyList this body content of the csv file

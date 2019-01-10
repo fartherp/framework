@@ -43,6 +43,9 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *  }).list(getList()).write();
      * </pre>
      *
+     * @param inputStream the file InputStream
+     * @param fileName the output file name
+     *
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
@@ -77,6 +80,9 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *          .list(ExcelWriteStyleTest.getList1())
      *          .write();
      * </pre>
+     *
+     * @param title the output file title
+     * @param fileName the output file name
      */
     public FileExcelWrite(String[] title, String fileName) {
         super(title, fileName);

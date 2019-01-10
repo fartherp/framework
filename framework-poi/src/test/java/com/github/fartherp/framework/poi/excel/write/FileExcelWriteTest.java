@@ -34,7 +34,7 @@ public class FileExcelWriteTest {
         title[4] = "登录IP";
         title[5] = "状态";
         String fileName = "D:\\style1.xls";
-        FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<ExcelDto>(title, fileName);
+        FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<>(title, fileName);
         excelWrite.setLargeDataMode(false).deal(obj -> {
             String[] result = new String[6];
             result[0] = obj.getTime();

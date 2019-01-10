@@ -21,6 +21,23 @@ import static com.github.fartherp.framework.poi.Constant.PDF_CONTENT_TYPE;
 public class HttpServletResponsePdfWrite extends AbstractPdfWrite {
     private HttpServletResponse response;
 
+    /**
+     * <p>
+     * Example code:
+     * </p>
+     * <pre>
+     *  new HttpServletResponsePdfWrite("合同.pdf", request, response)
+     *                 .addFontPath(getFontPath())//字体路径
+     *                 .deal((PdfWriteDeal<String>) () -> "合同内容").write();
+     * </pre>
+     *
+     * @param fileName the output file name
+     * @param request the HttpServletRequest
+     * @param response the HttpServletResponse
+     *
+     * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/d.html">
+     *     file content</a>
+     */
     public HttpServletResponsePdfWrite(String fileName, HttpServletRequest request, HttpServletResponse response) {
         super(fileName);
         this.setResponse(request, response);

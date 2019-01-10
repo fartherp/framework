@@ -19,6 +19,37 @@ import java.util.List;
  * Date: 2016/1/17
  */
 public class CSVRead<E> {
+    /**
+     * <p>
+     * Example code:
+     * </p>
+     * <pre>
+     * CSVRead<CsvReadDto> csvRead = new CSVRead<>();
+     * csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+     *     // 单条数据处理（每个excel一行对应一个javabean）
+     *     public CsvReadDto dealBean(String[] arr) {
+     *         CsvReadDto dto = new CsvReadDto();
+     *         dto.setId(Long.valueOf(arr[0]));
+     *         dto.setName(arr[1]);
+     *         dto.setAge(Integer.valueOf(arr[2]));
+     *         return dto;
+     *     }
+     * 
+     *     // 批量数据处理（可以批量入库）
+     *     public void dealBatchBean(List<CsvReadDto> list) {
+     *         Assert.assertEquals("name1", list.get(0).getName());
+     *         Assert.assertEquals("name2", list.get(1).getName());
+     *         Assert.assertEquals("name3", list.get(2).getName());
+     *     }
+     * });
+     * </pre>
+     *
+     * @param inputStream the file InputStream
+     * @param deal the user-defined of CSVReadDeal
+     *
+     * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/a.csv">
+     *     file content</a>
+     */
     public void read(InputStream inputStream, CSVReadDeal<E> deal) {
         try (CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)))) {
             int tmp = deal.getBatchCount();
@@ -35,7 +66,7 @@ public class CSVRead<E> {
                     l.add(o);
                     if (i % tmp == 0) {
                         deal.dealBatchBean(l);
-                        l = new ArrayList<E>(tmp);
+                        l = new ArrayList<>(tmp);
                     }
                 }
             }
@@ -44,6 +75,16 @@ public class CSVRead<E> {
             }
         } catch (IOException e) {
             // ignore
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    // ignore
+                    inputStream = null;
+                }
+            }
         }
     }
 }

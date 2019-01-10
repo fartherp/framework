@@ -18,8 +18,8 @@ import java.util.List;
 public class CSVReadTest {
     @Test
     public void testRead() throws Exception {
-        CSVRead<CsvReadDto> excelRead = new CSVRead<>();
-        excelRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+        CSVRead<CsvReadDto> csvRead = new CSVRead<>();
+        csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();
