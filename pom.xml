@@ -9,7 +9,7 @@
     <groupId>com.github.fartherp</groupId>
     <artifactId>framework</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.2</version>
+    <version>3.0.3-SNAPSHOT</version>
 
     <name>framework</name>
     <url>https://github.com/fartherp/framework</url>
