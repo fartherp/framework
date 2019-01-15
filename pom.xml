@@ -84,7 +84,6 @@
         <netty-all.version>4.1.32.Final</netty-all.version>
         <fastjson.version>1.2.54</fastjson.version>
         <guice.version>4.2.2</guice.version>
-        <junit.version>4.12</junit.version>
         <validation.version>2.0.1.Final</validation.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
@@ -350,12 +349,6 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
@@ -558,6 +551,10 @@
                     <exclusion>
                         <groupId>commons-logging</groupId>
                         <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
