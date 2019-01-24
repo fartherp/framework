@@ -9,7 +9,7 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-poi</artifactId>
-        <version>x.x.x</version>
+        <version>3.0.2</version>
     </dependency>
 ```
 
