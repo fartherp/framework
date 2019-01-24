@@ -1,4 +1,8 @@
 # 公告模块框架 framework-core
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-core/)
+
+功能描述
+
 ```
 1.基础的service，dao
 2.文件上传，nfs/ftp/sftp
@@ -10,13 +14,18 @@
 8.发送邮件，包括html邮件
 ```
 
-# 如何使用？
-1. 引入Maven依赖或下载jar包
+## 如何使用？
+1. 在项目中加入```framework-core```依赖
 
-``` xml
+    ```Maven```
+    ``` xml
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-core</artifactId>
         <version>3.0.2</version>
     </dependency>
-```
+    ```
+    ```Gradle```
+    ```
+    compile 'com.github.fartherp:framework-core:3.0.2'
+    ```

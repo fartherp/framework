@@ -1,14 +1,15 @@
 # 项目基础框架 
 
+Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成Framework。
+> framework-spring-boot(https://github.com/fartherp/framework-spring-boot)
+
 ## 公告模块框架 [framework-common](https://github.com/fartherp/framework/tree/master/framework-common)
 ```
-**项目通用模块**
 包括各种util，例如:日期DateUtil，BigDecimalUtil等等
 ```
 
-## 压缩框架 [framework-commpress](https://github.com/fartherp/framework/tree/master/framework-compress)
+## 压缩框架 [framework-compress](https://github.com/fartherp/framework/tree/master/framework-compress)
 ```
-**压缩通用模块**
 提供各种压缩方式
 1.bzip2
 2.gzip
@@ -21,7 +22,6 @@
 
 ## 核心框架 [framework-core](https://github.com/fartherp/framework/tree/master/framework-core)
 ```
-**核心设计模块(不通用)，核心代码，提供基础信息**
 1.基础的service，dao
 2.文件上传，nfs/ftp/sftp
 3.mybatis分页支持(目前mysql，可扩展)
@@ -39,7 +39,6 @@
 
 ## 异常体系框架 [framework-exception](https://github.com/fartherp/framework/tree/master/framework-exception)
 ```
-**异常体系模块，封装异常信息**
 1.mysql数据库返回的错误信息，转成可识别信息
 2.oracle数据库返回的错误信息，转成可识别信息
 3.通用的异常返回的错误信息，转成可识别信息
@@ -47,28 +46,24 @@
 
 ## 文件处理框架 [framework-file](https://github.com/fartherp/framework/tree/master/framework-file)
 ```
-**file模块**
 1.ftp
 2.nfs
 ```
 
 ## net框架 [framework-net](https://github.com/fartherp/framework/tree/master/framework-net)
 ```
-**net模块**
 1.ftp
 2.sftp
 ```
 
 ## poi框架 [framework-poi](https://github.com/fartherp/framework/tree/master/framework-poi)
 ```
-**poi模块**
 1.csv读取及下载
 2.excel读取
 ```
 
 ## 加密解密框架 [framework-security](https://github.com/fartherp/framework/tree/master/framework-security)
 ```
-**加密解密模块**
 1.不可逆:base64，MD5
 2.对称密钥:AES，DES，3DES
 3.非对称密钥:RSA
@@ -77,7 +72,6 @@
 ## [framework-filter](https://github.com/fartherp/framework/tree/master/framework-filter)
 
 ```
-**过滤器封装模块**
 1、支持切面过滤
 2、和spring环境集成
  配置方式是：

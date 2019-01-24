@@ -1,13 +1,24 @@
 # 公告模块框架 framework-common
-> 各种util，例如:日期DateUtil，BigDecimalUtil等等
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-common/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-common/)
 
-# 如何使用？
-1. 引入Maven依赖或下载jar包
+功能描述
 
-``` xml
+```
+各种util，例如:日期DateUtil，BigDecimalUtil等等
+```
+
+## 如何使用？
+1. 在项目中加入```framework-common```依赖
+
+    ```Maven```
+    ``` xml
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-common</artifactId>
         <version>3.0.2</version>
     </dependency>
-```
+    ```
+    ```Gradle```
+    ```
+    compile 'com.github.fartherp:framework-common:3.0.2'
+    ```

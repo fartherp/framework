@@ -1,17 +1,28 @@
 # poi框架 framework-poi
-> 简单、好用且轻量级的海量excel，csv文件导入导出解决方案。解决火狐浏览器中文编码问题。
-> 注：excel的合并功能及复杂功能，使用代码实现比较复杂，框架只提供单行的导入导出。
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-poi/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-poi/)
 
-# 如何使用？
-1. 引入Maven依赖或下载jar包
+功能描述
 
-``` xml
+```
+简单、好用且轻量级的海量excel，csv文件导入导出解决方案。解决火狐浏览器中文编码问题。
+注：excel的合并功能及复杂功能，使用代码实现比较复杂，框架只提供单行的导入导出。
+``` 
+
+## 如何使用？
+1. 在项目中加入```framework-poi```依赖
+
+    ```Maven```
+    ``` xml
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-poi</artifactId>
         <version>3.0.2</version>
     </dependency>
-```
+    ```
+    ```Gradle```
+    ```
+    compile 'com.github.fartherp:framework-poi:3.0.2'
+    ```
 
 ## CSV常用例子：
 1.CSV文件导入：
