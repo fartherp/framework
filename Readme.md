@@ -22,14 +22,11 @@ Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成
 
 ## 核心框架 [framework-core](https://github.com/fartherp/framework/tree/master/framework-core)
 ```
-1.基础的service，dao
-2.文件上传，nfs/ftp/sftp
-3.mybatis分页支持(目前mysql，可扩展)
-4.整合easyui分页功能
-5.验证码
-6.整合easyui树结构
-7.统一前端请求后的返回参数
-8.发送邮件，包括html邮件
+1.整合easyui分页功能
+2.验证码
+3.整合easyui树结构
+4.统一前端请求后的返回参数
+5.发送邮件，包括html邮件
 ```
 
 ## db操作框架 [framework-database](https://github.com/fartherp/framework/tree/master/framework-database)
