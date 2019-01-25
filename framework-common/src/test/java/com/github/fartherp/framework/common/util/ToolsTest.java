@@ -8,12 +8,12 @@ import org.testng.annotations.Test;
 
 public class ToolsTest {
 
-    @Test
+//    @Test
     public void testExecuteShell() throws Exception {
         Tools.executeShell("notepad");
     }
 
-    @Test
+//    @Test
     public void testExecuteShell1() throws Exception {
         Tools.executeShell("notepad", "help");
     }
