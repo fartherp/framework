@@ -4,6 +4,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/)
 [![GitHub release](https://img.shields.io/github/release/fartherp/framework.svg)](https://github.com/fartherp/framework/releases)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![Project Stats](https://www.openhub.net/p/fartherp-framework/widgets/project_thin_badge.gif)](https://www.openhub.net/p/fartherp-framework)
 
 Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成Framework。
 > framework-spring-boot(https://github.com/fartherp/framework-spring-boot)
