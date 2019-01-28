@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ExcelWriteStyleTest {
 //    @Test
-    public void writeExcel() throws Exception {
+    public void writeExcel() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         String[] title = new String [6];
@@ -33,10 +33,12 @@ public class ExcelWriteStyleTest {
         String fileName = "D:\\style.xls";
         String condition = "用户类型：投资用户    登录时间：XXXX-XX-XX至XXXX-XX-XX     查询条件：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-        FileExcelWrite<ExcelDto> excelDtoExcelWrite = new FileExcelWrite<>(title, fileName);
+        FileExcelWrite<ExcelDto> excelDtoExcelWrite = FileExcelWrite.build(title, fileName);
 //        excelDtoExcelWrite.setLargeDataMode(false);
-        ExcelWriteStyle<ExcelDto> writeStyle = new ExcelWriteStyle<>(excelDtoExcelWrite);
-        writeStyle.condition(condition).head(head).deal(
+        new ExcelWriteStyle<>(excelDtoExcelWrite)
+                .condition(condition)
+                .head(head)
+                .deal(
                 obj -> {
                     String[] result = new String[6];
                     result[0] = obj.getTime();
@@ -46,8 +48,8 @@ public class ExcelWriteStyleTest {
                     result[4] = obj.getIp();
                     result[5] = obj.getStatus() + "";
                     return result;
-                });
-        writeStyle.list(ExcelWriteStyleTest.getList())
+                })
+                .list(ExcelWriteStyleTest.getList())
                 .list(ExcelWriteStyleTest.getList1())
                 .write();
         stopWatch.stop();

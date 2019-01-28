@@ -14,10 +14,9 @@ import java.util.List;
 public class ExcelReadTest {
 
     @Test
-    public void testRead() throws Exception {
-        ExcelRead<ExcelReadDto> excelRead = new ExcelRead<>();
+    public void testRead() {
         // a.xls/a.xlsx
-        excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
+        ExcelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
             // 单条数据处理（每个excel一行对应一个对象）
             public ExcelReadDto dealBean(Row row) {
                 ExcelReadDto dto = new ExcelReadDto();

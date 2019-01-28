@@ -13,20 +13,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by IntelliJ IDEA.
  * Author: CK
  * Date: 2016/1/17
  */
-public class ExcelRead<E> {
+public class ExcelRead {
     /**
      * <p>
      * Example code:
      * </p>
      * <pre>
-     * ExcelRead<ExcelReadDto> excelRead = new ExcelRead<>();
-     * excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
+     * ExcelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal&lt;ExcelReadDto&gt;() {
      *     // 单条数据处理（每个excel一行对应一个javabean）
      *     public ExcelReadDto dealBean(Row row) {
      *         ExcelReadDto dto = new ExcelReadDto();
@@ -37,7 +37,7 @@ public class ExcelRead<E> {
      *     }
      *
      *     // 批量数据处理（可以批量入库）
-     *     public void dealBatchBean(List<ExcelReadDto> list) {
+     *     public void dealBatchBean(List&lt;ExcelReadDto&gt; list) {
      *         Assert.assertEquals("name1", list.get(0).getName());
      *         Assert.assertEquals("name2", list.get(1).getName());
      *         Assert.assertEquals("name3", list.get(2).getName());
@@ -61,7 +61,9 @@ public class ExcelRead<E> {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/a.xls">
      *     file content</a>
      */
-    public void read(InputStream inputStream, ExcelReadDeal<E> deal) {
+    public static <E> void read(InputStream inputStream, ExcelReadDeal<E> deal) {
+        Objects.requireNonNull(inputStream);
+        Objects.requireNonNull(deal);
         try (Workbook wb = WorkbookFactory.create(inputStream)) {
             for (int i = 0; i < wb.getNumberOfSheets(); i++) {
                 Sheet sheet = wb.getSheetAt(i);

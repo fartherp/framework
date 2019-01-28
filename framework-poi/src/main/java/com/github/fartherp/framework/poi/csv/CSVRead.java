@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -22,14 +23,13 @@ import java.util.function.Function;
  * Author: CK
  * Date: 2016/1/17
  */
-public class CSVRead<E> {
+public class CSVRead {
     /**
      * <p>
      * Example code:
      * </p>
      * <pre>
-     * CSVRead<CsvReadDto> csvRead = new CSVRead<>();
-     * csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+     * CSVRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal&lt;CsvReadDto&gt;() {
      *     // 单条数据处理（每个excel一行对应一个javabean）
      *     public CsvReadDto dealBean(String[] arr) {
      *         CsvReadDto dto = new CsvReadDto();
@@ -40,7 +40,7 @@ public class CSVRead<E> {
      *     }
      * 
      *     // 批量数据处理（可以批量入库）
-     *     public void dealBatchBean(List<CsvReadDto> list) {
+     *     public void dealBatchBean(List&lt;CsvReadDto&gt; list) {
      *         Assert.assertEquals("name1", list.get(0).getName());
      *         Assert.assertEquals("name2", list.get(1).getName());
      *         Assert.assertEquals("name3", list.get(2).getName());
@@ -54,7 +54,9 @@ public class CSVRead<E> {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/a.csv">
      *     file content</a>
      */
-    public void read(InputStream inputStream, CSVReadDeal<E> deal) {
+    public static <E> void read(InputStream inputStream, CSVReadDeal<E> deal) {
+        Objects.requireNonNull(inputStream);
+        Objects.requireNonNull(deal);
         try (CSVReader reader = new CSVReader(new InputStreamReader(new DataInputStream(inputStream)))) {
             int tmp = deal.getBatchCount();
             List<E> l = new ArrayList<>(tmp);
@@ -97,9 +99,8 @@ public class CSVRead<E> {
      * Example code:
      * </p>
      * <pre>
-     * CSVRead<CsvReadDto> csvRead = new CSVRead<>();
      * CSVParser parser = new CSVParserBuilder().withSeparator('|').withIgnoreQuotations(true).build();
-     * csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+     * CSVRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal&lt;CsvReadDto&gt;() {
      *     // 单条数据处理（每个excel一行对应一个javabean）
      *     public CsvReadDto dealBean(String[] arr) {
      *         CsvReadDto dto = new CsvReadDto();
@@ -110,7 +111,7 @@ public class CSVRead<E> {
      *     }
      *
      *     // 批量数据处理（可以批量入库）
-     *     public void dealBatchBean(List<CsvReadDto> list) {
+     *     public void dealBatchBean(List&lt;CsvReadDto&gt; list) {
      *         Assert.assertEquals("name1", list.get(0).getName());
      *         Assert.assertEquals("name2", list.get(1).getName());
      *         Assert.assertEquals("name3", list.get(2).getName());
@@ -124,8 +125,11 @@ public class CSVRead<E> {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/a1.csv">
      *     file content</a>
      */
-    public void read(InputStream inputStream, CSVReadDeal<E> deal, CSVParser parser) {
-        this.read(inputStream, deal, reader -> new CSVReaderBuilder(reader)
+    public static <E> void read(InputStream inputStream, CSVReadDeal<E> deal, CSVParser parser) {
+        Objects.requireNonNull(inputStream);
+        Objects.requireNonNull(deal);
+        Objects.requireNonNull(parser);
+        read(inputStream, deal, reader -> new CSVReaderBuilder(reader)
                 .withSkipLines(deal.skipLine()).withCSVParser(parser).build());
     }
 
@@ -136,7 +140,10 @@ public class CSVRead<E> {
      * @param function the function for get Reader
      * @see {@link #read(java.io.InputStream, com.github.fartherp.framework.poi.csv.CSVReadDeal, com.opencsv.CSVParser)}
      */
-    public void read(InputStream inputStream, CSVReadDeal<E> deal, Function<Reader, CSVReader> function) {
+    public static <E> void read(InputStream inputStream, CSVReadDeal<E> deal, Function<Reader, CSVReader> function) {
+        Objects.requireNonNull(inputStream);
+        Objects.requireNonNull(deal);
+        Objects.requireNonNull(function);
         try (CSVReader reader = function.apply(new InputStreamReader(new DataInputStream(inputStream)))) {
             int tmp = deal.getBatchCount();
             List<E> l = new ArrayList<>(tmp);

@@ -28,8 +28,7 @@
 1.CSV文件导入：
 > 示例代码：com.github.fartherp.framework.poi.csv.CSVReadTest
 ``` java
-    CSVRead<CsvReadDto> csvRead = new CSVRead<>();
-    csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+    CSVRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
         // 单条数据处理（每一行对应一个javabean）
         public CsvReadDto dealBean(String[] arr) {
             CsvReadDto dto = new CsvReadDto();
@@ -79,8 +78,7 @@
 ## Excel常用例子：
 1.Excel文件导入：
 ``` java
-    ExcelRead<ExcelReadDto> excelRead = new ExcelRead<>();
-    excelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
+    ExcelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
         // 单条数据处理（每一行对应一个javabean）
         public ExcelReadDto dealBean(Row row) {
             ExcelReadDto dto = new ExcelReadDto();
@@ -119,19 +117,21 @@
     title[4] = "登录IP";
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
-    FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<>(title, fileName);
-    excelWrite.setLargeDataMode(false).deal(obj -> {
-        String[] result = new String[6];
-        result[0] = obj.getTime();
-        result[1] = obj.getName();
-        result[2] = obj.getClient();
-        result[3] = obj.getVersion();
-        result[4] = obj.getIp();
-        result[5] = obj.getStatus() + "";
-        return result;
-    }).list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
+    FileExcelWrite.<ExcelDto>build(title, fileName)
+            .setLargeDataMode(false)
+            .deal(obj -> {
+                String[] result = new String[6];
+                result[0] = obj.getTime();
+                result[1] = obj.getName();
+                result[2] = obj.getClient();
+                result[3] = obj.getVersion();
+                result[4] = obj.getIp();
+                result[5] = obj.getStatus() + "";
+                return result;
+            })
+            .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
             .list(ExcelWriteStyleTest.getList1())
-            .write();
+            .write();        
 ```
 
 3.Excel文件导出（风格，可以自定义风格）：
@@ -142,20 +142,23 @@
     map.put("startTime", "2019-01-09 00:00:00");
     map.put("endTime", "2019-01-09 12:00:00");
     String fileName = "D:\\styleInputStream.xls";
-    FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<>(this.getClass().getResourceAsStream("/c.xls"), fileName);
-    excelWrite.additional(map).deal(new WriteDeal<ExcelDto>() {
-        public String[] dealBean(ExcelDto obj) {
-            String[] result = new String[3];
-            result[0] = obj.getId() + "";
-            result[1] = obj.getName();
-            result[2] = obj.getAge() + "";
-            return result;
-        }
-
-        public int skipLine() {
-            return 4;
-        }
-    }).list(getList()).write();
+    FileExcelWrite.<ExcelDto>build(this.getClass().getResourceAsStream("/c.xls"), fileName)
+            .additional(map)
+            .deal(new WriteDeal<ExcelDto>() {
+                public String[] dealBean(ExcelDto obj) {
+                    String[] result = new String[3];
+                    result[0] = obj.getId() + "";
+                    result[1] = obj.getName();
+                    result[2] = obj.getAge() + "";
+                    return result;
+                }
+    
+                public int skipLine() {
+                    return 4;
+                }
+            })
+            .list(getList())
+            .write();
 ```
 
 4.浏览器下载Excel文件：
@@ -168,17 +171,19 @@
     title[4] = "登录IP";
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
-    HttpServletResponseExcelWrite<ExcelDto> excelWrite = new HttpServletResponseExcelWrite<>(title, fileName, request, response);
-    excelWrite.setLargeDataMode(false).deal(obj -> {
-        String[] result = new String[6];
-        result[0] = obj.getTime();
-        result[1] = obj.getName();
-        result[2] = obj.getClient();
-        result[3] = obj.getVersion();
-        result[4] = obj.getIp();
-        result[5] = obj.getStatus() + "";
-        return result;
-    }).list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
+    HttpServletResponseExcelWrite.<ExcelDto>build(title, fileName, request, response)
+            .setLargeDataMode(false)
+            .deal(obj -> {
+                String[] result = new String[6];
+                result[0] = obj.getTime();
+                result[1] = obj.getName();
+                result[2] = obj.getClient();
+                result[3] = obj.getVersion();
+                result[4] = obj.getIp();
+                result[5] = obj.getStatus() + "";
+                return result;
+            })
+            .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
             .list(ExcelWriteStyleTest.getList1())
             .write();
 ```

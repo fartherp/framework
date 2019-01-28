@@ -20,8 +20,7 @@ import java.util.List;
 public class CSVReadTest {
     @Test
     public void testRead() {
-        CSVRead<CsvReadDto> csvRead = new CSVRead<>();
-        csvRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
+        CSVRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();
@@ -42,9 +41,8 @@ public class CSVReadTest {
 
     @Test
     public void testRead1() {
-        CSVRead<CsvReadDto> csvRead = new CSVRead<>();
         CSVParser parser = new CSVParserBuilder().withSeparator('|').withIgnoreQuotations(true).build();
-        csvRead.read(CSVReadTest.class.getResourceAsStream("/a1.csv"), new CSVReadDeal<CsvReadDto>() {
+        CSVRead.read(CSVReadTest.class.getResourceAsStream("/a1.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();

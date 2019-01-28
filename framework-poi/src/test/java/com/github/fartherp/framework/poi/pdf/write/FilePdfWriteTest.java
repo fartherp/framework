@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.poi.pdf.write;
 
 import org.apache.commons.io.FileUtils;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +22,13 @@ import java.util.List;
  */
 public class FilePdfWriteTest {
 
-//    @Test
-    public void write() throws Exception {
+    @Test
+    public void write() {
         String fileName = "D:\\pdf1.pdf";
-        FilePdfWrite filePdfWrite = new FilePdfWrite(fileName);
-        filePdfWrite.addFontPath("D:\\project\\githubnew\\framework\\framework-poi\\src\\test\\resources")
+        FilePdfWrite.build(fileName)
+                .addFontPath("D:\\project\\githubnew\\framework\\framework-poi\\src\\test\\resources")
                 .deal(() -> {
-                    String path = FilePdfWriteTest.class.getClassLoader().getResource("/d.html").getPath();
+                    String path = FilePdfWriteTest.class.getResource("/d.html").getPath();
                     File file = new File(path);
                     String html = null;
                     try {
@@ -68,6 +69,7 @@ public class FilePdfWriteTest {
                     sb.append("测试");
                     sb.append(htmls.get(14));
                     return sb.toString();
-                }).write();
+                })
+                .write();
     }
 }

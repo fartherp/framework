@@ -6,6 +6,12 @@ package com.github.fartherp.framework.common.util;
 
 import org.testng.annotations.Test;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtilTest {
@@ -48,5 +54,19 @@ public class DateUtilTest {
 
             j--;
         }
+    }
+
+    @Test
+    public void getDateByCalendar() {
+        ZoneId zone = ZoneId.systemDefault();
+        int ttl = 30;
+        Date date = new Date();
+        Date date1 = DateUtil.getDateByCalendar(date, Calendar.MINUTE, ttl);
+        System.out.println(date1.getTime());
+        LocalDateTime localTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), zone);
+        LocalDateTime localTime1 = localTime.plusMinutes(ttl);
+        System.out.println(localTime1.atZone(zone).toInstant().toEpochMilli());
+
+        System.out.println(localTime.plusSeconds(10000 / 1000).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
     }
 }

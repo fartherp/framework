@@ -34,17 +34,19 @@ public class FileExcelWriteTest {
         title[4] = "登录IP";
         title[5] = "状态";
         String fileName = "D:\\style1.xls";
-        FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<>(title, fileName);
-        excelWrite.setLargeDataMode(false).deal(obj -> {
-            String[] result = new String[6];
-            result[0] = obj.getTime();
-            result[1] = obj.getName();
-            result[2] = obj.getClient();
-            result[3] = obj.getVersion();
-            result[4] = obj.getIp();
-            result[5] = obj.getStatus() + "";
-            return result;
-        }).list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
+        FileExcelWrite.<ExcelDto>build(title, fileName)
+                .setLargeDataMode(false)
+                .deal(obj -> {
+                    String[] result = new String[6];
+                    result[0] = obj.getTime();
+                    result[1] = obj.getName();
+                    result[2] = obj.getClient();
+                    result[3] = obj.getVersion();
+                    result[4] = obj.getIp();
+                    result[5] = obj.getStatus() + "";
+                    return result;
+                })
+                .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
                 .list(ExcelWriteStyleTest.getList1())
                 .write();
 
@@ -63,20 +65,23 @@ public class FileExcelWriteTest {
         map.put("startTime", "2019-01-09 00:00:00");
         map.put("endTime", "2019-01-09 12:00:00");
         String fileName = "D:\\styleInputStream.xls";
-        FileExcelWrite<ExcelDto> excelWrite = new FileExcelWrite<>(this.getClass().getResourceAsStream("/c.xls"), fileName);
-        excelWrite.additional(map).deal(new WriteDeal<ExcelDto>() {
-            public String[] dealBean(ExcelDto obj) {
-                String[] result = new String[3];
-                result[0] = obj.getId() + "";
-                result[1] = obj.getName();
-                result[2] = obj.getAge() + "";
-                return result;
-            }
+        FileExcelWrite.<ExcelDto>build(this.getClass().getResourceAsStream("/c.xls"), fileName)
+                .additional(map)
+                .deal(new WriteDeal<ExcelDto>() {
+                    public String[] dealBean(ExcelDto obj) {
+                        String[] result = new String[3];
+                        result[0] = obj.getId() + "";
+                        result[1] = obj.getName();
+                        result[2] = obj.getAge() + "";
+                        return result;
+                    }
 
-            public int skipLine() {
-                return 4;
-            }
-        }).list(getList()).write();
+                    public int skipLine() {
+                        return 4;
+                    }
+                })
+                .list(getList())
+                .write();
 
         stopWatch.stop();
         System.out.println(stopWatch.toString());
