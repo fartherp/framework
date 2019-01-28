@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class FilePdfWriteTest {
 
-    @Test
+//    @Test
     public void write() {
         String fileName = "D:\\pdf1.pdf";
         FilePdfWrite.build(fileName)
