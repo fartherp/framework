@@ -22,10 +22,10 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-compress</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.4</version>
     </dependency>
     ```
     ```Gradle```
     ```
-    compile 'com.github.fartherp:framework-compress:3.0.2'
+    compile 'com.github.fartherp:framework-compress:3.0.4'
     ```

@@ -16,12 +16,12 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-poi</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.4</version>
     </dependency>
     ```
     ```Gradle```
     ```
-    compile 'com.github.fartherp:framework-poi:3.0.2'
+    compile 'com.github.fartherp:framework-poi:3.0.4'
     ```
 
 ## CSV常用例子：

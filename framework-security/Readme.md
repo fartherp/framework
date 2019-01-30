@@ -17,10 +17,10 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-security</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.4</version>
     </dependency>
     ```
     ```Gradle```
     ```
-    compile 'com.github.fartherp:framework-security:3.0.2'
+    compile 'com.github.fartherp:framework-security:3.0.4'
     ```

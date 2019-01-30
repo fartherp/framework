@@ -19,10 +19,10 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-core</artifactId>
-        <version>3.0.2</version>
+        <version>3.0.4</version>
     </dependency>
     ```
     ```Gradle```
     ```
-    compile 'com.github.fartherp:framework-core:3.0.2'
+    compile 'com.github.fartherp:framework-core:3.0.4'
     ```
