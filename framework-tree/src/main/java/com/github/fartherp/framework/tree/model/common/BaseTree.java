@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.tree.model.common;
 
-import java.io.Serializable;
 
 /**
  * Created by framework .

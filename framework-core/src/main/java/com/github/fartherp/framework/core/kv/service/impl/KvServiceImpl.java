@@ -154,6 +154,7 @@ public class KvServiceImpl implements KvService {
         return dao;
     }
 
+    @Override
     public void setDao(KvDao dao) {
         this.dao = dao;
     }
