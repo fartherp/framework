@@ -15,7 +15,7 @@ import java.util.Map;
  * The query of the database use the {@link NamedParameterJdbcTemplate} of the spring,
  * the {@link #dataSource} is setted through the XML injection of the spring.
  * <pre>
- * &lt;bean id="kvDao" class="cn.vansky.framework.core.kv.dao.impl.KvDaoImpl"&gt;
+ * &lt;bean id="kvDao" class="com.github.fartherp.framework.core.kv.dao.impl.KvDaoImpl"&gt;
  *     &lt;property name="dataSource" ref="dataSource"/&gt;
  * &lt;/bean&gt;
  * </pre>

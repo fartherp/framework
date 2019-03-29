@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * <pre>
- * &lt;bean id="kvService" class="cn.vansky.framework.core.kv.service.impl.KvServiceImpl"&gt;
+ * &lt;bean id="kvService" class="com.github.fartherp.framework.core.kv.service.impl.KvServiceImpl"&gt;
  *     &lt;property name="dao" ref="kvDao"/&gt;
  * &lt;/bean&gt;
  * </pre>

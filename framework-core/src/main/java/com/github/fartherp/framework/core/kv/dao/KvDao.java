@@ -13,6 +13,7 @@ import java.util.Map;
  * the {@linkplain com.github.fartherp.framework.core.kv.dao.impl.KvDaoImpl#dataSource}
  * is setted through the XML injection of the spring.
  * <pre>
+ * &lt;bean id="kvDao" class="cn.vansky.framework.core.kv.dao.impl.KvDaoImpl"&gt;
  *     &lt;property name="dataSource" ref="dataSource"/&gt;
  * &lt;/bean&gt;
  * </pre>
