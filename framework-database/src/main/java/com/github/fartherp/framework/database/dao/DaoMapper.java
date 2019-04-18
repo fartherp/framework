@@ -88,5 +88,5 @@ public interface DaoMapper<T, ID extends Serializable> {
      * delete batch
      * @param ids ids
      */
-    void deleteBatch(ID... ids);
+    void deleteBatch(List<ID> ids);
 }

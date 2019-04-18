@@ -1,8 +1,4 @@
 /*
- * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
- */
-
-/*
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
@@ -26,7 +22,7 @@ public interface GenericService<T, ID> {
     /**
      * 批量删除对象
      */
-    void deleteBatch(ID[] ids);
+    void deleteBatch(List<ID> ids);
 
     /**
      * 查询所有对象

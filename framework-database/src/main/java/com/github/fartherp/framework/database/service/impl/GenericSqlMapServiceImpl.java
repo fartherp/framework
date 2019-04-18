@@ -1,21 +1,8 @@
 /*
- * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
- */
-
-/*
- * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
- */
-
-/*
- * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
- */
-
-/*
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
 package com.github.fartherp.framework.database.service.impl;
-
 
 import com.github.fartherp.framework.database.dao.DaoMapper;
 import com.github.fartherp.framework.database.dao.FieldAccessVo;
@@ -41,15 +28,15 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
 
     public abstract DaoMapper<T, ID> getDao();
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     @SuppressWarnings("unchecked")
     public void delete(ID id) {
         Assert.notNull(id, "delete failed due to PrimaryKey is null");
         getDao().deleteByPrimaryKey(id);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
-    public void deleteBatch(ID[] ids){
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatch(List<ID> ids){
         getDao().deleteBatch(ids);
     }
 
@@ -65,7 +52,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         return getDao().count();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     @SuppressWarnings("unchecked")
     public ID saveEntity(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
@@ -73,7 +60,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         return (ID) entity.primaryKey();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     @SuppressWarnings("unchecked")
     public ID saveEntitySelective(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
@@ -81,7 +68,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         return (ID) entity.primaryKey();
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     public void saveBatch(List<T> entitys) {
         Assert.notNull(entitys, "saveBatch entitys failed due to entitys is null");
         if (CollectionUtils.isNotEmpty(entitys)) {
@@ -89,19 +76,19 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         }
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     public void updateEntity(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
         getDao().updateByPrimaryKey(entity);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     public void updateEntitySelective(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
         getDao().updateByPrimaryKeySelective(entity);
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     public T saveOrUpdate(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
         ID id = entity.primaryKey();
@@ -117,7 +104,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
         return entity;
     }
 
-    @Transactional(rollbackFor = {Exception.class})
+    @Transactional(rollbackFor = Exception.class)
     public T saveOrUpdateSelective(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
         ID id = entity.primaryKey();
