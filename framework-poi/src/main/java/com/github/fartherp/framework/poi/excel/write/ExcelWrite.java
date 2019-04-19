@@ -6,12 +6,15 @@ package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.Constant;
 import com.github.fartherp.framework.poi.excel.WriteDeal;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * Excel写接口
@@ -125,4 +128,18 @@ public interface ExcelWrite<T> {
      * @return ExcelWrite
      */
     ExcelWrite<T> additional(Map<String, Object> params);
+
+    /**
+     * 设置头的样式风格
+     * @param headStyle 头样式风格
+     * @return ExcelWrite
+     */
+    ExcelWrite<T> setHeadStyle(BiConsumer<CellStyle, Font> headStyle);
+
+    /**
+     * 设置包体的样式风格
+     * @param bodyStyle 包体样式风格
+     * @return ExcelWrite
+     */
+    ExcelWrite<T> setBodyStyle(BiConsumer<CellStyle, Font> bodyStyle);
 }
