@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 import static com.github.fartherp.framework.poi.Constant.EXCEL_CONTENT_TYPE;
@@ -20,36 +21,33 @@ import static com.github.fartherp.framework.poi.Constant.EXCEL_CONTENT_TYPE;
  * @author: CK
  * @date: 2017/11/25
  */
-public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
+public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
 
     private HttpServletResponse response;
 
-    private HttpServletResponseExcelWrite(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
-        super(inputStream, fileName);
-        this.setResponse(request, response);
+    private HttpServletRequest request;
+
+    private HttpServletResponseExcelWrite(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
     }
 
-    private HttpServletResponseExcelWrite(String[] title, String fileName, HttpServletRequest request, HttpServletResponse response) {
-        super(title, fileName);
-        this.setResponse(request, response);
-    }
-
-    public ExcelWrite<T> createOutputStream() {
+    @Override
+    public OutputStream createOutputStream(String fileName) {
         try {
-            this.outputStream = this.response.getOutputStream();
+            this.setResponse(request, response, fileName);
+            return this.response.getOutputStream();
         } catch (IOException e) {
             throw new RuntimeException("响应流异常", e);
         }
-        return this;
     }
 
-    private ExcelWrite<T> setResponse(HttpServletRequest request, HttpServletResponse response) {
+    private void setResponse(HttpServletRequest request, HttpServletResponse response, String fileName) {
         this.response = response;
         response.reset();
         response.setContentType(EXCEL_CONTENT_TYPE);
-        String filename = FileUtilies.getFileName(this.fileName, request);
+        String filename = FileUtilies.getFileName(fileName, request);
         response.setHeader("content-disposition", "attachment; filename=" + filename);
-        return this;
     }
 
     /**
@@ -63,7 +61,7 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
      *  map.put("startTime", "2019-01-09 00:00:00");
      *  map.put("endTime", "2019-01-09 12:00:00");
      *  String fileName = "D:\\styleInputStream.xls";
-     *  HttpServletResponseExcelWrite.&lt;ExcelDto&gt;build(this.getClass().getResourceAsStream("/c.xls"), fileName, request, response)
+     *  HttpServletResponseExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName, request, response)
      *          .additional(map)
      *          .deal(new WriteDeal&lt;ExcelDto&gt;() {
      *              public String[] dealBean(ExcelDto obj) {
@@ -77,20 +75,19 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
      *              public int skipLine() {
      *                  return 4;
      *              }
-     *          })
-     *          .list(getList())
+     *          }, getList())
      *          .write();
      * </pre>
      *
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
-    public static <T> HttpServletResponseExcelWrite<T> build(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static InputStreamExcelWrite build(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new HttpServletResponseExcelWrite<>(inputStream, fileName, request, response);
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response));
     }
 
     /**
@@ -106,9 +103,9 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
      *  title[4] = "登录IP";
      *  title[5] = "状态";
      *  String fileName = "D:\\style1.xls";
-     *  HttpServletResponseExcelWrite.&lt;ExcelDto&gt;build(title, fileName, request, response)
+     *  HttpServletResponseExcelWrite.build(fileName, request, response)
      *          .setLargeDataMode(false)
-     *          .deal(obj -> {
+     *          .deal(title, obj -> {
      *              String[] result = new String[6];
      *              result[0] = obj.getTime();
      *              result[1] = obj.getName();
@@ -117,17 +114,14 @@ public class HttpServletResponseExcelWrite<T> extends AbstractExcelWrite<T> {
      *              result[4] = obj.getIp();
      *              result[5] = obj.getStatus() + "";
      *              return result;
-     *          })
-     *          .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
-     *          .list(ExcelWriteStyleTest.getList1())
+     *          }, ExcelDataList.getList())
      *          .write();
      * </pre>
      */
-    public static <T> HttpServletResponseExcelWrite<T> build(String[] title, String fileName, HttpServletRequest request, HttpServletResponse response) {
-        Objects.requireNonNull(title);
+    public static ExcelWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new HttpServletResponseExcelWrite<>(title, fileName, request, response);
+        return new CreateNewExcelWrite(fileName, new HttpServletResponseExcelWrite(request, response));
     }
 }

@@ -4,9 +4,10 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 /**
@@ -15,23 +16,15 @@ import java.util.Objects;
  * Author: CK
  * Date: 2017/11/25
  */
-public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
+public class FileExcelWrite implements OutputStreamDelegate {
 
-    private FileExcelWrite(InputStream inputStream, String fileName) {
-        super(inputStream, fileName);
-    }
-
-    private FileExcelWrite(String[] title, String fileName) {
-        super(title, fileName);
-    }
-
-    public ExcelWrite<T> createOutputStream() {
+    @Override
+    public OutputStream createOutputStream(String fileName) {
         try {
-            this.outputStream = new FileOutputStream(this.fileName);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("文件不存在", e);
+            return new FileOutputStream(fileName);
+        } catch (IOException e) {
+            throw new RuntimeException("响应流异常", e);
         }
-        return this;
     }
 
     /**
@@ -45,7 +38,7 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *  map.put("startTime", "2019-01-09 00:00:00");
      *  map.put("endTime", "2019-01-09 12:00:00");
      *  String fileName = "D:\\styleInputStream.xls";
-     *  FileExcelWrite.&lt;ExcelDto&gt;build(this.getClass().getResourceAsStream("/c.xls"), fileName)
+     *  FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
      *         .additional(map)
      *         .deal(new WriteDeal&lt;ExcelDto&gt;() {
      *             public String[] dealBean(ExcelDto obj) {
@@ -59,8 +52,7 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *             public int skipLine() {
      *                 return 4;
      *             }
-     *         })
-     *         .list(getList())
+     *         }, getList())
      *         .write();
      * </pre>
      *
@@ -70,10 +62,10 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
-    public static <T> FileExcelWrite<T> build(InputStream inputStream, String fileName) {
+    public static InputStreamExcelWrite build(InputStream inputStream, String fileName) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
-        return new FileExcelWrite<>(inputStream, fileName);
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new FileExcelWrite());
     }
 
     /**
@@ -89,9 +81,9 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *  title[4] = "登录IP";
      *  title[5] = "状态";
      *  String fileName = "D:\\style1.xls";
-     *  FileExcelWrite.&lt;ExcelDto&gt;build(title, fileName)
+     *  FileExcelWrite.build(fileName)
      *          .setLargeDataMode(false)
-     *          .deal(obj -> {
+     *          .deal(title, obj -> {
      *              String[] result = new String[6];
      *              result[0] = obj.getTime();
      *              result[1] = obj.getName();
@@ -100,18 +92,14 @@ public class FileExcelWrite<T> extends AbstractExcelWrite<T> {
      *              result[4] = obj.getIp();
      *              result[5] = obj.getStatus() + "";
      *              return result;
-     *          })
-     *          .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
-     *          .list(ExcelWriteStyleTest.getList1())
+     *          }, ExcelDataList.getList())
      *          .write();
      * </pre>
      *
-     * @param title the output file title
      * @param fileName the output file name
      */
-    public static <T> FileExcelWrite<T> build(String[] title, String fileName) {
-        Objects.requireNonNull(title);
+    public static ExcelWrite build(String fileName) {
         Objects.requireNonNull(fileName);
-        return new FileExcelWrite<>(title, fileName);
+        return new CreateNewExcelWrite(fileName, new FileExcelWrite());
     }
 }

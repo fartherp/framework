@@ -32,6 +32,14 @@ public interface WriteDeal<T> {
     String[] dealBean(T obj);
 
     /**
+     * 设置sheet名称
+     * @return 名称
+     */
+    default String name() {
+        return null;
+    }
+
+    /**
      * 设置每列宽度
      * @param title 标题
      * @return 宽度
