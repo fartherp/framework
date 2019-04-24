@@ -117,9 +117,9 @@
     title[4] = "登录IP";
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
-    FileExcelWrite.<ExcelDto>build(title, fileName)
+    FileExcelWrite.build(fileName)
             .setLargeDataMode(false)
-            .deal(obj -> {
+            .deal(title, obj -> {
                 String[] result = new String[6];
                 result[0] = obj.getTime();
                 result[1] = obj.getName();
@@ -128,9 +128,7 @@
                 result[4] = obj.getIp();
                 result[5] = obj.getStatus() + "";
                 return result;
-            })
-            .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
-            .list(ExcelWriteStyleTest.getList1())
+            }, ExcelDataList.getList())
             .write();        
 ```
 
@@ -142,7 +140,7 @@
     map.put("startTime", "2019-01-09 00:00:00");
     map.put("endTime", "2019-01-09 12:00:00");
     String fileName = "D:\\styleInputStream.xls";
-    FileExcelWrite.<ExcelDto>build(this.getClass().getResourceAsStream("/c.xls"), fileName)
+    FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
             .additional(map)
             .deal(new WriteDeal<ExcelDto>() {
                 public String[] dealBean(ExcelDto obj) {
@@ -156,12 +154,11 @@
                 public int skipLine() {
                     return 4;
                 }
-            })
-            .list(getList())
+            }, ExcelDataList.getTenList())
             .write();
 ```
 
-4.浏览器下载Excel文件：
+4.多个sheet导出：
 ``` java
     String[] title = new String [6];
     title[0] = "登录时间";
@@ -171,9 +168,14 @@
     title[4] = "登录IP";
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
-    HttpServletResponseExcelWrite.<ExcelDto>build(title, fileName, request, response)
+
+    String[] title1 = new String [6];
+    title1[0] = "id";
+    title1[1] = "type";
+    title1[2] = "desc";
+    FileExcelWrite.build(fileName)
             .setLargeDataMode(false)
-            .deal(obj -> {
+            .deal(title, obj -> {
                 String[] result = new String[6];
                 result[0] = obj.getTime();
                 result[1] = obj.getName();
@@ -182,9 +184,92 @@
                 result[4] = obj.getIp();
                 result[5] = obj.getStatus() + "";
                 return result;
-            })
-            .list(ExcelWriteStyleTest.getList())// 默认情况下导出数据达到excel最大行，自动切换sheet，（xlsx=1048576，xls=65536）
-            .list(ExcelWriteStyleTest.getList1())
+            }, ExcelDataList.getList1())
+            .deal(title1, obj -> {
+                String[] result = new String[3];
+                result[0] = obj.getId() + "";
+                result[1] = obj.getType();
+                result[2] = obj.getDesc();
+                return result;
+            }, ExcelDataList.getTenList1())
+            .write();
+```
+
+5.多个sheet导出（自定义sheet名称）：
+``` java
+    String[] title = new String [6];
+    title[0] = "登录时间";
+    title[1] = "用户名";
+    title[2] = "访问端";
+    title[3] = "版本系统";
+    title[4] = "登录IP";
+    title[5] = "状态";
+    String fileName = "D:\\style1.xls";
+
+    String[] title1 = new String [6];
+    title1[0] = "id";
+    title1[1] = "type";
+    title1[2] = "desc";
+    FileExcelWrite.build(fileName)
+            .setLargeDataMode(false)
+            .deal(title, new WriteDeal<ExcelDto>() {
+                @Override
+                public String[] dealBean(ExcelDto obj) {
+                    String[] result = new String[6];
+                    result[0] = obj.getTime();
+                    result[1] = obj.getName();
+                    result[2] = obj.getClient();
+                    result[3] = obj.getVersion();
+                    result[4] = obj.getIp();
+                    result[5] = obj.getStatus() + "";
+                    return result;
+                }
+
+                @Override
+                public String name() {
+                    return "ExcelDto";
+                }
+            }, ExcelDataList.getList1())
+            .deal(title1, new WriteDeal<ExcelDto1>() {
+                @Override
+                public String[] dealBean(ExcelDto1 obj) {
+                    String[] result = new String[3];
+                    result[0] = obj.getId() + "";
+                    result[1] = obj.getType();
+                    result[2] = obj.getDesc();
+                    return result;
+                }
+
+                @Override
+                public String name() {
+                    return "test";
+                }
+            }, ExcelDataList.getTenList1())
+            .write();
+```
+
+6.浏览器下载Excel文件：
+``` java
+    String[] title = new String [6];
+    title[0] = "登录时间";
+    title[1] = "用户名";
+    title[2] = "访问端";
+    title[3] = "版本系统";
+    title[4] = "登录IP";
+    title[5] = "状态";
+    String fileName = "D:\\style1.xls";
+    HttpServletResponseExcelWrite.build(fileName, request, response)
+            .setLargeDataMode(false)
+            .deal(title, obj -> {
+                String[] result = new String[6];
+                result[0] = obj.getTime();
+                result[1] = obj.getName();
+                result[2] = obj.getClient();
+                result[3] = obj.getVersion();
+                result[4] = obj.getIp();
+                result[5] = obj.getStatus() + "";
+                return result;
+            }, ExcelDataList.getList())
             .write();
 ```
 
