@@ -50,27 +50,6 @@ public interface WriteDeal<T> {
     }
 
     /**
-     * 设置每列宽度
-     * @param title 标题
-     * @return 宽度
-     */
-    default int[] setColumnWidth(String[] title) {
-        int[] columnWidth = new int[title.length];
-        for (int i = 0; i < title.length; i++) {
-            columnWidth[i] = Constant.WIDTH_DEFAULT;
-        }
-        return columnWidth;
-    }
-
-    /**
-     * 设置高度
-     * @return 高度
-     */
-    default short setHeight() {
-        return Constant.HEIGHT_DEFAULT;
-    }
-
-    /**
      * 设置最大行数
      * @return 最大行数
      */

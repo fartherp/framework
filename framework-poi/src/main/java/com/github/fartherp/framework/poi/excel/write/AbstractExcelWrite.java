@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -168,6 +169,17 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
                 }
             }
             currentRow++;
+        }
+
+        if (dealWrapper.getTitle() != null && dealWrapper.getTitle().length > 0) {
+            if (largeDataMode) {
+                SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
+                // 自动调整列宽
+                sxssfSheet.trackAllColumnsForAutoSizing();
+            }
+            for (int i = 0; i < dealWrapper.getTitle().length; i++) {
+                currentSheet.autoSizeColumn(i, true);
+            }
         }
     }
 
