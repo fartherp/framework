@@ -31,6 +31,13 @@ public interface ExcelWrite {
     <T> ExcelWrite deal(String[] title, WriteDeal<T> deal, List<T> list);
 
     /**
+     * 具体操作
+     * @param deal 操作回调
+     * @return ExcelWrite
+     */
+    <T> ExcelWrite deal(WriteDeal<T> deal, List<T> list);
+
+    /**
      * 设置大数据模式（SXSSFWorkbook）
      * @param largeDataMode true/false
      */

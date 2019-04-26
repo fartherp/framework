@@ -6,6 +6,8 @@ package com.github.fartherp.framework.poi.excel;
 
 import com.github.fartherp.framework.poi.Constant;
 
+import java.util.Map;
+
 /**
  * Excel写接口
  *
@@ -36,6 +38,14 @@ public interface WriteDeal<T> {
      * @return 名称
      */
     default String name() {
+        return null;
+    }
+
+    /**
+     * 额外添加的条件数据
+     * @return 额外添加的条件数据
+     */
+    default Map<String, Object> additional() {
         return null;
     }
 

@@ -132,12 +132,18 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         dealWrapper.setDeal(deal);
         dealWrapper.setList(list);
         // 按用户自己输入的顺序排序
-        wrapperLinkedHashMap.compute(Arrays.hashCode(title),
+        int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
+        wrapperLinkedHashMap.compute(hashCode,
                 (integer, oldValue) -> Optional.ofNullable(oldValue).map(o -> {
                     o.getList().addAll(dealWrapper.getList());
                     return o;
                 }).orElse(dealWrapper));
         return this;
+    }
+
+    @Override
+    public <T> ExcelWrite deal(WriteDeal<T> deal, List<T> list) {
+        return this.deal(new String[0], deal, list);
     }
 
     private <T> void list(DealWrapper<T> dealWrapper) {

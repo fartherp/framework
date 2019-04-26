@@ -98,7 +98,7 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *
      * @param fileName the output file name
      */
-    public static ExcelWrite build(String fileName) {
+    public static NewExcelWrite build(String fileName) {
         Objects.requireNonNull(fileName);
         return new CreateNewExcelWrite(fileName, new FileExcelWrite());
     }

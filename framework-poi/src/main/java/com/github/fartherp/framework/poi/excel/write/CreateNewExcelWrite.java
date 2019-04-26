@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * Author: CK
  * Date: 2019/4/24
  */
-public class CreateNewExcelWrite extends AbstractExcelWrite {
+public class CreateNewExcelWrite extends AbstractExcelWrite implements NewExcelWrite {
 
     public CreateNewExcelWrite(String fileName, OutputStreamDelegate delegate) {
         super(fileName, delegate);

@@ -5,10 +5,10 @@
 package com.github.fartherp.framework.poi.excel.write;
 
 /**
- * 已有Excel模板，读取流生成新Excel模板
+ * 新生成Excel模板
  * Author: CK
- * Date: 2019/4/24
+ * Date: 2019/4/26
  */
-public interface InputStreamExcelWrite extends ExcelWrite {
+public interface NewExcelWrite extends ExcelWrite {
 
 }

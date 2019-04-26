@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
-import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringSubstitutor;
@@ -14,7 +13,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -30,20 +28,9 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements Inp
      */
     protected InputStream inputStream;
 
-    /**
-     * 额外参数
-     */
-    protected Map<String, Object> params;
-
     public CopyInputStreamExcelWrite(InputStream inputStream, String fileName, OutputStreamDelegate delegate) {
         super(fileName, delegate);
         this.inputStream = inputStream;
-    }
-
-    @Override
-    public InputStreamExcelWrite additional(Map<String, Object> params) {
-        this.params = params;
-        return this;
     }
 
     @Override
@@ -61,10 +48,16 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements Inp
      */
     @Override
     public <T> void createSheet(DealWrapper<T> dealWrapper) {
+        int count = dealWrapper.getList().size() + dealWrapper.getDeal().skipLine();
+        if (count > dealWrapper.getDeal().setMaxRows(type)) {
+            throw new RuntimeException("数据太大，超过当前sheet的最大数量");
+        }
         if (currentSheetNumber >= wb.getNumberOfSheets()) {
             throw new RuntimeException("数据太大，超过设置的sheet数");
         }
         currentSheet = wb.getSheetAt(currentSheetNumber++);
+        // 额外参数
+        Map<String, Object> params = dealWrapper.getDeal().additional();
 
         // 处理跳过的行数据
         int lastRowNum = currentSheet.getLastRowNum();
@@ -84,11 +77,6 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements Inp
                 }
             }
         }
-    }
-
-    @Override
-    public <T> InputStreamExcelWrite deal(WriteDeal<T> deal, List<T> list) {
-        return (InputStreamExcelWrite) super.deal(new String[0], deal, list);
     }
 
     @Override

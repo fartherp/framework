@@ -118,7 +118,7 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      *          .write();
      * </pre>
      */
-    public static ExcelWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static NewExcelWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
