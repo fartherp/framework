@@ -39,7 +39,6 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *  map.put("endTime", "2019-01-09 12:00:00");
      *  String fileName = "D:\\styleInputStream.xls";
      *  FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
-     *         .additional(map)
      *         .deal(new WriteDeal&lt;ExcelDto&gt;() {
      *             public String[] dealBean(ExcelDto obj) {
      *                 String[] result = new String[3];
@@ -51,6 +50,15 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *
      *             public int skipLine() {
      *                 return 4;
+     *             }
+     *
+     *             public Map<String, Object> additional() {
+     *                 Map<String, Object> map = new HashMap<>();
+     *                 map.put("quoteCurrency", "ETH");
+     *                 map.put("symbol", "USDT_ETH");
+     *                 map.put("startTime", "2019-01-09 00:00:00");
+     *                 map.put("endTime", "2019-01-09 12:00:00");
+     *                 return map;
      *             }
      *         }, getList())
      *         .write();
