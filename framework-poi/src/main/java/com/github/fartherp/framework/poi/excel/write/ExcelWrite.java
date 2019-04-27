@@ -19,6 +19,12 @@ import java.util.function.BiConsumer;
 public interface ExcelWrite {
 
     /**
+     * 初始化Excel信息
+     * @return 初始化Excel信息
+     */
+    ExcelWrite build();
+
+    /**
      * 写数据
      */
     void write();

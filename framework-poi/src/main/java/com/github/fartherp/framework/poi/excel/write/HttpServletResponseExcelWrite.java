@@ -90,12 +90,12 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
-    public static InputStreamExcelWrite build(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static ExcelWrite build(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response));
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response)).build();
     }
 
     /**
@@ -126,10 +126,10 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      *          .write();
      * </pre>
      */
-    public static NewExcelWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static ExcelWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new CreateNewExcelWrite(fileName, new HttpServletResponseExcelWrite(request, response));
+        return new CreateNewExcelWrite(fileName, new HttpServletResponseExcelWrite(request, response)).build();
     }
 }

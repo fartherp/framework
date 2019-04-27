@@ -16,10 +16,10 @@ import org.apache.poi.xssf.streaming.SXSSFSheet;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
@@ -56,16 +56,6 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
     protected int currentSheetNumber;
 
     /**
-     * 当前处理sheet
-     */
-    protected Sheet currentSheet;
-
-    /**
-     * 当前处理sheet的行
-     */
-    protected int currentRow;
-
-    /**
      * 大数据模式
      */
     protected boolean largeDataMode = true;
@@ -95,7 +85,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
      */
     protected BiConsumer<CellStyle, Font> bodyStyleConsumer;
 
-    private Map<Integer, DealWrapper> wrapperLinkedHashMap = new LinkedHashMap<>();
+    private Map<Integer, LinkedList<SheetWrapper>> wrapperLinkedListMap = new HashMap<>();
 
     private OutputStreamDelegate delegate;
 
@@ -121,84 +111,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         return this;
     }
 
-    public abstract void createWb();
-
-    @Override
-    public <T> ExcelWrite deal(String[] title, WriteDeal<T> deal, List<T> list) {
-        if (fileName == null) {
-            throw new IllegalArgumentException("文件名不存在");
-        }
-        DealWrapper<T> dealWrapper = new DealWrapper<>();
-        dealWrapper.setTitle(title);
-        dealWrapper.setDeal(deal);
-        dealWrapper.setList(list);
-        // 按用户自己输入的顺序排序
-        int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
-        wrapperLinkedHashMap.compute(hashCode,
-                (integer, oldValue) -> Optional.ofNullable(oldValue).map(o -> {
-                    o.getList().addAll(dealWrapper.getList());
-                    return o;
-                }).orElse(dealWrapper));
-        return this;
-    }
-
-    @Override
-    public <T> ExcelWrite deal(WriteDeal<T> deal, List<T> list) {
-        return this.deal(new String[0], deal, list);
-    }
-
-    private <T> void list(DealWrapper<T> dealWrapper) {
-        List<T> list = dealWrapper.getList();
-        // 数据准备好时，最终生成excel，total就是数据大小
-        dealWrapper.setTotal(list.size());
-        // 第一个sheet创建，一定创建标题
-        createSheet(dealWrapper, true);
-        for (T t : list) {
-            // 数据超过一个sheet最大值，需要创建第二个sheet
-            createSheet(dealWrapper, false);
-            // 创建一行
-            Row sheetRow = currentSheet.createRow(currentRow);
-            // 得到要插入的每一条记录
-            String[] data = dealWrapper.getDeal().dealBean(t);
-            for (int k = 0; k < data.length; k++) {
-                // 在一行内循环
-                Cell cell = sheetRow.createCell(k);
-                cell.setCellValue(data[k]);
-                if (this.bodyStyle != null) {
-                    cell.setCellStyle(this.bodyStyle);
-                }
-            }
-            currentRow++;
-        }
-
-        if (dealWrapper.getTitle() != null && dealWrapper.getTitle().length > 0) {
-            if (largeDataMode) {
-                SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
-                // 自动调整列宽
-                sxssfSheet.trackAllColumnsForAutoSizing();
-            }
-            for (int i = 0; i < dealWrapper.getTitle().length; i++) {
-                currentSheet.autoSizeColumn(i, true);
-            }
-        }
-    }
-
-    private <T> void createSheet(DealWrapper<T> dealWrapper, boolean flag) {
-        WriteDeal<T> deal = dealWrapper.getDeal();
-        int total = dealWrapper.getTotal();
-
-        // excel处理的最大行数
-        int maxRows = deal.setMaxRows(this.type);
-        if (flag || (total > maxRows && currentRow == maxRows)) {
-            currentRow = deal.skipLine();
-            createSheet(dealWrapper);
-        }
-    }
-
-    public abstract <T> void createSheet(DealWrapper<T> dealWrapper);
-
-    @Override
-    public void write() {
+    public ExcelWrite build() {
         this.outputStream = delegate.createOutputStream(this.fileName);
         // 创建excel
         createWb();
@@ -214,8 +127,91 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
             this.bodyStyleConsumer.accept(this.bodyStyle, bodyFont);
             this.bodyStyle.setFont(bodyFont);
         }
-        wrapperLinkedHashMap.forEach((k, v) -> {
-            list(v);
+        return this;
+    }
+
+    public abstract void createWb();
+
+    @Override
+    public <T> ExcelWrite deal(String[] title, WriteDeal<T> deal, List<T> list) {
+        if (fileName == null) {
+            throw new IllegalArgumentException("文件名不存在");
+        }
+        // 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
+        int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
+        // 同一sheet类型，链表结构，达到Excel最大数量，可以追加
+        LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap.computeIfAbsent(hashCode, k -> new LinkedList<>());
+        list(title, deal, list, linkedList);
+        return this;
+    }
+
+    @Override
+    public <T> ExcelWrite deal(WriteDeal<T> deal, List<T> list) {
+        return this.deal(new String[0], deal, list);
+    }
+
+    private <T> void list(String[] title, WriteDeal<T> deal, List<T> list, LinkedList<SheetWrapper> linkedList) {
+        SheetWrapper currentSheetWrapper = linkedList.peekLast();
+        for (int i = 0; i < list.size(); i++) {
+            T t = list.get(i);
+            // 数据超过一个sheet最大值，需要创建第二个sheet
+            currentSheetWrapper = createSheet(linkedList, currentSheetWrapper, title, deal, i, list.size());
+            // 创建一行
+            Row sheetRow = currentSheetWrapper.getSheet().createRow(currentSheetWrapper.increaseCurrentRow());
+            // 得到要插入的每一条记录
+            String[] data = deal.dealBean(t);
+            for (int k = 0; k < data.length; k++) {
+                // 在一行内循环
+                Cell cell = sheetRow.createCell(k);
+                cell.setCellValue(data[k]);
+                if (this.bodyStyle != null) {
+                    cell.setCellStyle(this.bodyStyle);
+                }
+            }
+        }
+    }
+
+    private <T> SheetWrapper createSheet(LinkedList<SheetWrapper> linkedList, SheetWrapper currentSheetWrapper,
+                                 String[] title, WriteDeal<T> deal, int i, int size) {
+        // excel处理的最大行数
+        int maxRows = deal.setMaxRows(this.type);
+        // sheet创建（当前sheet不存在，整个excel第一次创建）（第二次数据达到最大值时）
+        if ((i == 0 && currentSheetWrapper == null) || (currentSheetWrapper.getCurrentRow() == maxRows)) {
+            SheetWrapper newSheetWrapper = new SheetWrapper();
+            newSheetWrapper.setTitleLength(title.length);
+            newSheetWrapper.setCurrentRow(deal.skipLine());
+            Sheet sheet = createSheet(newSheetWrapper, title, deal);
+            newSheetWrapper.setSheet(sheet);
+            SheetWrapper prev = linkedList.peekLast();
+            if (prev != null) {
+                int overRow = prev.total - maxRows;
+                newSheetWrapper.increaseTotal(size + overRow);
+            } else {
+                newSheetWrapper.increaseTotal(size);
+            }
+            linkedList.addLast(newSheetWrapper);
+            return newSheetWrapper;
+        }
+        return currentSheetWrapper;
+    }
+
+    public abstract <T> Sheet createSheet(SheetWrapper currentSheetWrapper, String[] title, WriteDeal<T> deal);
+
+    @Override
+    public void write() {
+        // 最终把所有sheet改成自动调整列宽
+        wrapperLinkedListMap.forEach((k, v) -> {
+            v.forEach(currentSheetWrapper -> {
+                if (largeDataMode) {
+                    Sheet currentSheet = currentSheetWrapper.getSheet();
+                    SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
+                    // 自动调整列宽
+                    sxssfSheet.trackAllColumnsForAutoSizing();
+                    for (int i = 0; i < currentSheetWrapper.getTitleLength(); i++) {
+                        currentSheet.autoSizeColumn(i);
+                    }
+                }
+            });
         });
 
         // 创建文件输出流，准备输出电子表格
@@ -234,58 +230,53 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         }
     }
 
-    final class DealWrapper<T> {
-        /**
-         * 标题
-         */
-        private String[] title;
-        /**
-         * 自定义业务处理
-         */
-        private WriteDeal<T> deal;
-        /**
-         * 实际数据
-         */
-        private List<T> list;
+    final class SheetWrapper {
+        private Sheet sheet;
+        private int currentRow = 0;
+        private int titleLength;
         /**
          * 总数量（同一类型数据，sheet计数）
          */
-        private int total;
+        private int total = 0;
 
-        public String[] getTitle() {
-            return title;
+        public Sheet getSheet() {
+            return sheet;
         }
 
-        public void setTitle(String[] title) {
-            this.title = title;
+        public void setSheet(Sheet sheet) {
+            this.sheet = sheet;
         }
 
-        public WriteDeal<T> getDeal() {
-            return deal;
+        public int getCurrentRow() {
+            return currentRow;
         }
 
-        public void setDeal(WriteDeal<T> deal) {
-            this.deal = deal;
+        public void setCurrentRow(int currentRow) {
+            this.currentRow = currentRow;
         }
 
-        public List<T> getList() {
-            return list;
+        public int increaseCurrentRow() {
+            return currentRow++;
         }
 
-        public void setList(List<T> list) {
-            this.list = list;
+        public int getTitleLength() {
+            return titleLength;
+        }
+
+        public void setTitleLength(int titleLength) {
+            this.titleLength = titleLength;
         }
 
         public int getTotal() {
             return total;
         }
 
-        public void setTotal(int total) {
-            this.total = total;
+        public void increaseTotal() {
+            ++total;
         }
 
-        public void increaseTotal() {
-            this.total++;
+        public void increaseTotal(int i) {
+            total += i;
         }
     }
 }

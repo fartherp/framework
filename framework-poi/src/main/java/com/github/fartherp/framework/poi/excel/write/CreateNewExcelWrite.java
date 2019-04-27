@@ -5,10 +5,12 @@
 package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.Constant;
+import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -17,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * Author: CK
  * Date: 2019/4/24
  */
-public class CreateNewExcelWrite extends AbstractExcelWrite implements NewExcelWrite {
+public class CreateNewExcelWrite extends AbstractExcelWrite {
 
     public CreateNewExcelWrite(String fileName, OutputStreamDelegate delegate) {
         super(fileName, delegate);
@@ -49,22 +51,29 @@ public class CreateNewExcelWrite extends AbstractExcelWrite implements NewExcelW
     }
 
     @Override
-    public <T> void createSheet(DealWrapper<T> dealWrapper) {
+    public <T> Sheet createSheet(SheetWrapper currentSheetWrapper, String[] title, WriteDeal<T> deal) {
         // 标题多算一行数据
-        dealWrapper.increaseTotal();
-        String sheetName = dealWrapper.getDeal().name();
+        currentSheetWrapper.increaseTotal();
+        String sheetName = deal.name();
         // 第一个sheet(数量相等), 第二个及以后(超过最大行)
         // sheet 对应一个工作页
+        Sheet currentSheet;
         if (sheetName == null) {
             currentSheet = wb.createSheet("sheet" + currentSheetNumber++);
-        } else if (currentSheetNumber == 0) {
-            currentSheet = wb.createSheet(sheetName);
-            currentSheetNumber++;
         } else {
-            currentSheet = wb.createSheet(sheetName + currentSheetNumber++);
+            StringBuilder sb = new StringBuilder();
+            sb.append(sheetName);
+            currentSheet = wb.getSheet(sb.toString());
+            while (currentSheet != null) {
+                // 自定义名称重名sheet，重新命名
+                sb.setLength(0);
+                sb.append(sheetName);
+                sb.append(currentSheetNumber++);
+                currentSheet = wb.getSheet(sb.toString());
+            }
+            currentSheet = wb.createSheet(sb.toString());
         }
-        Row dataRow = currentSheet.createRow(currentRow);
-        String[] title = dealWrapper.getTitle();
+        Row dataRow = currentSheet.createRow(currentSheetWrapper.increaseCurrentRow());
         // 设置标题数据
         for (int i = 0; i < title.length; i++) {
             Cell cell = dataRow.createCell(i);
@@ -73,6 +82,6 @@ public class CreateNewExcelWrite extends AbstractExcelWrite implements NewExcelW
                 cell.setCellStyle(this.headStyle);
             }
         }
-        currentRow++;
+        return currentSheet;
     }
 }

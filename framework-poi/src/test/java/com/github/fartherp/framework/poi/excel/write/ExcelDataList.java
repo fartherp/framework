@@ -24,6 +24,11 @@ public class ExcelDataList {
             dto.setId((long) i);
             dto.setName("name" + i);
             dto.setAge(i);
+            dto.setTime("2017-10-20 10:10:1" + i);
+            dto.setClient("client"  + i);
+            dto.setVersion("1.0." + i);
+            dto.setIp("192.168.1." + i);
+            dto.setStatus(i);
             excelDtos.add(dto);
         }
         return excelDtos;
@@ -56,16 +61,13 @@ public class ExcelDataList {
         return excelDtos;
     }
 
-    public static List<ExcelDto> getList1() {
-        List<ExcelDto> excelDtos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ExcelDto dto = new ExcelDto();
-            dto.setTime("2222-22-22 22:22:2" + i);
-            dto.setName("2222" + i);
-            dto.setClient("22222"  + i);
-            dto.setVersion("2.2." + i);
-            dto.setIp("222.222.2." + i);
-            dto.setStatus(i);
+    public static List<ExcelDto1> getList1() {
+        List<ExcelDto1> excelDtos = new ArrayList<>();
+        for (int i = 0; i < 65536; i++) {
+            ExcelDto1 dto = new ExcelDto1();
+            dto.setId((long) i);
+            dto.setType("type" + i);
+            dto.setDesc("desc" + i);
             excelDtos.add(dto);
         }
         return excelDtos;

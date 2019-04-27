@@ -70,10 +70,10 @@ public class FileExcelWrite implements OutputStreamDelegate {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
-    public static InputStreamExcelWrite build(InputStream inputStream, String fileName) {
+    public static ExcelWrite build(InputStream inputStream, String fileName) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
-        return new CopyInputStreamExcelWrite(inputStream, fileName, new FileExcelWrite());
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new FileExcelWrite()).build();
     }
 
     /**
@@ -106,8 +106,8 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *
      * @param fileName the output file name
      */
-    public static NewExcelWrite build(String fileName) {
+    public static ExcelWrite build(String fileName) {
         Objects.requireNonNull(fileName);
-        return new CreateNewExcelWrite(fileName, new FileExcelWrite());
+        return new CreateNewExcelWrite(fileName, new FileExcelWrite()).build();
     }
 }

@@ -4,11 +4,13 @@
 
 package com.github.fartherp.framework.poi.excel.write;
 
+import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringSubstitutor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.IOException;
@@ -21,7 +23,7 @@ import java.util.Objects;
  * Author: CK
  * Date: 2019/4/24
  */
-public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements InputStreamExcelWrite {
+public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
 
     /**
      * 文件输入流
@@ -47,17 +49,17 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements Inp
      * 通过现有的excel读取，生成对应的excel数据
      */
     @Override
-    public <T> void createSheet(DealWrapper<T> dealWrapper) {
-        int count = dealWrapper.getList().size() + dealWrapper.getDeal().skipLine();
-        if (count > dealWrapper.getDeal().setMaxRows(type)) {
+    public <T> Sheet createSheet(SheetWrapper currentSheetWrapper, String[] title, WriteDeal<T> deal) {
+        int count = currentSheetWrapper.getTotal() + deal.skipLine();
+        if (count > deal.setMaxRows(type)) {
             throw new RuntimeException("数据太大，超过当前sheet的最大数量");
         }
         if (currentSheetNumber >= wb.getNumberOfSheets()) {
             throw new RuntimeException("数据太大，超过设置的sheet数");
         }
-        currentSheet = wb.getSheetAt(currentSheetNumber++);
+        Sheet currentSheet = wb.getSheetAt(currentSheetNumber++);
         // 额外参数
-        Map<String, Object> params = dealWrapper.getDeal().additional();
+        Map<String, Object> params = deal.additional();
 
         // 处理跳过的行数据
         int lastRowNum = currentSheet.getLastRowNum();
@@ -77,6 +79,7 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite implements Inp
                 }
             }
         }
+        return currentSheet;
     }
 
     @Override
