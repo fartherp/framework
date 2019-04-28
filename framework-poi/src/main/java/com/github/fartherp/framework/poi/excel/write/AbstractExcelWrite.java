@@ -152,10 +152,9 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
 
     private <T> void list(String[] title, WriteDeal<T> deal, List<T> list, LinkedList<SheetWrapper> linkedList) {
         SheetWrapper currentSheetWrapper = linkedList.peekLast();
-        for (int i = 0; i < list.size(); i++) {
-            T t = list.get(i);
+        for (T t : list) {
             // 数据超过一个sheet最大值，需要创建第二个sheet
-            currentSheetWrapper = createSheet(linkedList, currentSheetWrapper, title, deal, i, list.size());
+            currentSheetWrapper = createSheet(linkedList, currentSheetWrapper, title, deal, list.size());
             // 创建一行
             Row sheetRow = currentSheetWrapper.getSheet().createRow(currentSheetWrapper.increaseCurrentRow());
             // 得到要插入的每一条记录
@@ -172,11 +171,11 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
     }
 
     private <T> SheetWrapper createSheet(LinkedList<SheetWrapper> linkedList, SheetWrapper currentSheetWrapper,
-                                 String[] title, WriteDeal<T> deal, int i, int size) {
+                                 String[] title, WriteDeal<T> deal, int size) {
         // excel处理的最大行数
         int maxRows = deal.setMaxRows(this.type);
         // sheet创建（当前sheet不存在，整个excel第一次创建）（第二次数据达到最大值时）
-        if ((i == 0 && currentSheetWrapper == null) || (currentSheetWrapper.getCurrentRow() == maxRows)) {
+        if (currentSheetWrapper == null || currentSheetWrapper.getCurrentRow() == maxRows) {
             SheetWrapper newSheetWrapper = new SheetWrapper();
             newSheetWrapper.setTitleLength(title.length);
             newSheetWrapper.setCurrentRow(deal.skipLine());
