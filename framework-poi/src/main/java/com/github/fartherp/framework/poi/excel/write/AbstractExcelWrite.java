@@ -63,7 +63,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
     /**
      * 内存中保留 5000 条数据，以免内存溢出，其余写入硬盘
      */
-    protected int rowAccessWindowSize = 5000;
+    protected int rowAccessWindowSize = 65536;
 
     /**
      * 头样式风格
@@ -94,8 +94,17 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         this.delegate = delegate;
     }
 
+    @Override
     public ExcelWrite setLargeDataMode(boolean largeDataMode) {
         this.largeDataMode = largeDataMode;
+        return this;
+    }
+
+    @Override
+    public ExcelWrite setRowAccessWindowSize(int rowAccessWindowSize) {
+        if (rowAccessWindowSize != 0) {
+            this.rowAccessWindowSize = rowAccessWindowSize;
+        }
         return this;
     }
 
@@ -111,23 +120,24 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         return this;
     }
 
-    public ExcelWrite build() {
-        this.outputStream = delegate.createOutputStream(this.fileName);
-        // 创建excel
-        createWb();
-        if (this.headStyleConsumer != null) {
-            this.headStyle = wb.createCellStyle();
-            Font headFont = wb.createFont();
-            this.headStyleConsumer.accept(this.headStyle, headFont);
-            this.headStyle.setFont(headFont);
+    private void build() {
+        if (wb == null) {
+            this.outputStream = delegate.createOutputStream(this.fileName);
+            // 创建excel
+            createWb();
+            if (this.headStyleConsumer != null) {
+                this.headStyle = wb.createCellStyle();
+                Font headFont = wb.createFont();
+                this.headStyleConsumer.accept(this.headStyle, headFont);
+                this.headStyle.setFont(headFont);
+            }
+            if (this.bodyStyleConsumer != null) {
+                this.bodyStyle = wb.createCellStyle();
+                Font bodyFont = wb.createFont();
+                this.bodyStyleConsumer.accept(this.bodyStyle, bodyFont);
+                this.bodyStyle.setFont(bodyFont);
+            }
         }
-        if (this.bodyStyleConsumer != null) {
-            this.bodyStyle = wb.createCellStyle();
-            Font bodyFont = wb.createFont();
-            this.bodyStyleConsumer.accept(this.bodyStyle, bodyFont);
-            this.bodyStyle.setFont(bodyFont);
-        }
-        return this;
     }
 
     public abstract void createWb();
@@ -137,6 +147,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         if (fileName == null) {
             throw new IllegalArgumentException("文件名不存在");
         }
+        build();
         // 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
         int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
         // 同一sheet类型，链表结构，达到Excel最大数量，可以追加

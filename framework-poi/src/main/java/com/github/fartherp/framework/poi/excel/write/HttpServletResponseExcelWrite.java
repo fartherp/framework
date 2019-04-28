@@ -95,7 +95,7 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response)).build();
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response));
     }
 
     /**
@@ -130,6 +130,6 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new CreateNewExcelWrite(fileName, new HttpServletResponseExcelWrite(request, response)).build();
+        return new CreateNewExcelWrite(fileName, new HttpServletResponseExcelWrite(request, response));
     }
 }

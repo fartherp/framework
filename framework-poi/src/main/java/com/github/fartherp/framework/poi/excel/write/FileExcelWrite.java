@@ -73,7 +73,7 @@ public class FileExcelWrite implements OutputStreamDelegate {
     public static ExcelWrite build(InputStream inputStream, String fileName) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
-        return new CopyInputStreamExcelWrite(inputStream, fileName, new FileExcelWrite()).build();
+        return new CopyInputStreamExcelWrite(inputStream, fileName, new FileExcelWrite());
     }
 
     /**
@@ -108,6 +108,6 @@ public class FileExcelWrite implements OutputStreamDelegate {
      */
     public static ExcelWrite build(String fileName) {
         Objects.requireNonNull(fileName);
-        return new CreateNewExcelWrite(fileName, new FileExcelWrite()).build();
+        return new CreateNewExcelWrite(fileName, new FileExcelWrite());
     }
 }

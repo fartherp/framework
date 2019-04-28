@@ -19,12 +19,6 @@ import java.util.function.BiConsumer;
 public interface ExcelWrite {
 
     /**
-     * 初始化Excel信息
-     * @return 初始化Excel信息
-     */
-    ExcelWrite build();
-
-    /**
      * 写数据
      */
     void write();
@@ -48,6 +42,13 @@ public interface ExcelWrite {
      * @param largeDataMode true/false
      */
     ExcelWrite setLargeDataMode(boolean largeDataMode);
+
+    /**
+     * 设置大数据缓存记录数
+     * @param rowAccessWindowSize 缓存记录数
+     * @return ExcelWrite
+     */
+    ExcelWrite setRowAccessWindowSize(int rowAccessWindowSize);
 
     /**
      * 设置头的样式风格
