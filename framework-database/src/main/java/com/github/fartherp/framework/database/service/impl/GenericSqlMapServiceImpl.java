@@ -21,7 +21,7 @@ import java.util.List;
  * Author: CK
  * Date: 2015/6/5.
  */
-public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID extends Serializable>
+public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID extends Serializable>
         implements GenericService<T, ID> {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,7 +29,6 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     public abstract DaoMapper<T, ID> getDao();
 
     @Transactional(rollbackFor = Exception.class)
-    @SuppressWarnings("unchecked")
     public void delete(ID id) {
         Assert.notNull(id, "delete failed due to PrimaryKey is null");
         getDao().deleteByPrimaryKey(id);
@@ -53,19 +52,17 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo, ID exten
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @SuppressWarnings("unchecked")
     public ID saveEntity(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insert(entity);
-        return (ID) entity.primaryKey();
+        return entity.primaryKey();
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @SuppressWarnings("unchecked")
     public ID saveEntitySelective(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insertSelective(entity);
-        return (ID) entity.primaryKey();
+        return entity.primaryKey();
     }
 
     @Transactional(rollbackFor = Exception.class)

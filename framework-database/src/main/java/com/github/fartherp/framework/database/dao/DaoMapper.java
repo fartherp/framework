@@ -82,11 +82,11 @@ public interface DaoMapper<T, ID extends Serializable> {
     /**
      * save batch
      */
-    void insertBatch(List<T> list);
+    int insertBatch(List<T> list);
 
     /**
      * delete batch
      * @param ids ids
      */
-    void deleteBatch(List<ID> ids);
+    int deleteBatch(List<ID> ids);
 }
