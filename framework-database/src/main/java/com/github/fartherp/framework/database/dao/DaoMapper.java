@@ -1,8 +1,4 @@
 /*
- * Copyright (C) 2018 hyssop, Inc. All Rights Reserved.
- */
-
-/*
  * Copyright (c) 2017. CK. All rights reserved.
  */
 
