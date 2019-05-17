@@ -5,6 +5,7 @@
 package com.github.fartherp.framework.poi.excel.write;
 
 import com.github.fartherp.framework.poi.excel.WriteDeal;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -163,6 +164,10 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
 
     private <T> void list(String[] title, WriteDeal<T> deal, List<T> list, LinkedList<SheetWrapper> linkedList) {
         SheetWrapper currentSheetWrapper = linkedList.peekLast();
+        if (CollectionUtils.isEmpty(list)) {
+            createSheet(linkedList, currentSheetWrapper, title, deal, 0);
+            return;
+        }
         for (T t : list) {
             // 数据超过一个sheet最大值，需要创建第二个sheet
             currentSheetWrapper = createSheet(linkedList, currentSheetWrapper, title, deal, list.size());

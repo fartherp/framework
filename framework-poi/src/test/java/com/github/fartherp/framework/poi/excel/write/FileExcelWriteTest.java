@@ -10,6 +10,7 @@ import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.commons.lang3.time.StopWatch;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,36 @@ public class FileExcelWriteTest {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
                 .deal(title, get(), ExcelDataList.getList())
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
+    public void writeSingleNullSheetExcel() throws Exception {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, get(), null)
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
+    public void writeSingleEmptySheetExcel() throws Exception {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, get(), new ArrayList<>())
                 .write();
 
         stopWatch.stop();
@@ -243,6 +274,38 @@ public class FileExcelWriteTest {
     }
 
 //    @Test
+    public void writeMultipleSheetNullExcel() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, get(), null)
+                .deal(title1, get1(), null)
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
+    public void writeMultipleSheetEmptyExcel() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, get(), new ArrayList<>())
+                .deal(title1, get1(), new ArrayList<>())
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
     public void writeMultipleSheetOverMaxTwoCountExcel() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -386,6 +449,40 @@ public class FileExcelWriteTest {
                 .setLargeDataMode(false)
                 .deal(title, getExcelDtoName(), ExcelDataList.getList())
                 .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
+    public void writeMultipleSheetAndNameNullExcel() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, getExcelDtoName(), null)
+                .deal(title1, getTestName(), null)
+                .write();
+
+        stopWatch.stop();
+        System.out.println(stopWatch.toString());
+    }
+
+//    @Test
+    public void writeMultipleSheetAndNameEmptyExcel() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+
+        String fileName = "D:\\style1.xls";
+
+        FileExcelWrite.build(fileName)
+                .setLargeDataMode(false)
+                .deal(title, getExcelDtoName(), new ArrayList<>())
+                .deal(title1, getTestName(), new ArrayList<>())
                 .write();
 
         stopWatch.stop();
