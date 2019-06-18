@@ -14,7 +14,7 @@ import java.io.Serializable;
  * Date: 2016-09-09
  * Description: 所有的属性结构extends该该类，
  */
-public abstract class Treeable<ID extends Serializable> extends FieldAccessVo {
+public abstract class Treeable<ID extends Serializable> extends FieldAccessVo<ID> {
 
     public abstract void setName(String name);
 

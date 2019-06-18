@@ -20,7 +20,7 @@ import java.util.List;
  * @author: CK
  * @date: 2018/4/21
  */
-public abstract class ExtendGenericSqlMapServiceImpl<T extends FieldAccessVo, ID extends Serializable>
+public abstract class ExtendGenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID extends Serializable>
         extends GenericSqlMapServiceImpl<T, ID> implements ExtendGenericService<T, ID> {
 
     public abstract ExtendDaoMapper<T, ID> getDao();

@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.tree.service;
 
-
 import com.github.fartherp.framework.database.mybatis.plugin.search.enums.SearchOperator;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.CustomConditionFactory;
 import com.github.fartherp.framework.database.mybatis.plugin.search.filter.SearchFilter;
