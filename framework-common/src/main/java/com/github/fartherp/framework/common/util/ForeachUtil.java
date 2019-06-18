@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2019. CK. All rights reserved.
+ */
+
 package com.github.fartherp.framework.common.util;
 
 import java.util.ArrayList;
