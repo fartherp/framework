@@ -9,6 +9,8 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -20,6 +22,8 @@ import java.io.OutputStream;
  * @date: 2018/12/19
  */
 public abstract class AbstractPdfWrite implements PdfWrite {
+
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 文件名
