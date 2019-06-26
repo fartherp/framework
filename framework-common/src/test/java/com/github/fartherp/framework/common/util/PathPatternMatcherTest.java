@@ -6,12 +6,13 @@ package com.github.fartherp.framework.common.util;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertTrue;
+
 public class PathPatternMatcherTest {
 
     @Test
-    public void testMatch() throws Exception {
-//        System.out.println("-- " + match("/**/*.jsp", "/e.jsp"));
+    public void testMatch() {
         String s = "/time/;jsessionid=6E697A0D5DDDBC4F7206250E5E594305js/frame/menuModel.js";
-        System.out.println(PathPatternMatcher.match("/**/*.js", s));
+		assertTrue(PathPatternMatcher.match("/**/*.js", s));
     }
 }

@@ -19,7 +19,7 @@ import static org.testng.Assert.*;
  */
 public class MailUtilTest {
 //    @Test
-    public void testSendEmail() throws Exception {
+    public void testSendEmail() {
         MailInfo mailInfo = new MailInfo();
         mailInfo.setHost("smtp.exmail.qq.com");
         mailInfo.setFrom("support@juzix.io");
@@ -27,7 +27,7 @@ public class MailUtilTest {
         mailInfo.setPassword("JuzhenP@C2018");
         mailInfo.setSubject("标题");
         mailInfo.setContent("内容");
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("214722930@qq.com");
         mailInfo.setToAddress(list);
         MailUtil.sendEmail(mailInfo);

@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class HttpClientUtilTest {
 
-    @Test
-    public void testExecute() throws Exception {
+//    @Test
+    public void testExecute() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("ak", "lTz3Ctx4eC9QAXl7ZjoyzyWb");
         params.put("location", "30.548397,104.04701");

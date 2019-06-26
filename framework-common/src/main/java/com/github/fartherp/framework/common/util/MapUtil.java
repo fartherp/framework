@@ -59,7 +59,7 @@ public class MapUtil {
          * @return the map plain
          */
         public MapPlain<K, V> putAll(Map<K, V> map) {
-            if (map == null) {
+            if (map == null || map.isEmpty()) {
                 return this;
             }
             this.map.putAll(map);
@@ -111,20 +111,20 @@ public class MapUtil {
         Map<String,Object> m = new HashMap<>(ts.length);
         for (PropertyDescriptor t : ts) {
             Method r = t.getReadMethod();
-            if (r != null && (ignoreList == null || (!ignoreList.contains(t.getName())))) {
+            String name = t.getName();
+            if (r != null && (ignoreList == null || !ignoreList.contains(name))) {
                 try {
                     if (!Modifier.isPublic(r.getDeclaringClass().getModifiers())) {
                         r.setAccessible(true);
                     }
-                    if (null != map && map.containsKey(t.getName())) {
-                        m.put(map.get(t.getName()), r.invoke(o));
+                    String value;
+                    if (null != map && (value = map.get(name)) != null) {
+                        m.put(value, r.invoke(o));
                     } else {
-                        m.put(t.getName(), r.invoke(o));
+                        m.put(name, r.invoke(o));
                     }
-                }
-                catch (Throwable e) {
-                    throw new RuntimeException("Could not copy property '" + t.getName()
-                            + "' from source to target", e);
+                } catch (Throwable e) {
+                    throw new RuntimeException("Could not copy property '" + name + "' from source to target", e);
                 }
             }
         }
@@ -153,8 +153,9 @@ public class MapUtil {
         for (PropertyDescriptor t : ts) {
             String name = t.getName();
             if (ignoreList == null || !ignoreList.contains(name)) {
-                if (null != source && source.containsKey(name)) {
-                    ReflectUtil.setValueByField(target, t.getName(), source.get(name));
+            	Object value;
+                if (null != source && (value = source.get(name)) != null) {
+                    ReflectUtil.setValueByField(target, name, value);
                 }
             }
         }
@@ -184,15 +185,15 @@ public class MapUtil {
             return list;
         }
 
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            Map<String, Object> result = new HashMap<>();
-            result.put("text", entry.getValue().toString());
-            result.put("value", entry.getKey());
-            if (null != defaultValue && entry.getKey().toString().equals(defaultValue.toString())) {
-                result.put("selected", true);
-            }
-            list.add(result);
-        }
+		map.forEach((k, v) -> {
+			Map<String, Object> result = new HashMap<>();
+			result.put("text", v.toString());
+			result.put("value", k);
+			if (null != defaultValue && k.equals(defaultValue.toString())) {
+				result.put("selected", true);
+			}
+			list.add(result);
+		});
 
         return list;
     }

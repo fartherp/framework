@@ -27,7 +27,7 @@ public class DateValueValidator implements ConstraintValidator<DateValue, Object
         }
         Date d = (Date) obj;
         Date date = new Date();
-        return  ("before".equals(values) && date.getTime() >= d.getTime())
-                || ("after".equals(values) && date.getTime() <= d.getTime());
+        return ("before".equals(values) && date.getTime() >= d.getTime())
+			|| ("after".equals(values) && date.getTime() <= d.getTime());
     }
 }

@@ -4,12 +4,12 @@
 
 package com.github.fartherp.framework.common.validate;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.Locale;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,42 +18,61 @@ import static org.testng.Assert.*;
  * @date: 2018/3/20
  */
 public class ValidateUtilsTest {
+
     @Test
-    public void validate() throws Exception {
-        UserVo vo = new UserVo();
-        vo.setEmail("214722930qq.com");
-        vo.setRealName("a");
+    public void testValidate() {
+        User user = new User();
+        user.setRealName("a");
         try {
-            ValidateUtils.validate(vo);
+            ValidateUtils.validate(user);
         } catch (Exception e) {
             String str = e.getMessage();
-            System.out.println(str);
+            assertEquals(str, "用户id不能为空");
         }
     }
 
     @Test
-    public void validateEnglish() throws Exception {
-        UserVo vo = new UserVo();
-        vo.setEmail("214722930qq.com");
-        vo.setRealName("a");
+    public void testFastValidate() {
+        User user = new User();
         try {
-            ValidateUtils.validate(vo, Locale.ENGLISH, AddGroup.class);
+            ValidateUtils.validate(user, false);
         } catch (Exception e) {
             String str = e.getMessage();
-            System.out.println(str);
+            String [] arrays = str.split(",");
+            assertEquals(arrays.length, 2);
         }
     }
 
-    @Test
-    public void validateChinese() throws Exception {
-        UserVo vo = new UserVo();
-        vo.setEmail("214722930qq.com");
-        vo.setRealName("a");
-        try {
-            ValidateUtils.validate(vo, Locale.CHINESE, EditGroup.class);
-        } catch (Exception e) {
-            String str = e.getMessage();
-            System.out.println(str);
-        }
-    }
+	@Test
+	public void testValidateSuccess() {
+		User user = new User();
+		user.setId(1L);
+		user.setRealName("a");
+		ValidateUtils.validate(user);
+	}
+
+	public class User {
+
+		@NotNull(message = "用户id不能为空")
+		private Long id;
+
+		@NotEmpty(message = "真实姓名不能为空")
+		private String realName;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getRealName() {
+			return realName;
+		}
+
+		public void setRealName(String realName) {
+			this.realName = realName;
+		}
+	}
 }

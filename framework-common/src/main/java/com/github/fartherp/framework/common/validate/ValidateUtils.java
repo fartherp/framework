@@ -4,7 +4,6 @@
 
 package com.github.fartherp.framework.common.validate;
 
-import com.github.fartherp.framework.common.util.OutputUtil;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -12,7 +11,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
-import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -49,40 +47,13 @@ public class ValidateUtils {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(bean, group);
         if (!constraintViolations.isEmpty()) {
             for (ConstraintViolation<T> constraint : constraintViolations) {
-                sb.append(constraint.getMessage());
-                OutputUtil.newLine(sb);
+				sb.append(constraint.getMessage());
+				sb.append(",");
             }
         }
 
         if (sb.length() > 0) {
-            throw new IllegalArgumentException(sb.toString());
-        }
-    }
-
-    /**
-     * 验证对象属性
-     * @param bean 对象
-     * @param locale 区域
-     * @param groups 分组
-     * @param <T> 泛型
-     */
-    public static <T> void validate(T bean, Locale locale, Class<?>... groups) {
-        StringBuilder sb = new StringBuilder();
-
-        Class<?>[] group = (groups == null || groups.length ==0) ? new Class[]{Default.class} : groups;
-
-        ValidatorFactory validatorFactory = ExpandValidation.byProvider(ExpandValidator.class).configure(locale).buildValidatorFactory();
-        Validator validator = validatorFactory.getValidator();
-        Set<ConstraintViolation<T>> constraintViolations = validator.validate(bean, group);
-        if (!constraintViolations.isEmpty()) {
-            for (ConstraintViolation<T> constraint : constraintViolations) {
-                sb.append(constraint.getMessage());
-                OutputUtil.newLine(sb);
-            }
-        }
-
-        if (sb.length() > 0) {
-            throw new IllegalArgumentException(sb.toString());
+            throw new IllegalArgumentException(sb.deleteCharAt(sb.length() - 1).toString());
         }
     }
 }

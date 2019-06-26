@@ -16,7 +16,7 @@ import static org.testng.Assert.*;
  */
 public class JsonUtilTest {
     @Test
-    public void testToJson() throws Exception {
+    public void testToJson() {
         User user = new User();
         user.setName("名称");
         user.setDesc("测试");

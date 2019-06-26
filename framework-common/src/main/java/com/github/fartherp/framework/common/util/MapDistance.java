@@ -53,30 +53,30 @@ public class MapDistance {
      * 最大纬度 minLat
      * @return Map
      */
-    public static Map<String, String> getAround(double lng, double lat, double raidusMile) {
-        Map<String, String> map = new HashMap<>();
+    public static Map<String, Double> getAround(double lng, double lat, double raidusMile) {
+        Map<String, Double> map = new HashMap<>();
 
-        Double degree = (24901 * 1609) / 360.0; // 获取每度
+        double degree = (24901 * 1609) / 360.0; // 获取每度
 
-        Double mpdLng = Double.parseDouble((degree * Math.cos(lng * (Math.PI / 180)) + "").replace("-", ""));
-        Double dpmLng = 1 / mpdLng;
-        Double radiusLng = dpmLng * raidusMile;
-        //获取最小经度
-        Double minLat = lat - radiusLng;
+		double mpdLng = Double.parseDouble((degree * Math.cos(lng * (Math.PI / 180)) + "").replace("-", ""));
+		double dpmLng = 1 / mpdLng;
+		double radiusLng = dpmLng * raidusMile;
+        // 获取最小经度
+        double minLat = lat - radiusLng;
         // 获取最大经度
-        Double maxLat = lat + radiusLng;
+        double maxLat = lat + radiusLng;
 
-        Double dpmLat = 1 / degree;
-        Double radiusLat = dpmLat * raidusMile;
+		double dpmLat = 1 / degree;
+		double radiusLat = dpmLat * raidusMile;
         // 获取最小纬度
-        Double minLng = lng - radiusLat;
+		double minLng = lng - radiusLat;
         // 获取最大纬度
-        Double maxLng = lng + radiusLat;
+		double maxLng = lng + radiusLat;
 
-        map.put("minLat", minLat + "");
-        map.put("maxLat", maxLat + "");
-        map.put("minLng", minLng + "");
-        map.put("maxLng", maxLng + "");
+        map.put("minLat", minLat);
+        map.put("maxLat", maxLat);
+        map.put("minLng", minLng);
+        map.put("maxLng", maxLng);
 
         return map;
     }
