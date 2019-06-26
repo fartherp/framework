@@ -4,7 +4,10 @@
 
 package com.github.fartherp.framework.poi.pdf.write;
 
+import com.github.fartherp.framework.common.util.PlatformDependent;
 import org.apache.commons.io.FileUtils;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -22,13 +25,23 @@ import java.util.List;
  */
 public class FilePdfWriteTest {
 
-//    @Test
+	File tmpdir = PlatformDependent.tmpdir();
+
+	String fileName = new File(tmpdir, "test_pdf.pdf").getPath();
+
+	@AfterMethod
+	public void tearDown() throws IOException {
+		File file = new File(fileName);
+		Assert.assertTrue(file.exists());
+		FileUtils.forceDelete(file);
+	}
+
+    @Test
     public void write() {
-        String fileName = "D:\\pdf1.pdf";
+		String path = FilePdfWriteTest.class.getResource("/d.html").getPath();
         FilePdfWrite.build(fileName)
-                .addFontPath("D:\\project\\githubnew\\framework\\framework-poi\\src\\test\\resources")
+                .addFontPath(path.substring(0, path.lastIndexOf("/")))
                 .deal(() -> {
-                    String path = FilePdfWriteTest.class.getResource("/d.html").getPath();
                     File file = new File(path);
                     String html = null;
                     try {
