@@ -52,15 +52,15 @@ public interface ExcelWrite {
 
     /**
      * 设置头的样式风格
-     * @param headStyle 头样式风格
+     * @param headStyleConsumer 头样式风格
      * @return ExcelWrite
      */
-    ExcelWrite setHeadStyle(BiConsumer<CellStyle, Font> headStyle);
+    ExcelWrite setHeadStyle(BiConsumer<CellStyle, Font> headStyleConsumer);
 
     /**
      * 设置包体的样式风格
-     * @param bodyStyle 包体样式风格
+     * @param bodyStyleConsumer 包体样式风格
      * @return ExcelWrite
      */
-    ExcelWrite setBodyStyle(BiConsumer<CellStyle, Font> bodyStyle);
+    ExcelWrite setBodyStyle(BiConsumer<CellStyle, Font> bodyStyleConsumer);
 }

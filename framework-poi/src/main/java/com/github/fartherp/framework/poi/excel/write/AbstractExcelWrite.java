@@ -13,6 +13,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * Excel模板抽象类
@@ -30,6 +33,8 @@ import java.util.function.BiConsumer;
  * @date: 2017/11/25
  */
 public abstract class AbstractExcelWrite implements ExcelWrite {
+
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 文件类型
@@ -110,14 +115,14 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
     }
 
     @Override
-    public ExcelWrite setHeadStyle(BiConsumer<CellStyle, Font> headStyle) {
-        this.headStyleConsumer = headStyle;
+    public ExcelWrite setHeadStyle(BiConsumer<CellStyle, Font> headStyleConsumer) {
+        this.headStyleConsumer = headStyleConsumer;
         return this;
     }
 
     @Override
-    public ExcelWrite setBodyStyle(BiConsumer<CellStyle, Font> bodyStyle) {
-        this.bodyStyleConsumer = bodyStyle;
+    public ExcelWrite setBodyStyle(BiConsumer<CellStyle, Font> bodyStyleConsumer) {
+        this.bodyStyleConsumer = bodyStyleConsumer;
         return this;
     }
 
@@ -143,17 +148,34 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
 
     public abstract void createWb();
 
+	public void close(Consumer<Object> consumer) {
+		try {
+			consumer.accept(null);
+		} catch (Throwable ex) {
+			if (this.outputStream != null) {
+				try {
+					this.outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			throw ex;
+		}
+	}
+
     @Override
     public <T> ExcelWrite deal(String[] title, WriteDeal<T> deal, List<T> list) {
         if (fileName == null) {
             throw new IllegalArgumentException("文件名不存在");
         }
-        build();
-        // 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
-        int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
-        // 同一sheet类型，链表结构，达到Excel最大数量，可以追加
-        LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap.computeIfAbsent(hashCode, k -> new LinkedList<>());
-        list(title, deal, list, linkedList);
+		close(o -> {
+			build();
+			// 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
+			int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
+			// 同一sheet类型，链表结构，达到Excel最大数量，可以追加
+			LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap.computeIfAbsent(hashCode, k -> new LinkedList<>());
+			list(title, deal, list, linkedList);
+		});
         return this;
     }
 
@@ -217,15 +239,15 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         // 最终把所有sheet改成自动调整列宽
         wrapperLinkedListMap.forEach((k, v) -> {
             v.forEach(currentSheetWrapper -> {
-                if (largeDataMode) {
-                    Sheet currentSheet = currentSheetWrapper.getSheet();
+				Sheet currentSheet = currentSheetWrapper.getSheet();
+                if (currentSheet instanceof SXSSFSheet) {
                     SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
                     // 自动调整列宽
                     sxssfSheet.trackAllColumnsForAutoSizing();
-                    for (int i = 0; i < currentSheetWrapper.getTitleLength(); i++) {
-                        currentSheet.autoSizeColumn(i);
-                    }
                 }
+				for (int i = 0; i < currentSheetWrapper.getTitleLength(); i++) {
+					currentSheet.autoSizeColumn(i);
+				}
             });
         });
 

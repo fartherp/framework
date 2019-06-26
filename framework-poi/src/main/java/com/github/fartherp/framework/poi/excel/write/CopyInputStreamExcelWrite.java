@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * 已有Excel模板，读取流生成新Excel模板
@@ -45,7 +46,23 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
         }
     }
 
-    /**
+	@Override
+	public void close(Consumer<Object> consumer) {
+    	try {
+			super.close(consumer);
+		} catch (Throwable ex) {
+			if (this.inputStream != null) {
+				try {
+					this.inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+    		throw ex;
+		}
+	}
+
+	/**
      * 通过现有的excel读取，生成对应的excel数据
      */
     @Override
