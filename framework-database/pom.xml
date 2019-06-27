@@ -67,6 +67,11 @@
             <groupId>ognl</groupId>
             <artifactId>ognl</artifactId>
         </dependency>
+		<dependency>
+			<groupId>com.github.fartherp</groupId>
+			<artifactId>framework-base-databse</artifactId>
+			<version>${project.version}</version>
+		</dependency>
     </dependencies>
 
 </project>

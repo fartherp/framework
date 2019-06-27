@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2019. CK. All rights reserved.
  */
 
 package com.github.fartherp.framework.database.service;

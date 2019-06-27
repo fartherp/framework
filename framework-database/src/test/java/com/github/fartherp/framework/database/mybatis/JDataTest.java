@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2017. CK. All rights reserved.
  */
@@ -15,29 +14,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.testng.Assert.assertEquals;
+
 public class JDataTest {
 
     @Test
-    public void testAddAll() throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public void testAddAll() {
+        Map<String, Object> map = new HashMap<>();
         map.put("1", "name1");
         map.put("2", "name2");
         map.put("3", "name3");
         String json = JsonUtil.toJson(map);
-        System.out.println(json);
+		assertEquals(json, "{\"1\":\"name1\",\"2\":\"name2\",\"3\":\"name3\"}");
     }
 
     @Test
-    public void testObject() throws Exception {
+    public void testObject() {
         PageTestVo vo = new PageTestVo(10);
-        List<PageTestBo> list = new ArrayList<PageTestBo>();
+        List<PageTestBo> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             PageTestBo bo = new PageTestBo("name" + i);
             list.add(bo);
         }
         vo.setRows(list);
         String json = JsonUtil.toJson(vo);
-        System.out.println(json);
+        assertEquals(json, "{\"age\":10,\"firstPage\":1,\"total\":0,\"limit\":10,\"rows\":[{\"name\":\"name0\"},{\"name\":\"name1\"},{\"name\":\"name2\"}]}");
     }
 
     public static class PageTestVo extends BaseVo<PageTestBo> {

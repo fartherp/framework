@@ -27,7 +27,8 @@
         <module>framework-remoting</module>
         <module>framework-security</module>
         <module>framework-tree</module>
-    </modules>
+		<module>framework-base-databse</module>
+	</modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

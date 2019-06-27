@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017. CK. All rights reserved.
+ * Copyright (c) 2019. CK. All rights reserved.
  */
 
 package com.github.fartherp.framework.database.service.impl;
@@ -7,7 +7,6 @@ package com.github.fartherp.framework.database.service.impl;
 import com.github.fartherp.framework.database.dao.DaoMapper;
 import com.github.fartherp.framework.database.dao.FieldAccessVo;
 import com.github.fartherp.framework.database.service.GenericService;
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +35,9 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(List<ID> ids){
-        getDao().deleteBatch(ids);
+    	if (ids != null && !ids.isEmpty()) {
+        	getDao().deleteBatch(ids);
+		}
     }
 
     public List<T> findAll() {
@@ -67,8 +68,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
 
     @Transactional(rollbackFor = Exception.class)
     public void saveBatch(List<T> entitys) {
-        Assert.notNull(entitys, "saveBatch entitys failed due to entitys is null");
-        if (CollectionUtils.isNotEmpty(entitys)) {
+        if (entitys!= null && !entitys.isEmpty()) {
             getDao().insertBatch(entitys);
         }
     }
@@ -76,12 +76,14 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     @Transactional(rollbackFor = Exception.class)
     public void updateEntity(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
+        Assert.notNull(entity.primaryKey(), "update entity failed due to entity id is null");
         getDao().updateByPrimaryKey(entity);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void updateEntitySelective(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
+        Assert.notNull(entity.primaryKey(), "update entity failed due to entity id is null");
         getDao().updateByPrimaryKeySelective(entity);
     }
 
