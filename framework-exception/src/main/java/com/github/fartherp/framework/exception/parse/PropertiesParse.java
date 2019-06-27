@@ -24,7 +24,7 @@ public enum PropertiesParse {
 
     public final String path;
 
-    private static Map<String, Properties> map = new HashMap<String, Properties>();
+    private static Map<String, Properties> map = new HashMap<>();
 
     static {
         for (PropertiesParse parse : PropertiesParse.values()) {

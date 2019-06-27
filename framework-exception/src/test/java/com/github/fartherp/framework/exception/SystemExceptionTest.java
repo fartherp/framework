@@ -6,10 +6,12 @@ package com.github.fartherp.framework.exception;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 public class SystemExceptionTest {
 
     @Test
-    public void testGetMessage() throws Exception {
+    public void testGetMessageCustomExceptionAndCustomMessage() {
         try {
             try {
                 String s = null;
@@ -19,13 +21,12 @@ public class SystemExceptionTest {
                 throw new SystemException("first={0}, second={1}", e, str);
             }
         }  catch (Exception e) {
-            String error = e.getMessage();
-            System.out.println(error);
+			assertEquals(e.getMessage(), "first=a, second=b");
         }
     }
 
     @Test
-    public void testGetMessage1() throws Exception {
+    public void testGetMessageCustomMessage() {
         try {
             try {
                 String s = null;
@@ -34,13 +35,12 @@ public class SystemExceptionTest {
                 throw new SystemException("自定义异常信息");
             }
         }  catch (Exception e) {
-            String error = e.getMessage();
-            System.out.println(error);
+			assertEquals(e.getMessage(), "自定义异常信息");
         }
     }
 
     @Test
-    public void testGetMessage2() throws Exception {
+    public void testGetMessageNullPointerException() {
         try {
             try {
                 String s = null;
@@ -49,13 +49,12 @@ public class SystemExceptionTest {
                 throw new SystemException(e);
             }
         }  catch (SystemException e) {
-            String error = e.getMessage();
-            System.out.println(error);
+			assertEquals(e.getMessage(), "空指针异常");
         }
     }
 
     @Test
-    public void testGetMessage3() throws Exception {
+    public void testGetMessageCustomExceptionAndMessage() {
         try {
             try {
                 String s = null;
@@ -64,8 +63,7 @@ public class SystemExceptionTest {
                 throw new SystemException("自定义异常信息", e);
             }
         }  catch (Exception e) {
-            String error = e.getMessage();
-            System.out.println(error);
+			assertEquals(e.getMessage(), "空指针异常");
         }
     }
 }

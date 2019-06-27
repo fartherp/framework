@@ -124,8 +124,7 @@ public abstract class BaseSystemException extends RuntimeException implements Ba
         Object temp = parse.getProperty(String.valueOf(errorCode));
         if (temp == null) {
             return parse.getProperty("unknow");
-        } else {
-            return temp.toString();
         }
+		return temp.toString();
     }
 }

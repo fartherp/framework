@@ -35,11 +35,11 @@ public class SystemException extends BaseSystemException {
      * @return message
      */
     public String getMessage(Throwable t) {
-        String oldMessage = "";
+        String oldMessage;
         if (t instanceof InvocationTargetException) {
             oldMessage = getMessage(((InvocationTargetException) t).getTargetException());
         } else if (t instanceof SystemException) {
-            oldMessage = ((SystemException) t).getMessage();
+            oldMessage = t.getMessage();
         } else if (t instanceof SQLException) {
             oldMessage = getSQLException(t);
         } else if (t instanceof RuntimeException) {
