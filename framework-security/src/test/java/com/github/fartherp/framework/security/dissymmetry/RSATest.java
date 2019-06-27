@@ -4,7 +4,10 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import java.util.Base64;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * <pre>
@@ -20,7 +23,9 @@ import java.util.Base64;
  * Date: 2015/4/13
  */
 public class RSATest {
-    public static void main(String[] args) throws Exception {
+
+	@Test
+    public void testSignAndVerify() {
         String inputStr = "abc";
 
         // 构建密钥
@@ -30,22 +35,29 @@ public class RSATest {
         byte[] publicKey = disSymmetryKey.getPublicKey();
         byte[] privateKey = disSymmetryKey.getPrivateKey();
 
-        System.out.println("公钥: " + Base64.getEncoder().encodeToString(publicKey));
-        System.out.println("私钥: " + Base64.getEncoder().encodeToString(privateKey));
-
         // 产生签名
         byte[] data = inputStr.getBytes();
         byte[] sign = RSA.sign(data, privateKey);
-        System.out.println("签名: " + Base64.getEncoder().encodeToString(sign));
 
         // 验证签名
         boolean status = RSA.verify(data, publicKey, sign);
-        System.out.println("状态: " + status);
-        byte[] encryptData = RSA.encryptByPublicKey(data, publicKey);
-        System.out.println("源数据: " + inputStr);
-        System.out.println("加密数据: " + Base64.getEncoder().encodeToString(encryptData));
-        System.out.println("解密数据: " + new String(RSA.decryptByPrivateKey(encryptData, privateKey)));
-
-
+		assertTrue(status);
     }
+
+	@Test
+	public void testEncryptAndDecrypt() {
+		String inputStr = "abc";
+
+		// 构建密钥
+		DisSymmetryKey disSymmetryKey = RSA.initKey();
+
+		// 获得密钥
+		byte[] publicKey = disSymmetryKey.getPublicKey();
+		byte[] privateKey = disSymmetryKey.getPrivateKey();
+
+		// 产生签名
+		byte[] data = inputStr.getBytes();
+		byte[] encryptData = RSA.encryptByPublicKey(data, publicKey);
+		assertEquals(new String(RSA.decryptByPrivateKey(encryptData, privateKey)), inputStr);
+	}
 }

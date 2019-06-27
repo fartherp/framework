@@ -4,8 +4,9 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
-import com.github.fartherp.framework.common.util.HttpClientUtil;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,9 +28,9 @@ public class WeatherSecurityTest {
             //需要加密的数据
             String data = "http://open.weather.com.cn/data/?areaid=" + areaid + "&type=" + type + "&date=" + date + "&appid=";
             String str = WeatherSecurity.standardURLEncoder(data + appid, key);
-            String result = data + appid.substring(0, 6);
-            String json = HttpClientUtil.executeGet(result + "&key=" + str);
-            System.out.println(json);
+			assertEquals(str, "ocxOZEXG%2BM9aqzMKw0eZK0mXcaA%3D");
+            String result = data + appid.substring(0, 6) + "&key=" + str;
+			assertEquals(result, "http://open.weather.com.cn/data/?areaid=101010100&type=forecast_f&date=201503030741&appid=0efe9e&key=ocxOZEXG%2BM9aqzMKw0eZK0mXcaA%3D");
         } catch (Exception e) {
             e.printStackTrace();
         }

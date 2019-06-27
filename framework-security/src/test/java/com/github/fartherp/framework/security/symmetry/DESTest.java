@@ -4,10 +4,11 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Base64;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,12 +16,13 @@ import java.util.Base64;
  * Date: 2015/4/13
  */
 public class DESTest {
+
     @Test
-    public void testDES() {
+    public void testEncryptAndDecrypt() {
         byte[] key = "11111111".getBytes();
         String data = "2222222222222222";
         byte[] encryption = DES.encrypt(data.getBytes(), key);
-        Assert.assertEquals("+ScU6A6DLtz5JxToDoMu3K1qiLT6N4M9", Base64.getEncoder().encodeToString(encryption));
-        Assert.assertEquals(data, new String(DES.decrypt(encryption, key)));
+        assertEquals(Base64.getEncoder().encodeToString(encryption), "+ScU6A6DLtz5JxToDoMu3K1qiLT6N4M9");
+        assertEquals(new String(DES.decrypt(encryption, key)), data);
     }
 }

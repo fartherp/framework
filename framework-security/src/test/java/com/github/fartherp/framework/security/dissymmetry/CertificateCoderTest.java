@@ -4,6 +4,8 @@
 
 package com.github.fartherp.framework.security.dissymmetry;
 
+import org.testng.annotations.Test;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.DataInputStream;
 import java.io.InputStream;
@@ -15,7 +17,9 @@ import java.net.URL;
  * Date: 2015/4/13
  */
 public class CertificateCoderTest {
-    public static void main(String [] args) {
+
+//	@Test
+    public void main() {
         String password = "123456";
         String alias = "www.zlex.org";
         String certificatePath = "d:/zlex.cer";

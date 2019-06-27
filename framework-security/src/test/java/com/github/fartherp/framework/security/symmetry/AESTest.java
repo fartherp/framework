@@ -4,10 +4,11 @@
 
 package com.github.fartherp.framework.security.symmetry;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Base64;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,8 +21,8 @@ public class AESTest {
         String data = "root1";
         byte[] key = "1111111111111111".getBytes();
         byte[] encryption = AES.encrypt(data.getBytes(), key);
-        Assert.assertEquals("8/mudtZ/bQOhcV/K6JFrug==", Base64.getEncoder().encodeToString(encryption));
+        assertEquals(Base64.getEncoder().encodeToString(encryption), "8/mudtZ/bQOhcV/K6JFrug==");
         String decryptData = new String(AES.decrypt(encryption, key));
-        Assert.assertEquals(data, decryptData);
+        assertEquals(decryptData, data);
     }
 }

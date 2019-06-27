@@ -60,14 +60,12 @@ public class CertificateCoder {
         try {
             KeyStore ks = getKeyStore(keyStorePath, password);
             return (PrivateKey) ks.getKey(alias, password.toCharArray());
-        } catch (KeyStoreException e) {
+        } catch (KeyStoreException | UnrecoverableKeyException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
-        } catch (UnrecoverableKeyException e) {
-            throw new RuntimeException(e);
         }
-    }
+	}
 
     /**
      * 由Certificate获得公钥
@@ -195,11 +193,7 @@ public class CertificateCoder {
             return cipher.doFinal(data);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
-        } catch (NoSuchPaddingException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException(e);
-        } catch (BadPaddingException e) {
+        } catch (NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeyException e) {
             throw new RuntimeException("无效密钥", e);
@@ -362,14 +356,10 @@ public class CertificateCoder {
             return ctx.getSocketFactory();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("无此算法", e);
-        } catch (UnrecoverableKeyException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        } catch (KeyManagementException e) {
+        } catch (UnrecoverableKeyException | KeyStoreException | KeyManagementException e) {
             throw new RuntimeException(e);
         }
-    }
+	}
 
     /**
      * 为HttpsURLConnection配置SSLSocketFactory

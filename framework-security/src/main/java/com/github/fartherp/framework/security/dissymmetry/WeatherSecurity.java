@@ -7,7 +7,6 @@ package com.github.fartherp.framework.security.dissymmetry;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
-import java.security.InvalidKeyException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,29 +29,23 @@ public class WeatherSecurity {
     };
 
     public static String standardURLEncoder(String data, String key) {
-        byte[] byteHMAC = null;
-        String urlEncoder = "";
         try {
             Mac mac = Mac.getInstance("HmacSHA1");
             SecretKeySpec spec = new SecretKeySpec(key.getBytes(), "HmacSHA1");
             mac.init(spec);
-            byteHMAC = mac.doFinal(data.getBytes());
+			byte[] byteHMAC = mac.doFinal(data.getBytes());
             if (byteHMAC != null) {
                 String oauth = encode(byteHMAC);
-                if (oauth != null) {
-                    urlEncoder = URLEncoder.encode(oauth, "utf8");
-                }
-            }
-        } catch (InvalidKeyException e1) {
+				return URLEncoder.encode(oauth, "utf8");
+			}
+        } catch (Exception e1) {
             e1.printStackTrace();
-        } catch (Exception e2) {
-            e2.printStackTrace();
         }
-        return urlEncoder;
+		return "";
     }
 
     public static String encode(byte[] from) {
-        StringBuffer to = new StringBuffer((int) (from.length * 1.34) + 3);
+        StringBuilder to = new StringBuilder((int) (from.length * 1.34) + 3);
         int num = 0;
         char currentByte = 0;
         for (int i = 0; i < from.length; i++) {

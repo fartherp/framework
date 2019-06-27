@@ -5,8 +5,9 @@
 package com.github.fartherp.framework.security.symmetry;
 
 import com.github.fartherp.framework.common.util.ISOUtil;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,10 +25,10 @@ public class ThreeDESTest {
         String dataS = "F4F3E7B3566F6622098750B491EA8D5C";
         // encrypt
         byte[] encryption = ThreeDES.encrypt(ISOUtil.hex2byte(dataS), key);
-        Assert.assertEquals("FE7B6C8A73167964798EBAC2BA4899AA", ISOUtil.hexString(encryption));
+        assertEquals(ISOUtil.hexString(encryption), "FE7B6C8A73167964798EBAC2BA4899AA");
 
         // decrypt
-        Assert.assertEquals(dataS, ISOUtil.hexString(ThreeDES.decrypt(encryption, key)));
+        assertEquals(ISOUtil.hexString(ThreeDES.decrypt(encryption, key)), dataS);
     }
 
     /**
@@ -40,9 +41,9 @@ public class ThreeDESTest {
         String dataS = "F4F3E7B3566F6622098750B491EA8D5C";
         // encrypt
         byte[] encryption = ThreeDES.encrypt(ISOUtil.hex2byte(dataS), key);
-        Assert.assertEquals("738533847602379CDC0F3B7EF880C356", ISOUtil.hexString(encryption));
+        assertEquals(ISOUtil.hexString(encryption), "738533847602379CDC0F3B7EF880C356");
 
         // decrypt
-        Assert.assertEquals(dataS, ISOUtil.hexString(ThreeDES.decrypt(encryption, key)));
+        assertEquals(ISOUtil.hexString(ThreeDES.decrypt(encryption, key)), dataS);
     }
 }
