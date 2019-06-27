@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -29,13 +29,14 @@ import static org.testng.Assert.assertEquals;
 public class GenericServiceTest {
 
 	@InjectMocks
-	private UserService userService = new UserServiceImpl();
+	private UserService userService;
 
 	@Mock
 	private UserMapper userMapper;
 
-	@BeforeMethod
-	public void setUp() {
+	@BeforeClass(alwaysRun = true)
+	public void initMocks() {
+		userService = new UserServiceImpl();
 		MockitoAnnotations.initMocks(this);
 	}
 
