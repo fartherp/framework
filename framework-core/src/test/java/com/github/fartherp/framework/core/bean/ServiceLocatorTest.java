@@ -4,10 +4,9 @@
 
 package com.github.fartherp.framework.core.bean;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,11 +16,11 @@ import static org.testng.Assert.*;
  */
 public class ServiceLocatorTest {
     @Test
-    public void testGetFactory() throws Exception {
+    public void testGetFactory() {
         try {
             ServiceLocator.getBean("test");
         } catch (IllegalArgumentException e) {
-            Assert.assertEquals(e.getMessage(), "没有注入spring factory");
+            assertEquals(e.getMessage(), "没有注入spring factory");
         }
     }
 

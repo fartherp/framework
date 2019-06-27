@@ -7,11 +7,13 @@ package com.github.fartherp.framework.core.util;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 public class JEmptyTest {
 
     @Test
     public void empty() {
-        String json = JsonResp.asEmpty().error("我是错误信息").toJson();
-        System.out.println(json);
+        String json = JsonResp.asEmpty().error("Hello World").toJson();
+		assertEquals(json, "{\"status\":1,\"statusInfo\":\"Hello World\"}");
     }
 }

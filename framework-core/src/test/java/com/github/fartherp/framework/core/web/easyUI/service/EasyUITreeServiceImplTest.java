@@ -7,12 +7,13 @@ package com.github.fartherp.framework.core.web.easyUI.service;
 import com.github.fartherp.framework.core.web.easyUI.model.EasyUITreeModel;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.testng.Assert.assertNotNull;
 
 public class EasyUITreeServiceImplTest {
     @InjectMocks
@@ -20,12 +21,12 @@ public class EasyUITreeServiceImplTest {
 
     @BeforeClass(alwaysRun = true)
     public void initMocks() {
-        service = new EasyUITreeServiceImpl<Param>();
+        service = new EasyUITreeServiceImpl<>();
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testFindModel() throws Exception {
+    public void testFindModel() {
         List<EasyUITreeModel> json = service.findChildren(getList(), p -> {
             EasyUITreeModel m = new EasyUITreeModel();
             m.setId(p.getParamId());
@@ -33,7 +34,7 @@ public class EasyUITreeServiceImplTest {
             m.setPid(p.getParamType());
             return m;
         });
-        Assert.assertNotNull(json);
+        assertNotNull(json);
     }
 
     private List<Param> getList() {
