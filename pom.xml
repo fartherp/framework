@@ -27,7 +27,7 @@
         <module>framework-remoting</module>
         <module>framework-security</module>
         <module>framework-tree</module>
-		<module>framework-base-databse</module>
+		<module>framework-base-database</module>
 	</modules>
 
     <properties>
