@@ -56,7 +56,8 @@ public class DbManagerTest {
 		PreparedStatement preparedStatement = dbManager.getPreparedStatement(connection, "select count(1) as count from tb_user");
 		ResultSet resultSet = dbManager.getResultSet(preparedStatement);
 		assertNotNull(resultSet);
-		long count = resultSet.getLong("");
+		resultSet.next();
+		long count = resultSet.getLong("count");
 		assertEquals(count, 0);
 		dbManager.close(connection, preparedStatement, resultSet);
 	}
@@ -90,7 +91,7 @@ public class DbManagerTest {
 	@Test
 	public void testGetPrimaryKeys() throws Exception {
 		Connection connection = dbManager.getConnection();
-		ResultSet resultSet = dbManager.getColumns(connection, "", "test_tmp", "tb_user");
+		ResultSet resultSet = dbManager.getPrimaryKeys(connection, "", "test_tmp", "tb_user");
 		assertNotNull(resultSet);
 		int size = 0;
 		while (resultSet.next()) {
