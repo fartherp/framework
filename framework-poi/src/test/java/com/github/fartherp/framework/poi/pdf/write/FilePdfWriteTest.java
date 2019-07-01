@@ -29,6 +29,8 @@ public class FilePdfWriteTest {
 
 	String fileName = new File(tmpdir, "test_pdf.pdf").getPath();
 
+	String fontPath = PlatformDependent.isWindows() ? "C:\\Windows\\Fonts" : "/usr/share/fonts";
+
 	@AfterMethod
 	public void tearDown() throws IOException {
 		File file = new File(fileName);
@@ -40,7 +42,7 @@ public class FilePdfWriteTest {
     public void write() {
 		String path = FilePdfWriteTest.class.getResource("/d.html").getPath();
         FilePdfWrite.build(fileName)
-                .addFontPath(path.substring(0, path.lastIndexOf("/")))
+                .addFontPath(fontPath)
                 .deal(() -> {
                     File file = new File(path);
                     String html = null;
