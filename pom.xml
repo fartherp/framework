@@ -15,6 +15,7 @@
     <description>framework</description>
 
     <modules>
+		<module>framework-base-database</module>
         <module>framework-common</module>
         <module>framework-compress</module>
         <module>framework-core</module>
@@ -24,10 +25,8 @@
         <module>framework-filter</module>
         <module>framework-net</module>
         <module>framework-poi</module>
-        <module>framework-remoting</module>
         <module>framework-security</module>
         <module>framework-tree</module>
-		<module>framework-base-database</module>
 	</modules>
 
     <properties>
