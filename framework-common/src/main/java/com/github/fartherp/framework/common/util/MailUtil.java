@@ -28,7 +28,7 @@ public class MailUtil {
 
             // 添加附件
             List<EmailAttachment> attachments = mailInfo.getAttachments();
-            if (null != attachments && attachments.size() > 0) {
+            if (null != attachments && !attachments.isEmpty()) {
                 for (EmailAttachment attachment : attachments) {
                     email.attach(attachment);
                 }
@@ -36,21 +36,21 @@ public class MailUtil {
 
             // 收件人
             List<String> toAddress = mailInfo.getToAddress();
-            if (null != toAddress && toAddress.size() > 0) {
+            if (null != toAddress && !toAddress.isEmpty()) {
                 for (String toAddres : toAddress) {
                     email.addTo(toAddres);
                 }
             }
             // 抄送人
             List<String> ccAddress = mailInfo.getCcAddress();
-            if (null != ccAddress && ccAddress.size() > 0) {
+            if (null != ccAddress && !ccAddress.isEmpty()) {
                 for (String ccAddres : ccAddress) {
                     email.addCc(ccAddres);
                 }
             }
             //邮件模板 密送人
             List<String> bccAddress = mailInfo.getBccAddress();
-            if (null != bccAddress && bccAddress.size() > 0) {
+            if (null != bccAddress && !bccAddress.isEmpty()) {
                 for (String bccAddres : bccAddress) {
                     email.addBcc(bccAddres);
                 }

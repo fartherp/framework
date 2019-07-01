@@ -153,7 +153,7 @@ public class ProtobufSerializeUtil {
             i++;
         }
         Arrays.sort(strs);
-        return new ArrayList<>(Arrays.asList(strs));
+        return Arrays.asList(strs);
     }
 
     private static <T> Schema<T> getSchema(Class<T> cls) {

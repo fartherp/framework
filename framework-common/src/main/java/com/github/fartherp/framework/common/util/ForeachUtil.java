@@ -14,7 +14,7 @@ import java.util.function.Function;
  */
 public class ForeachUtil {
     public static <T> List<T> foreachAddWithReturn(int num, Function<Integer, List<T>> getFunc) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             result.addAll(CatchUtil.tryDo(i, getFunc));
         }
