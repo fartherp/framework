@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * the CSV tools that the response write the csv file of the page and write the csv file of the user-defined
@@ -31,7 +33,7 @@ public class CsvUtil {
      * HttpServletRequest request = null;
      * String filename = "TEST";
      * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
-     * List<String[]> bodyList = new ArrayList<>();
+     * List&lt;String[]&gt; bodyList = new ArrayList&lt;&gt;();
      * CsvUtil.writeCsvFile(response, request, filename, title, bodyList);
      * </pre>
      *
@@ -48,16 +50,43 @@ public class CsvUtil {
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".csv");
 
         try (CSVWriter writer = new CSVWriter(response.getWriter())) {
-            if (title != null && title.length > 0) {
-                writer.writeNext(title);
-            }
-            if (bodyList != null && bodyList.size() > 0) {
-                writer.writeAll(bodyList);
-            }
+			write(writer, title, bodyList);
         } catch (IOException e) {
             throw new RuntimeException("write csv file of response fail ", e);
         }
     }
+
+	/**
+	 * The csv file is output through the response of the page
+	 *
+	 * <p>
+	 * Example code:
+	 * </p>
+	 * <pre>
+	 * HttpServletResponse response = null;
+	 * HttpServletRequest request = null;
+	 * String filename = "TEST";
+	 * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
+	 * List&lt;User&gt; objs = new ArrayList&lt;&gt;();
+	 * CsvUtil.writeCsvFile(response, request, filename, title, objs, t -> {
+	 * 	   String[] bodyList = new String[2];
+	 * 	   bodyList[0] = t.getId() + "";
+	 * 	   bodyList[1] = t.getName();
+	 * 	   return bodyList;
+	 * });
+	 * </pre>
+	 *
+	 * @param response the response of the page
+	 * @param request the request of the page
+	 * @param filename the file name of user-defined
+	 * @param title the title content of the csv file
+	 * @param objs the body content of the csv file
+	 */
+	public static <T> void writeCsvFile(HttpServletResponse response, HttpServletRequest request,
+									String filename, String[] title, List<T> objs, Function<T, String[]> function) {
+		List<String[]> bodyList = objs.stream().map(function).collect(Collectors.toList());
+		writeCsvFile(response, request, filename, title, bodyList);
+	}
 
     /**
      * The csv file wrote through user-defined
@@ -68,7 +97,7 @@ public class CsvUtil {
      * <pre>
      * String filename = "TEST";
      * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
-     * List<String[]> bodyList = new ArrayList<>();
+     * List&lt;String[]&gt; bodyList = new ArrayList&lt;&gt;();
      * CsvUtil.writeCsvFile(filename, title, bodyList);
      * </pre>
      *
@@ -78,45 +107,46 @@ public class CsvUtil {
      */
     public static void writeCsvFile(String filename, String[] title, List<String[]> bodyList) {
         try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File(filename + ".csv")), "GBK"))) {
-            if (title != null && title.length > 0) {
-                writer.writeNext(title);
-            }
-            if (bodyList != null && bodyList.size() > 0) {
-                writer.writeAll(bodyList);
-            }
+            write(writer, title, bodyList);
         } catch (IOException e) {
             throw new RuntimeException("write csv file fail ", e);
         }
     }
 
-    /**
-     * create csv String
-     * @param outputList the output content list
-     * @return the new {@code String}
-     */
-    public static String createCsvFile(List<List<Object>> outputList) {
-        StringBuilder sb = new StringBuilder();
-        // enter symbol
-        char returnChar = '\r';
-        // newline symbol
-        char lineChar = '\n';
-        for (List<Object> unitList : outputList) {
-            if (unitList != null && !unitList.isEmpty()) {
-                sb.setLength(0);
-                for (Object unitOb : unitList) {
-                    String unit = "";
-                    if (unitOb != null) {
-                        unit = unitOb.toString().replaceAll(",", "");
-                    }
-                    sb.append(unit);
-                    sb.append(",");
-                }
-                sb.deleteCharAt(sb.length() - 1);
-                sb.append(returnChar);
-                sb.append(lineChar);
-            }
-        }
-        return sb.toString();
-    }
+	/**
+	 * The csv file wrote through user-defined
+	 *
+	 * <p>
+	 * Example code:
+	 * </p>
+	 * <pre>
+	 * String filename = "TEST";
+	 * String[] title = SheetsTitlesEnum.USER_LOGIN_LOG.getTitle();
+	 * List&lt;User&gt; objs = new ArrayList&lt;&gt;();
+	 * CsvUtil.writeCsvFile(filename, title, objs, t -> {
+	 * 	   String[] bodyList = new String[2];
+	 * 	   bodyList[0] = t.getId() + "";
+	 * 	   bodyList[1] = t.getName();
+	 * 	   return bodyList;
+	 * });
+	 * </pre>
+	 *
+	 * @param filename the file name
+	 * @param title the title content of the csv file
+	 * @param objs 对象列表
+	 * @param function 对象转字符串数组回调
+	 */
+	public static <T> void writeCsvFile(String filename, String[] title, List<T> objs, Function<T, String[]> function) {
+		List<String[]> bodyList = objs.stream().map(function).collect(Collectors.toList());
+		writeCsvFile(filename, title, bodyList);
+	}
 
+    private static void write(CSVWriter writer, String[] title, List<String[]> bodyList) {
+		if (title != null && title.length > 0) {
+			writer.writeNext(title);
+		}
+		if (bodyList != null && !bodyList.isEmpty()) {
+			writer.writeAll(bodyList);
+		}
+	}
 }
