@@ -95,14 +95,12 @@ public class ExcelRead {
             // ignore
             e.printStackTrace();
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    // ignore
-                    inputStream = null;
-                }
-            }
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				// ignore
+				inputStream = null;
+			}
         }
     }
 }

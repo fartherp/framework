@@ -132,13 +132,12 @@ public class ExcelUtils {
     public static RichTextString setRichTextString(boolean largeDataMode,String type, String value) {
         if (largeDataMode) {
             return new XSSFRichTextString(value);
-        } else {
-            if (Constant.OFFICE_EXCEL_2003_POSTFIX.equals(type)) {
-                return new HSSFRichTextString(value);
-            } else if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(type)) {
-                return new XSSFRichTextString(value);
-            }
         }
+		if (Constant.OFFICE_EXCEL_2003_POSTFIX.equals(type)) {
+			return new HSSFRichTextString(value);
+		} else if (Constant.OFFICE_EXCEL_2010_POSTFIX.equals(type)) {
+			return new XSSFRichTextString(value);
+		}
         throw new IllegalArgumentException("不是Excel文件");
     }
 }

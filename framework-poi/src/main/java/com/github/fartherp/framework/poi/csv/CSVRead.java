@@ -83,14 +83,12 @@ public class CSVRead {
             // ignore
             e.printStackTrace();
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    // ignore
-                    inputStream = null;
-                }
-            }
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				// ignore
+				inputStream = null;
+			}
         }
     }
 
@@ -167,14 +165,12 @@ public class CSVRead {
             // ignore
             e.printStackTrace();
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    // ignore
-                    inputStream = null;
-                }
-            }
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				// ignore
+				inputStream = null;
+			}
         }
     }
 }
