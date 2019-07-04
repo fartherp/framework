@@ -13,6 +13,7 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -31,19 +32,18 @@ public class SpringProxyUtils {
      * @param <T>   强转
      * @return 被代理对象
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getRealTarget(Object proxy) {
-        ConfigurablePropertyAccessor accessor;
+		Assert.notNull(proxy, "proxy not null");
         while (AopUtils.isAopProxy(proxy)) {
-            ProxyFactory proxyFactory = null;
-            if (AopUtils.isJdkDynamicProxy(proxy)) {
-                proxyFactory = findJdkDynamicProxyFactory(proxy);
-            }
-            if (AopUtils.isCglibProxy(proxy)) {
-                proxyFactory = findCglibProxyFactory(proxy);
-            }
-            accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+			ProxyFactory proxyFactory = getProxyFactory(proxy);
+			if (proxyFactory == null) {
+				return null;
+			}
+			ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
             TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
+            if (targetSource == null) {
+            	return null;
+			}
             try {
                 proxy = targetSource.getTarget();
             } catch (Exception e) {
@@ -58,19 +58,17 @@ public class SpringProxyUtils {
      *
      * @param proxy 被代理的对象
      */
-    @SuppressWarnings("checked")
     public static boolean isMultipleProxy(Object proxy) {
-        ConfigurablePropertyAccessor accessor;
         try {
-            ProxyFactory proxyFactory = null;
-            if (AopUtils.isJdkDynamicProxy(proxy)) {
-                proxyFactory = findJdkDynamicProxyFactory(proxy);
-            }
-            if (AopUtils.isCglibProxy(proxy)) {
-                proxyFactory = findCglibProxyFactory(proxy);
-            }
-            accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+			ProxyFactory proxyFactory = getProxyFactory(proxy);
+			if (proxyFactory == null) {
+				return false;
+			}
+			ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
             TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
+			if (targetSource == null) {
+				return false;
+			}
             return AopUtils.isAopProxy(targetSource.getTarget());
         } catch (Exception e) {
             throw new IllegalArgumentException("proxy args maybe not proxy with cglib or jdk dynamic proxy. this method not support", e);
@@ -84,8 +82,7 @@ public class SpringProxyUtils {
      */
     public static ProxyFactory findJdkDynamicProxyFactory(Object proxy) {
         InvocationHandler h = Proxy.getInvocationHandler(proxy);
-        ConfigurablePropertyAccessor accessor;
-        accessor = PropertyAccessorFactory.forDirectFieldAccess(h);
+        ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(h);
         return (ProxyFactory) accessor.getPropertyValue("advised");
     }
 
@@ -97,6 +94,9 @@ public class SpringProxyUtils {
     public static ProxyFactory findCglibProxyFactory(Object proxy) {
         ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
         Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
+        if (cglib$CALLBACK_0 == null) {
+        	return null;
+		}
         accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
         return (ProxyFactory) accessor.getPropertyValue("advised");
     }
@@ -138,14 +138,8 @@ public class SpringProxyUtils {
         if (!AopUtils.isAopProxy(proxy)) {
             return;
         }
-        ProxyFactory proxyFactory = null;
-        if (AopUtils.isJdkDynamicProxy(proxy)) {
-            proxyFactory = findJdkDynamicProxyFactory(proxy);
-        }
-        if (AopUtils.isCglibProxy(proxy)) {
-            proxyFactory = findCglibProxyFactory(proxy);
-        }
 
+		ProxyFactory proxyFactory = getProxyFactory(proxy);
         if (proxyFactory == null) {
             return;
         }
@@ -167,19 +161,12 @@ public class SpringProxyUtils {
      * @param proxy       被代理类
      * @param adviceClass 判断代理类是否包含该类型的拦截器
      */
-
     private static boolean hasAdvice(Object proxy, Class<? extends Advice> adviceClass) {
         if (!AopUtils.isAopProxy(proxy)) {
             return false;
         }
-        ProxyFactory proxyFactory = null;
-        if (AopUtils.isJdkDynamicProxy(proxy)) {
-            proxyFactory = findJdkDynamicProxyFactory(proxy);
-        }
-        if (AopUtils.isCglibProxy(proxy)) {
-            proxyFactory = findCglibProxyFactory(proxy);
-        }
 
+		ProxyFactory proxyFactory = getProxyFactory(proxy);
         if (proxyFactory == null) {
             return false;
         }
@@ -196,4 +183,14 @@ public class SpringProxyUtils {
         }
         return false;
     }
+
+    private static ProxyFactory getProxyFactory(Object proxy) {
+		if (AopUtils.isJdkDynamicProxy(proxy)) {
+			return findJdkDynamicProxyFactory(proxy);
+		}
+		if (AopUtils.isCglibProxy(proxy)) {
+			return findCglibProxyFactory(proxy);
+		}
+		return null;
+	}
 }

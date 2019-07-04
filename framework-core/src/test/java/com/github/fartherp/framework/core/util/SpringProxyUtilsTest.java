@@ -4,11 +4,14 @@
 
 package com.github.fartherp.framework.core.util;
 
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.target.SingletonTargetSource;
 import org.springframework.util.ClassUtils;
 import org.testng.annotations.BeforeClass;
@@ -182,5 +185,48 @@ public class SpringProxyUtilsTest {
 		Object target = SpringProxyUtils.getRealTarget(proxy);
 		assertEquals(bmw, target);
 		assertEquals(bmw, SpringProxyUtils.getRealTarget(proxy));
+	}
+
+	private static class TestMethodInterceptor implements MethodInterceptor {
+
+		public Object invoke(MethodInvocation invocation) throws Throwable {
+			Class<?> targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
+			if (targetClass != null) {
+				System.out.println(targetClass.getSimpleName());
+			}
+			Object obj = invocation.proceed();
+			if (obj != null) {
+				System.out.println("-------" + obj.toString());
+			}
+			return obj;
+		}
+	}
+
+	private static interface Car {
+
+		void get();
+	}
+
+	private static class Bmw implements Car {
+		public Bmw() {
+			this.type = "宝马";
+		}
+
+		protected String type;
+
+		public void get() {
+			System.out.println(type);
+		}
+	}
+
+	private static class Audi extends Bmw {
+
+		public Audi() {
+			this.type = "奥迪";
+		}
+
+		public void get() {
+			System.out.println(type);
+		}
 	}
 }
