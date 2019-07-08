@@ -10,19 +10,3 @@
 4.统一前端请求后的返回参数
 5.发送邮件，包括html邮件
 ```
-
-## 如何使用？
-1. 在项目中加入```framework-core```依赖
-
-    ```Maven```
-    ``` xml
-    <dependency>
-        <groupId>com.github.fartherp</groupId>
-        <artifactId>framework-core</artifactId>
-        <version>3.0.4</version>
-    </dependency>
-    ```
-    ```Gradle```
-    ```
-    compile 'com.github.fartherp:framework-core:3.0.4'
-    ```

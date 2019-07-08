@@ -7,19 +7,3 @@
 1.ftp
 2.nfs
 ```
-
-## 如何使用？
-1. 在项目中加入```framework-net```依赖
-
-    ```Maven```
-    ``` xml
-    <dependency>
-        <groupId>com.github.fartherp</groupId>
-        <artifactId>framework-net</artifactId>
-        <version>3.0.4</version>
-    </dependency>
-    ```
-    ```Gradle```
-    ```
-    compile 'com.github.fartherp:framework-net:3.0.4'
-    ```

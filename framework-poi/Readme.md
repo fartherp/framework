@@ -13,22 +13,6 @@
 注：excel的合并功能及复杂功能，使用代码实现比较复杂，框架只提供单行的导入导出。
 ``` 
 
-## 如何使用？
-1. 在项目中加入```framework-poi```依赖
-
-    ```Maven```
-    ``` xml
-    <dependency>
-        <groupId>com.github.fartherp</groupId>
-        <artifactId>framework-poi</artifactId>
-        <version>3.0.5</version>
-    </dependency>
-    ```
-    ```Gradle```
-    ```
-    compile 'com.github.fartherp:framework-poi:3.0.5'
-    ```
-
 ## CSV常用例子：
 1.CSV文件导入：
 > 示例代码：com.github.fartherp.framework.poi.csv.CSVReadTest
