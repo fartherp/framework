@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.fartherp.framework.poi.excel.write.ExcelDataList.*;
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -27,20 +29,6 @@ import java.util.Map;
  * @date: 2017/11/25
  */
 public class FileExcelWriteTest {
-
-    public static final String[] title = new String[6];
-    public static final String[] title1 = new String [6];
-    static {
-        title[0] = "登录时间";
-        title[1] = "用户名";
-        title[2] = "访问端";
-        title[3] = "版本系统";
-        title[4] = "登录IP";
-        title[5] = "状态";
-        title1[0] = "id";
-        title1[1] = "type";
-        title1[2] = "desc";
-    }
 
 	File tmpdir = PlatformDependent.tmpdir();
 
@@ -54,73 +42,73 @@ public class FileExcelWriteTest {
 	}
 
 	@Test
-    public void writeSingleOverMaxSheetExcel() {
+    public void testWriteSingleOverMaxSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
                 .write();
     }
 
     @Test
-    public void writeSingleNullSheetExcel() {
+    public void testWriteSingleNullSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), null)
+                .deal(getTitle(), get(), null)
                 .write();
     }
 
     @Test
-    public void writeSingleEmptySheetExcel() {
+    public void testWriteSingleEmptySheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), new ArrayList<>())
+                .deal(getTitle(), get(), new ArrayList<>())
                 .write();
     }
 
     @Test
-    public void writeTwoOverMaxSheetExcel() {
+    public void testWriteTwoOverMaxSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title, get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
                 .write();
     }
 
     @Test
-    public void writeThreeOverMaxSheetExcel() {
+    public void testWriteThreeOverMaxSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title, get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
                 .write();
     }
 
     @Test
-    public void writeSingleEqualMaxSheetExcel() {
+    public void testWriteSingleEqualMaxSheetExcel() {
         List<ExcelDto> excelDtos = ExcelDataList.getList();
         excelDtos.remove(65535);
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), excelDtos)
+                .deal(getTitle(), get(), excelDtos)
                 .write();
     }
 
     @Test
-    public void writeTwoEqualMaxSheetExcel() {
+    public void testWriteTwoEqualMaxSheetExcel() {
         List<ExcelDto> excelDtos = ExcelDataList.getList();
         excelDtos.remove(65535);
         List<ExcelDto> excelDtos1 = ExcelDataList.getList();
         excelDtos1.remove(65535);
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), excelDtos)
-                .deal(title, get(), excelDtos1)
+                .deal(getTitle(), get(), excelDtos)
+                .deal(getTitle(), get(), excelDtos1)
                 .write();
     }
 
     @Test
-    public void writeThreeEqualMaxSheetExcel() {
+    public void testWriteThreeEqualMaxSheetExcel() {
         List<ExcelDto> excelDtos = ExcelDataList.getList();
         excelDtos.remove(65535);
         List<ExcelDto> excelDtos1 = ExcelDataList.getList();
@@ -130,253 +118,187 @@ public class FileExcelWriteTest {
 
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), excelDtos)
-                .deal(title, get(), excelDtos1)
-                .deal(title, get(), excelDtos2)
+                .deal(getTitle(), get(), excelDtos)
+                .deal(getTitle(), get(), excelDtos1)
+                .deal(getTitle(), get(), excelDtos2)
                 .write();
     }
 
     @Test
-    public void writeSingleLtMaxSheetExcel() {
+    public void testWriteSingleLtMaxSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
                 .write();
     }
 
     @Test
-    public void writeSingleGtMaxSheetExcel() {
+    public void testWriteSingleGtMaxSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title, get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
                 .write();
     }
 
-    private WriteDeal<ExcelDto> get() {
-        return obj -> {
-            String[] result = new String[6];
-            result[0] = obj.getTime();
-            result[1] = obj.getName();
-            result[2] = obj.getClient();
-            result[3] = obj.getVersion();
-            result[4] = obj.getIp();
-            result[5] = obj.getStatus() + "";
-            return result;
-        };
-    }
-
     @Test
-    public void writeMultipleSheetExcel() {
-        String[] title1 = new String [6];
-        title1[0] = "id";
-        title1[1] = "type";
-        title1[2] = "desc";
+    public void testWriteMultipleSheetExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getTenList())
-                .deal(title1, get1(), ExcelDataList.getTenList1())
+                .deal(getTitle(), get(), ExcelDataList.getTenList())
+                .deal(getTitle1(), get1(), ExcelDataList.getTenList1())
                 .write();
     }
 
-    private WriteDeal<ExcelDto1> get1() {
-        return obj -> {
-            String[] result = new String[3];
-            result[0] = obj.getId() + "";
-            result[1] = obj.getType();
-            result[2] = obj.getDesc();
-            return result;
-        };
-    }
-
     @Test
-    public void writeMultipleSheetOverMaxCountExcel() {
+    public void testWriteMultipleSheetOverMaxCountExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title1, get1(), ExcelDataList.getTenList1())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle1(), get1(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetNullExcel() {
+    public void testWriteMultipleSheetNullExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), null)
-                .deal(title1, get1(), null)
+                .deal(getTitle(), get(), null)
+                .deal(getTitle1(), get1(), null)
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetEmptyExcel() {
+    public void testWriteMultipleSheetEmptyExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), new ArrayList<>())
-                .deal(title1, get1(), new ArrayList<>())
+                .deal(getTitle(), get(), new ArrayList<>())
+                .deal(getTitle1(), get1(), new ArrayList<>())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetOverMaxTwoCountExcel() {
+    public void testWriteMultipleSheetOverMaxTwoCountExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title1, get1(), ExcelDataList.getTenList1())
-                .deal(title, get(), ExcelDataList.getList())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle1(), get1(), ExcelDataList.getTenList1())
+                .deal(getTitle(), get(), ExcelDataList.getList())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetOverMaxTwoDoubleCountExcel() {
+    public void testWriteMultipleSheetOverMaxTwoDoubleCountExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title1, get1(), ExcelDataList.getTenList1())
-                .deal(title, get(), ExcelDataList.getList())
-                .deal(title1, get1(), ExcelDataList.getTenList1())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle1(), get1(), ExcelDataList.getTenList1())
+                .deal(getTitle(), get(), ExcelDataList.getList())
+                .deal(getTitle1(), get1(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameExcel() {
+    public void testWriteMultipleSheetAndNameExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameLtMaxExcel() {
+    public void testWriteMultipleSheetAndNameLtMaxExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameLtMaxDisorderExcel() {
+    public void testWriteMultipleSheetAndNameLtMaxDisorderExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
-                .deal(title, getExcelDtoName(), ExcelDataList.getTenList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getTenList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
-    public WriteDeal<ExcelDto> getExcelDtoName() {
-        return new WriteDeal<ExcelDto>() {
-            @Override
-            public String[] dealBean(ExcelDto obj) {
-                String[] result = new String[6];
-                result[0] = obj.getTime();
-                result[1] = obj.getName();
-                result[2] = obj.getClient();
-                result[3] = obj.getVersion();
-                result[4] = obj.getIp();
-                result[5] = obj.getStatus() + "";
-                return result;
-            }
-
-            @Override
-            public String name() {
-                return "ExcelDto";
-            }
-        };
-    }
-
-    public WriteDeal<ExcelDto1> getTestName() {
-        return new WriteDeal<ExcelDto1>() {
-            @Override
-            public String[] dealBean(ExcelDto1 obj) {
-                String[] result = new String[3];
-                result[0] = obj.getId() + "";
-                result[1] = obj.getType();
-                result[2] = obj.getDesc();
-                return result;
-            }
-
-            @Override
-            public String name() {
-                return "test";
-            }
-        };
-    }
-
     @Test
-    public void writeMultipleSheetAndNameOverMaxCountExcel() {
+    public void testWriteMultipleSheetAndNameOverMaxCountExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameNullExcel() {
+    public void testWriteMultipleSheetAndNameNullExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), null)
-                .deal(title1, getTestName(), null)
+                .deal(getTitle(), getExcelDtoName(), null)
+                .deal(getTitle1(), getTestName(), null)
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameEmptyExcel() {
+    public void testWriteMultipleSheetAndNameEmptyExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), new ArrayList<>())
-                .deal(title1, getTestName(), new ArrayList<>())
+                .deal(getTitle(), getExcelDtoName(), new ArrayList<>())
+                .deal(getTitle1(), getTestName(), new ArrayList<>())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameOverMaxCountTwoExcel() {
+    public void testWriteMultipleSheetAndNameOverMaxCountTwoExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameOverMaxCountTwoDisorderExcel() {
+    public void testWriteMultipleSheetAndNameOverMaxCountTwoDisorderExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeMultipleSheetAndNameOverMaxCountTwoTwoDisorderExcel() {
+    public void testWriteMultipleSheetAndNameOverMaxCountTwoTwoDisorderExcel() {
         FileExcelWrite.build(fileName)
                 .setLargeDataMode(false)
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
-                .deal(title1, getTestName(), ExcelDataList.getList1())
-                .deal(title, getExcelDtoName(), ExcelDataList.getList())
-                .deal(title1, getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getList1())
+                .deal(getTitle(), getExcelDtoName(), ExcelDataList.getList())
+                .deal(getTitle1(), getTestName(), ExcelDataList.getTenList1())
                 .write();
     }
 
     @Test
-    public void writeExcelByInputStream() {
+    public void testWriteExcelByInputStream() {
         FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
                 .setLargeDataMode(false)
                 .deal(new WriteDeal<ExcelDto>() {
@@ -406,7 +328,7 @@ public class FileExcelWriteTest {
     }
 
     @Test
-    public void writeMultipleSheetExcelByInputStream() {
+    public void testWriteMultipleSheetExcelByInputStream() {
         FileExcelWrite.build(this.getClass().getResourceAsStream("/d.xls"), fileName)
                 .setLargeDataMode(true)
                 .deal(new WriteDeal<ExcelDto>() {
@@ -459,7 +381,7 @@ public class FileExcelWriteTest {
     }
 
     @Test(expectedExceptions = RuntimeException.class)
-    public void writeExcelOverMaxCountExceptionByInputStream() {
+    public void testWriteExcelOverMaxCountExceptionByInputStream() {
 		FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
 				.setLargeDataMode(true)
 				.deal(new WriteDeal<ExcelDto>() {
@@ -489,7 +411,7 @@ public class FileExcelWriteTest {
     }
 
     @Test
-    public void writeExcelMaxCountByInputStream() {
+    public void testWriteExcelMaxCountByInputStream() {
         List<ExcelDto> list = ExcelDataList.getList();
         list.remove(65535);
         list.remove(65534);

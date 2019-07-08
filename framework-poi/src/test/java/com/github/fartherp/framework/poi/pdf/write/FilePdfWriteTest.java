@@ -39,7 +39,7 @@ public class FilePdfWriteTest {
 	}
 
     @Test
-    public void write() {
+    public void testWrite() {
 		String path = FilePdfWriteTest.class.getResource("/d.html").getPath();
         FilePdfWrite.build(fileName)
                 .addFontPath(fontPath)
