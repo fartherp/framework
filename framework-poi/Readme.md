@@ -5,6 +5,11 @@
 
 ```
 简单、好用且轻量级的海量excel，csv文件导入导出解决方案。解决火狐浏览器中文编码问题。
+1.解决火狐浏览器，中文名乱码问题 
+2.解决数据量过大OOM问题 
+3.导出字段可以自定义格式 
+4.支持多sheet导出 
+5.支持excel单个sheet最大行，自动生成新sheet继续导出
 注：excel的合并功能及复杂功能，使用代码实现比较复杂，框架只提供单行的导入导出。
 ``` 
 
@@ -16,12 +21,12 @@
     <dependency>
         <groupId>com.github.fartherp</groupId>
         <artifactId>framework-poi</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
     </dependency>
     ```
     ```Gradle```
     ```
-    compile 'com.github.fartherp:framework-poi:3.0.4'
+    compile 'com.github.fartherp:framework-poi:3.0.5'
     ```
 
 ## CSV常用例子：
@@ -118,7 +123,6 @@
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
     FileExcelWrite.build(fileName)
-            .setLargeDataMode(false)
             .deal(title, obj -> {
                 String[] result = new String[6];
                 result[0] = obj.getTime();
@@ -134,11 +138,6 @@
 
 3.Excel文件导出（风格，可以自定义风格）：
 ``` java
-    Map<String, Object> map = new HashMap<>();
-    map.put("quoteCurrency", "ETH");
-    map.put("symbol", "USDT_ETH");
-    map.put("startTime", "2019-01-09 00:00:00");
-    map.put("endTime", "2019-01-09 12:00:00");
     String fileName = "D:\\styleInputStream.xls";
     FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
             .deal(new WriteDeal<ExcelDto>() {
@@ -182,7 +181,6 @@
     title1[1] = "type";
     title1[2] = "desc";
     FileExcelWrite.build(fileName)
-            .setLargeDataMode(false)
             .deal(title, obj -> {
                 String[] result = new String[6];
                 result[0] = obj.getTime();
@@ -219,7 +217,6 @@
     title1[1] = "type";
     title1[2] = "desc";
     FileExcelWrite.build(fileName)
-            .setLargeDataMode(false)
             .deal(title, new WriteDeal<ExcelDto>() {
                 @Override
                 public String[] dealBean(ExcelDto obj) {
@@ -267,7 +264,6 @@
     title[5] = "状态";
     String fileName = "D:\\style1.xls";
     HttpServletResponseExcelWrite.build(fileName, request, response)
-            .setLargeDataMode(false)
             .deal(title, obj -> {
                 String[] result = new String[6];
                 result[0] = obj.getTime();

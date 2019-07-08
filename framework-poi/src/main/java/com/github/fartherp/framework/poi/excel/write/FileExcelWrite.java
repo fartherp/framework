@@ -32,11 +32,6 @@ public class FileExcelWrite implements OutputStreamDelegate {
      * Example code:
      * </p>
      * <pre>
-     *  Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
-     *  map.put("quoteCurrency", "ETH");
-     *  map.put("symbol", "USDT_ETH");
-     *  map.put("startTime", "2019-01-09 00:00:00");
-     *  map.put("endTime", "2019-01-09 12:00:00");
      *  String fileName = "D:\\styleInputStream.xls";
      *  FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
      *         .deal(new WriteDeal&lt;ExcelDto&gt;() {
@@ -52,8 +47,8 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *                 return 4;
      *             }
      *
-     *             public Map<String, Object> additional() {
-     *                 Map<String, Object> map = new HashMap<>();
+     *             public Map&lt;String, Object&gt; additional() {
+     *                 Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
      *                 map.put("quoteCurrency", "ETH");
      *                 map.put("symbol", "USDT_ETH");
      *                 map.put("startTime", "2019-01-09 00:00:00");
@@ -90,7 +85,6 @@ public class FileExcelWrite implements OutputStreamDelegate {
      *  title[5] = "状态";
      *  String fileName = "D:\\style1.xls";
      *  FileExcelWrite.build(fileName)
-     *          .setLargeDataMode(false)
      *          .deal(title, obj -> {
      *              String[] result = new String[6];
      *              result[0] = obj.getTime();

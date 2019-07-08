@@ -55,11 +55,6 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      * Example code:
      * </p>
      * <pre>
-     *  Map&lt;String, Object&gt; map = new HashMap<>();
-     *  map.put("quoteCurrency", "ETH");
-     *  map.put("symbol", "USDT_ETH");
-     *  map.put("startTime", "2019-01-09 00:00:00");
-     *  map.put("endTime", "2019-01-09 12:00:00");
      *  String fileName = "D:\\styleInputStream.xls";
      *  HttpServletResponseExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName, request, response)
      *          .deal(new WriteDeal&lt;ExcelDto&gt;() {
@@ -75,8 +70,8 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      *                  return 4;
      *              }
      *
-     *             public Map<String, Object> additional() {
-     *                 Map<String, Object> map = new HashMap<>();
+     *             public Map&lt;String, Object&gt; additional() {
+     *                 Map&lt;String, Object&gt; map = new HashMap<>();
      *                 map.put("quoteCurrency", "ETH");
      *                 map.put("symbol", "USDT_ETH");
      *                 map.put("startTime", "2019-01-09 00:00:00");
@@ -112,7 +107,6 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      *  title[5] = "状态";
      *  String fileName = "D:\\style1.xls";
      *  HttpServletResponseExcelWrite.build(fileName, request, response)
-     *          .setLargeDataMode(false)
      *          .deal(title, obj -> {
      *              String[] result = new String[6];
      *              result[0] = obj.getTime();
