@@ -1,5 +1,6 @@
 # 公告模块框架 framework-commpress
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-compress/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework-compress/)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.github.fartherp/framework-compress.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/github/fartherp/framework-compress)
 
 功能描述
 

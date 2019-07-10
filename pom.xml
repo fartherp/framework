@@ -22,11 +22,9 @@
         <module>framework-database</module>
         <module>framework-exception</module>
         <module>framework-file</module>
-        <module>framework-filter</module>
         <module>framework-net</module>
         <module>framework-poi</module>
         <module>framework-security</module>
-        <module>framework-tree</module>
 	</modules>
 
     <properties>

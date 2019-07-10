@@ -2,12 +2,18 @@
 [![Build Status](https://travis-ci.org/fartherp/framework.svg?branch=master)](https://travis-ci.org/fartherp/framework)
 [![Coverage Status](https://coveralls.io/repos/github/fartherp/framework/badge.svg?branch=master)](https://coveralls.io/github/fartherp/framework?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.github.fartherp/framework.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/github/fartherp/framework)
 [![GitHub release](https://img.shields.io/github/release/fartherp/framework.svg)](https://github.com/fartherp/framework/releases)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Project Stats](https://www.openhub.net/p/fartherp-framework/widgets/project_thin_badge.gif)](https://www.openhub.net/p/fartherp-framework)
 
 Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成Framework。
 > framework-spring-boot(https://github.com/fartherp/framework-spring-boot)
+
+## db基础操作框架 [framework-base-database](https://github.com/fartherp/framework/tree/master/framework-base-database)
+```
+封装操作数据库的基本操作（增删改查）
+```
 
 ## 公告模块框架 [framework-common](https://github.com/fartherp/framework/tree/master/framework-common)
 ```
@@ -37,7 +43,7 @@ Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成
 
 ## db操作框架 [framework-database](https://github.com/fartherp/framework/tree/master/framework-database)
 ```
-封装操作数据库的基本操作（增删改查）
+mybatis分页，sql监控
 ```
 
 ## 异常体系框架 [framework-exception](https://github.com/fartherp/framework/tree/master/framework-exception)
@@ -71,42 +77,6 @@ Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成
 2.对称密钥:AES，DES，3DES
 3.非对称密钥:RSA
 ```
-
-## [framework-filter](https://github.com/fartherp/framework/tree/master/framework-filter)
-
-```
-1、支持切面过滤
-2、和spring环境集成
- 配置方式是：
- web.xml 
-     <filter>
-        <filter-name>frameworkFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <param-name>targetFilterLifecycle</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>frameworkFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    spring 配置文件
-      <bean id="frameworkFilter" class="cn.vanskey.filter.web.FrameworkFilterFactoryBean">
-        <property name="filters"> //过滤器配置
-            <util:map>
-                <entry key="myfilter">
-                    <bean  class="com.zrj.pay.cashier.action.demo.MyFilter"/>
-                </entry>
-            </util:map>
-        </property>
-        <property name="filterChainDefinitions">
-            <value>
-                /** = myfilter   //过滤器和路径的对应关系
-            </value>
-        </property>
-    </bean>
-``` 
 
 ## JDK
 > 1.8
