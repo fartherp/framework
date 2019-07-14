@@ -32,14 +32,17 @@ import javax.servlet.http.HttpSessionListener;
 public class CheckSessionListener implements HttpSessionListener {
     private static final Logger log = LoggerFactory.getLogger(CheckSessionListener.class);
 
-    public void sessionCreated(HttpSessionEvent event) {
+    @Override
+	public void sessionCreated(HttpSessionEvent event) {
         String sessionId = event.getSession().getId();
         log.info("[Session监听器]--Session启动了! " + sessionId + "上线了!");
     }
 
-    public void sessionDestroyed(HttpSessionEvent event) {
+    @Override
+	public void sessionDestroyed(HttpSessionEvent event) {
         HttpSession session = event.getSession();
-        WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+        WebApplicationContext context =
+			WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
         if (context != null) {
             log.info("session expired, logged user out");
         }

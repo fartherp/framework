@@ -17,8 +17,8 @@ package com.github.fartherp.framework.exception.web;
 
 /**
  * JSON异常
- * Auth: CK
- * Date: 2016/9/9
+ * @author CK
+ * @date 2016/9/9
  */
 public class ResponseException extends RuntimeException {
 

@@ -17,10 +17,6 @@ package com.github.fartherp.framework.common.util;
 
 import org.testng.annotations.Test;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.testng.Assert.assertEquals;
@@ -30,14 +26,14 @@ public class DateUtilTest {
 
     @Test
     public void testDateRedMonthBegin() {
-        Date date = DateUtil.parse(DateUtil.yyyyMM, "201603");
+        Date date = DateUtil.parse(DateUtil.YYYY_MM, "201603");
         String startDate = DateUtil.dateRedMonthBegin(date, 0);
 		assertEquals(startDate, "2016-03-01");
     }
 
     @Test
     public void testDateRedMonthEnd() {
-        Date date = DateUtil.parse(DateUtil.yyyyMM, "201603");
+        Date date = DateUtil.parse(DateUtil.YYYY_MM, "201603");
         String endDate = DateUtil.dateRedMonthEnd(date, 0);
 		assertEquals(endDate, "2016-03-31");
     }
@@ -50,10 +46,10 @@ public class DateUtilTest {
             Thread[] threads = new Thread[count];
             for (int i = 0; i < count; i++) {
                 Thread thread = new Thread(() -> {
-					String date =  DateUtil.format(DateUtil.yyyy_MM_dd_HH_mm_ss, new Date());
+					String date =  DateUtil.format(DateUtil.YYYY_MM_DD_HH_MM_SS, new Date());
 					assertNotNull(date);
 
-					date =  DateUtil.format(DateUtil.yyyy_MM_dd, new Date());
+					date =  DateUtil.format(DateUtil.YYYY_MM_DD, new Date());
 					assertNotNull(date);
 				});
                 threads[i] = thread;

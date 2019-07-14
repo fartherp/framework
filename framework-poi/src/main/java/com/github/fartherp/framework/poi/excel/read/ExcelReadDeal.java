@@ -21,8 +21,8 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/12/22
+ * @author CK
+ * @date 2017/12/22
  */
 public interface ExcelReadDeal<E> extends ReadDeal<E> {
     /**

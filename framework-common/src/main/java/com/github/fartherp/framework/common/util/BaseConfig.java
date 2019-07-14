@@ -21,8 +21,8 @@ import java.util.Properties;
 
 /**
  * The base config by read with operation properties file.
- * Auth: CK
- * Date: 2016/5/3
+ * @author CK
+ * @date 2016/5/3
  */
 public class BaseConfig {
     private final Properties properties = new Properties();

@@ -19,8 +19,8 @@ import com.github.fartherp.framework.compress.CommonCompress;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class JAR extends CommonCompress {
     public JAR() {

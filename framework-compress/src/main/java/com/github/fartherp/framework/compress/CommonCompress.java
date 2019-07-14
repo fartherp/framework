@@ -21,12 +21,11 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/14
+ * @author CK
+ * @date 2015/4/14
  */
 public abstract class CommonCompress implements Compress {
 
@@ -71,6 +70,7 @@ public abstract class CommonCompress implements Compress {
      * 公共压缩调用
      * @return 输出路径字符串
      */
+	@Override
     public void compress() {
         if (2 != this.flag) {
             validation(false);
@@ -83,6 +83,7 @@ public abstract class CommonCompress implements Compress {
      * 解压
      * @return 输出路径字符串
      */
+	@Override
     public String unCompress() {
         validation(true);
         return commonCompress.unCompress();
@@ -128,8 +129,8 @@ public abstract class CommonCompress implements Compress {
                 target = source.getParentFile();
             } else {
                 // 压缩,文件夹,名称同文件夹名文件:文件,名称同文件名
-                String fileName = source.isDirectory() ? source.getName() :
-                        StringUtils.substringBeforeLast(source.getName(), DOT);
+                String fileName = source.isDirectory() ? source.getName()
+					: StringUtils.substringBeforeLast(source.getName(), DOT);
                 target = new File(source.getParentFile(), fileName + DOT + getSuffix());
             }
             setTargetFile(target);
@@ -165,6 +166,7 @@ public abstract class CommonCompress implements Compress {
      * 设置源文件名称
      * @param source 源名称
      */
+	@Override
     public CommonCompress source(String source) {
         setSource(source);
         setSourceFile(new File(source));
@@ -175,6 +177,7 @@ public abstract class CommonCompress implements Compress {
      * 设置目标文件名称
      * @param target 目标名称
      */
+	@Override
     public CommonCompress target(String target) {
         this.target = target;
         setTargetFile(new File(target));
@@ -186,11 +189,13 @@ public abstract class CommonCompress implements Compress {
      * @param request 请求
      * @param response 响应
      */
+	@Override
     public CommonCompress response(HttpServletRequest request, HttpServletResponse response) {
-        this.response(request, response, new Date().getTime() + "");
+        this.response(request, response, System.currentTimeMillis() + "");
         return this;
     }
 
+	@Override
     public CommonCompress response(HttpServletRequest request, HttpServletResponse response, String fileName) {
         this.flag = 2;
         response.reset();

@@ -21,8 +21,8 @@ import java.io.InputStreamReader;
 
 /**
  * 进程执行操作类
- * Author: CK.
- * Date: 2015/3/28.
+ * @author CK.
+ * @date 2015/3/28.
  */
 public class Tools {
 
@@ -30,7 +30,7 @@ public class Tools {
      * Execute shell.
      * @param shellCommand the shell command
      */
-    public synchronized static void executeShell(String shellCommand) {
+    public static synchronized void executeShell(String shellCommand) {
         int success = -1;
         BufferedReader bufferedReader = null;
         try {
@@ -58,7 +58,7 @@ public class Tools {
      *
      * @param shellCommand the shell command
      */
-    public synchronized static void executeShell(String ... shellCommand) {
+    public static synchronized void executeShell(String... shellCommand) {
         int success = -1;
         BufferedReader bufferedReader = null;
         try {

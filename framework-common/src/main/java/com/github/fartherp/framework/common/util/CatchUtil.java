@@ -19,7 +19,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Created by zhjie.zhang on 2019/3/26.
+ * Created by IntelliJ IDEA.
+ *
+ * @author zhjie.zhang
+ * @date 2019/3/26
  */
 public class CatchUtil {
     public static <T, R> R tryDo(T t, Function<T, R> func) {

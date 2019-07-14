@@ -27,8 +27,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * 新生成Excel模板
- * Author: CK
- * Date: 2019/4/24
+ * @author CK
+ * @date 2019/4/24
  */
 public class CreateNewExcelWrite extends AbstractExcelWrite {
 
@@ -89,7 +89,7 @@ public class CreateNewExcelWrite extends AbstractExcelWrite {
         for (int i = 0; i < title.length; i++) {
             Cell cell = dataRow.createCell(i);
             cell.setCellValue(title[i]);
-            if(this.headStyle != null){
+            if (this.headStyle != null) {
                 cell.setCellStyle(this.headStyle);
             }
         }

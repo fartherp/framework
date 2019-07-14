@@ -21,20 +21,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <pre>
- *  @author: cuiyuqiang
- *  @email: cuiyuqiang@ddjf.com.cn
- *  @date: 2019/6/25 17:59
- *  @project: risk-control-parent
- * </pre>
+ * Created by IntelliJ IDEA.
+ *
+ * @author CK
+ * @date 2019/6/25
  */
 public final class PlatformDependent {
+	private static final Pattern BIT_PATTERN = Pattern.compile("([1-9][0-9]+)-?bit");
+
 	public static boolean isWindows() {
 		return SystemPropertyUtil.get("os.name", "").toLowerCase(Locale.US).contains("win");
 	}
 
 	public static boolean isAndroid() {
-		// Idea: Sometimes java binaries include Android classes on the classpath, even if it isn't actually Android.
+		// Idea: Sometimes java binaries include Android classes on the classpath,
+		// even if it isn't actually Android.
 		// Rather than check if certain classes are present, just check the VM, which is tied to the JDK.
 
 		// Optional improvement: check if `android.os.Build.VERSION` is >= 24. On later versions of Android, the
@@ -58,7 +59,7 @@ public final class PlatformDependent {
 
 	public static boolean isIkvmDotNet() {
 		String vmName = SystemPropertyUtil.get("java.vm.name", "").toUpperCase(Locale.US);
-		return vmName.equals("IKVM.NET");
+		return "IKVM.NET".equals(vmName);
 	}
 
 	public static File tmpdir() {
@@ -159,7 +160,6 @@ public final class PlatformDependent {
 
 		// Last resort: guess from VM name and then fall back to most common 64-bit mode.
 		String vm = SystemPropertyUtil.get("java.vm.name", "").toLowerCase(Locale.US);
-		Pattern BIT_PATTERN = Pattern.compile("([1-9][0-9]+)-?bit");
 		Matcher m = BIT_PATTERN.matcher(vm);
 		if (m.find()) {
 			return Integer.parseInt(m.group(1));

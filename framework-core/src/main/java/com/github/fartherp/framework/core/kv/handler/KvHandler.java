@@ -20,22 +20,22 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public interface KvHandler {
     /**
      * IN条件
      */
-    public static final int IN = 1;
+	int IN = 1;
     /**
      * all
      */
-    public static final int ALL = 2;
+	int ALL = 2;
     /**
      * 前缀
      */
-    public static final int PREFIX_SQL = 3;
+	int PREFIX_SQL = 3;
     /**
      * 获得kvHandler的名称
      *
@@ -54,13 +54,13 @@ public interface KvHandler {
      * 通过dao执行SQL
      * @return
      */
-    public boolean isDaoExecute();
+	boolean isDaoExecute();
 
     /**
      * 创建SQL
      * @return SQL
      */
-    public String createSql(Map<String, Object> params);
+	String createSql(Map<String, Object> params);
 
     /**
      * 获取主键字段名称

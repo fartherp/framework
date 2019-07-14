@@ -55,7 +55,8 @@ public class TarGzCompressShell {
         }
         String path = sourceFile.substring(0, sourceFile.lastIndexOf("/"));
         try {
-            Tools.executeShell("sh /bcspapp/bcspgztar.sh " + sourceFile + " " + path + " " + sourceFile.substring(0, sourceFile.lastIndexOf(".")));
+            Tools.executeShell("sh /bcspapp/bcspgztar.sh " + sourceFile + " "
+				+ path + " " + sourceFile.substring(0, sourceFile.lastIndexOf(".")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

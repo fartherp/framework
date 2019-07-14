@@ -20,6 +20,9 @@ import java.security.PrivilegedAction;
 
 /**
  * A collection of utility methods to retrieve and parse the values of the Java system properties.
+ *
+ * @author CK
+ * @date 2019/6/25
  */
 public final class SystemPropertyUtil {
 

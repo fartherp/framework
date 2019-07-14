@@ -47,8 +47,8 @@ import java.util.List;
  *      &lt;/property&gt;
  *  &lt;/bean&gt;
  * </pre>
- * Author: CK
- * Date: 2016/2/5
+ * @author CK
+ * @date 2016/2/5
  */
 public class CustomizeExceptionHandlerResolver implements HandlerExceptionResolver, InitializingBean {
 
@@ -56,8 +56,9 @@ public class CustomizeExceptionHandlerResolver implements HandlerExceptionResolv
 
     private List<CustomizeExceptionHandler> exceptions = new ArrayList<CustomizeExceptionHandler>();
 
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
-                                         Object handler, Exception ex) {
+    @Override
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
+		Object handler, Exception ex) {
         logger.error("Catch Exception: ", ex);
         Method method = ((HandlerMethod) handler).getMethod();
         Class clazz = method.getReturnType();
@@ -87,7 +88,8 @@ public class CustomizeExceptionHandlerResolver implements HandlerExceptionResolv
         this.exceptions = exceptions;
     }
 
-    public void afterPropertiesSet() throws Exception {
+    @Override
+	public void afterPropertiesSet() throws Exception {
         exceptions.add(new ResponseExceptionHandler());
         exceptions.add(new ForwardExceptionHandler());
         exceptions.add(new GeneralExceptionHandler());

@@ -30,8 +30,8 @@ import java.util.Map;
  *     &lt;property name="dao" ref="kvDao"/&gt;
  * &lt;/bean&gt;
  * </pre>
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public interface KvService {
     /**
@@ -55,8 +55,8 @@ public interface KvService {
      * @param extraConds 扩展信息
      * @return
      */
-    public List<Map<Object, Object>> in(KvHandlerSupport support, Collection<Object> keys,
-                                        Map<String, Object> extraConds);
+	List<Map<Object, Object>> in(KvHandlerSupport support, Collection<Object> keys,
+								 Map<String, Object> extraConds);
 
     /**
      * ALL查询
@@ -64,7 +64,7 @@ public interface KvService {
      * @param extraConds 扩展信息
      * @return list
      */
-    public List<Map<Object, Object>> all(KvHandlerSupport support, Map<String, Object> extraConds);
+	List<Map<Object, Object>> all(KvHandlerSupport support, Map<String, Object> extraConds);
 
     /**
      * 全LIKE模糊查询
@@ -74,8 +74,8 @@ public interface KvService {
      * @param maxLimit 返回数据条数
      * @return list
      */
-    public List<Map<Object, Object>> fuzzy(KvHandlerSupport support, String key,
-                                           Map<String, Object> extrConds, Integer maxLimit);
+	List<Map<Object, Object>> fuzzy(KvHandlerSupport support, String key,
+			Map<String, Object> extrConds, Integer maxLimit);
 
     /**
      * 字段前面like
@@ -85,8 +85,8 @@ public interface KvService {
      * @param maxLimit 返回数据条数
      * @return list
      */
-    public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
-                                            Map<String, Object> extraConds, Integer maxLimit);
+	List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
+			Map<String, Object> extraConds, Integer maxLimit);
 
     /**
      * 字段like
@@ -98,9 +98,9 @@ public interface KvService {
      * @param maxLimit 返回数据条数
      * @return list
      */
-    public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
-                                            Map<String, Object> extraConds, boolean needPrefix,
-                                            boolean needPostfix, Integer maxLimit);
+	List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
+		Map<String, Object> extraConds, boolean needPrefix, boolean needPostfix,
+		Integer maxLimit);
 
     void setDao(KvDao dao);
 }

@@ -23,8 +23,8 @@ import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/6
+ * @author CK
+ * @date 2015/8/6
  */
 public class I18nManager implements Serializable {
 

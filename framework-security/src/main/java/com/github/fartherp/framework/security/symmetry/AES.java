@@ -22,7 +22,7 @@ import static com.github.fartherp.framework.security.ISecurity.AES_ALGORITHM;
 /**
  * AES
  * <p>AES加密算法对密钥有严格要求,密钥必须是16字节,数据没有硬性要求</p>
- * Author: CK
+ * @author CK
  */
 public class AES {
 

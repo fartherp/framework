@@ -17,8 +17,8 @@ package com.github.fartherp.framework.net.exception;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class FtpFailException extends RuntimeException {
 

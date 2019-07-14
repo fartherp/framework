@@ -20,63 +20,63 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/14
+ * @author CK
+ * @date 2015/4/14
  */
 public interface Compress {
-    public static final String NULL_STR = "";
+    String NULL_STR = "";
     /**
      * dot
      */
-    public static final String DOT = ".";
+	String DOT = ".";
     /**
      * ZIP
      */
-    public static final String ZIP = "ZIP";
+	String ZIP = "ZIP";
     /**
      * SUFFIX_ZIP
      */
-    public static final String SUFFIX_ZIP = "zip";
+	String SUFFIX_ZIP = "zip";
     /**
      * GZIP
      */
-    public static final String GZIP = "GZIP";
+	String GZIP = "GZIP";
     /**
      * SUFFIX_GZIP
      */
-    public static final String SUFFIX_GZIP = "gz";
+	String SUFFIX_GZIP = "gz";
     /**
      * TAR
      */
-    public static final String TAR = "TAR";
+	String TAR = "TAR";
     /**
      * SUFFIX_TAR
      */
-    public static final String SUFFIX_TAR = "tar";
+	String SUFFIX_TAR = "tar";
     /**
      * RAR
      */
-    public static final String RAR = "RAR";
+	String RAR = "RAR";
     /**
      * BZIP2
      */
-    public static final String BZIP2 = "BZIP2";
+	String BZIP2 = "BZIP2";
     /**
      * SUFFIX_BZIP2
      */
-    public static final String SUFFIX_BZIP2 = "bz2";
+	String SUFFIX_BZIP2 = "bz2";
     /**
      * JAR
      */
-    public static final String JAR = "JAR";
+	String JAR = "JAR";
     /**
      * SUFFIX_ZIP
      */
-    public static final String SUFFIX_JAR = "jar";
+	String SUFFIX_JAR = "jar";
     /**
      * 缓冲大小
      */
-    public static final int BUFFER = 1024;
+	int BUFFER = 1024;
     /**
      * 压缩文件
      * @return 压缩文件名

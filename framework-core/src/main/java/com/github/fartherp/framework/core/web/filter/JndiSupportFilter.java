@@ -59,8 +59,8 @@ import java.util.Set;
  *  &lt;param-value&gt;jndi:java:comp/env/uc/uc.loginPagePath&lt;/param-value&gt;
  *  param loginPagePath will load value from jndi service
  * </pre>
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public abstract class JndiSupportFilter implements Filter {
     /**
@@ -86,7 +86,8 @@ public abstract class JndiSupportFilter implements Filter {
      */
     private final Set requiredProperties = new HashSet();
 
-    public final void init(FilterConfig filterConfig) throws ServletException {
+    @Override
+	public final void init(FilterConfig filterConfig) throws ServletException {
         Assert.notNull(filterConfig, "FilterConfig must not be null");
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Initializing filter '" + filterConfig.getFilterName() + "'");
@@ -100,11 +101,14 @@ public abstract class JndiSupportFilter implements Filter {
             BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
             ResourceLoader resourceLoader = new ServletContextResourceLoader(filterConfig.getServletContext());
             ServletContextPropertySource servletContextPropertySource
-                    = new ServletContextPropertySource(NAME + "_ServletContextPropertySource", filterConfig.getServletContext());
+                    = new ServletContextPropertySource(NAME + "_ServletContextPropertySource",
+				filterConfig.getServletContext());
             MutablePropertySources propertySources = new MutablePropertySources();
             propertySources.addFirst(servletContextPropertySource);
-            PropertySourcesPropertyResolver propertySourcesPropertyResolver = new PropertySourcesPropertyResolver(propertySources);
-            bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, propertySourcesPropertyResolver));
+            PropertySourcesPropertyResolver propertySourcesPropertyResolver =
+				new PropertySourcesPropertyResolver(propertySources);
+            bw.registerCustomEditor(Resource.class,
+				new ResourceEditor(resourceLoader, propertySourcesPropertyResolver));
             bw.setPropertyValues(pvs, true);
         } catch (BeansException ex) {
             String msg = "Failed to set bean properties on filter '" +
@@ -126,15 +130,16 @@ public abstract class JndiSupportFilter implements Filter {
      * @param filterConfig {@link FilterConfig} instance
      */
     private void initPlaceHolderConfigure(FilterConfig filterConfig) {
-        ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext());
+        ApplicationContext app = WebApplicationContextUtils
+			.getWebApplicationContext(filterConfig.getServletContext());
         if (app == null) {
             return;
         }
 
         AbstractApplicationContext context = (AbstractApplicationContext) app;
 
-        Properties propertyResource =
-                PropertyPlaceholderConfigurerTool.getRegisteredPropertyResourceConfigurer(context.getBeanFactory());
+        Properties propertyResource = PropertyPlaceholderConfigurerTool
+			.getRegisteredPropertyResourceConfigurer(context.getBeanFactory());
         if (propertyResource != null && resolver == null) {
             resolver = PropertyPlaceholderConfigurerTool.createPlaceholderParser(propertyResource);
         }
@@ -156,7 +161,8 @@ public abstract class JndiSupportFilter implements Filter {
      * as well as filter bean destruction in a Spring application context.
      * <p>This default implementation is empty.
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
     }
 
     /**
@@ -206,10 +212,11 @@ public abstract class JndiSupportFilter implements Filter {
          * @throws ServletException if any required properties are missing
          */
         @SuppressWarnings("unchecked")
-        public JndiSupportFilterConfigPropertyValues(FilterConfig config, Set requiredProperties)
+		JndiSupportFilterConfigPropertyValues(FilterConfig config, Set requiredProperties)
                 throws ServletException {
 
-            Set missingProps = CollectionUtils.isNotEmpty(requiredProperties) ? new HashSet(requiredProperties) : null;
+            Set missingProps = CollectionUtils.isNotEmpty(requiredProperties)
+				? new HashSet(requiredProperties) : null;
 
             Enumeration en = config.getInitParameterNames();
             while (en.hasMoreElements()) {

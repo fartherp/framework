@@ -17,16 +17,16 @@ package com.github.fartherp.framework.exception;
 
 /**
  * 定义基础异常功能接口
- * Author: CK
- * Date: 2016/2/5
+ * @author CK
+ * @date 2016/2/5
  */
 public interface BaseException {
     /**
      * 默认数据库
      */
-    public static final String MYSQL_DATABASE = "MYSQL";
-    public static final String ORACLE_DATABASE = "ORACLE";
-    public static final String COMMON_EXCEPTION_MESSAGE = "COMMON";
+	String MYSQL_DATABASE = "MYSQL";
+    String ORACLE_DATABASE = "ORACLE";
+    String COMMON_EXCEPTION_MESSAGE = "COMMON";
     /**
      * <p>获得异常消息信息。</p>
      *

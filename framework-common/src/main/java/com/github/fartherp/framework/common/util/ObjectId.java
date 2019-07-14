@@ -41,8 +41,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * <p>Instances of this class are immutable.</p>
  *
- * @author: CK
- * @date: 2019/3/19
+ * @author CK
+ * @date 2019/3/19
  */
 public class ObjectId implements Comparable<ObjectId>, Serializable {
 
@@ -484,7 +484,7 @@ public class ObjectId implements Comparable<ObjectId>, Serializable {
             machinePiece = sb.toString().hashCode();
         } catch (Throwable t) {
             // exception sometimes happens with IBM JVM, use random
-            machinePiece = (new SecureRandom().nextInt());
+            machinePiece = new SecureRandom().nextInt();
             // ignore
 //            LOGGER.warn("Failed to get machine identifier from network interface, using random number instead", t);
         }
@@ -533,10 +533,10 @@ public class ObjectId implements Comparable<ObjectId>, Serializable {
 
     private static int makeInt(final byte b3, final byte b2, final byte b1, final byte b0) {
         // CHECKSTYLE:OFF
-        return (((b3) << 24) |
-                ((b2 & 0xff) << 16) |
-                ((b1 & 0xff) << 8) |
-                ((b0 & 0xff)));
+        return (b3 << 24)
+			| ((b2 & 0xff) << 16)
+			| ((b1 & 0xff) << 8)
+			| (b0 & 0xff);
         // CHECKSTYLE:ON
     }
 
@@ -553,7 +553,7 @@ public class ObjectId implements Comparable<ObjectId>, Serializable {
     }
 
     private static byte int0(final int x) {
-        return (byte) (x);
+        return (byte) x;
     }
 
     private static byte short1(final short x) {
@@ -561,6 +561,6 @@ public class ObjectId implements Comparable<ObjectId>, Serializable {
     }
 
     private static byte short0(final short x) {
-        return (byte) (x);
+        return (byte) x;
     }
 }

@@ -35,8 +35,8 @@ import java.security.cert.X509Certificate;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/17
+ * @author CK
+ * @date 2018/12/17
  */
 public class InstallCert {
     public static void main(String[] args1) throws Exception {

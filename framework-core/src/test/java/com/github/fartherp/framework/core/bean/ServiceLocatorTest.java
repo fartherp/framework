@@ -22,8 +22,8 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/10
+ * @author CK
+ * @date 2017/11/10
  */
 public class ServiceLocatorTest {
     @Test

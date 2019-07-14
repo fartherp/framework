@@ -17,8 +17,8 @@ package com.github.fartherp.framework.file.nfs;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/3/7
+ * @author CK
+ * @date 2016/3/7
  */
 public class NfsConfig {
 

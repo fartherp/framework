@@ -17,8 +17,8 @@ package com.github.fartherp.framework.common.util;
 
 /**
  * 62进制数字
- * Author: CK
- * Date: 2016/2/14
+ * @author CK
+ * @date 2016/2/14
  */
 public class Num62 {
     /**

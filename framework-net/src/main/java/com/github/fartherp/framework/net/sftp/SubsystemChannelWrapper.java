@@ -20,8 +20,8 @@ import com.jcraft.jsch.ChannelSubsystem;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public class SubsystemChannelWrapper extends ChannelWrapper<ChannelSubsystem> {
+public class SubsystemChannelWrapper extends AbstractChannelWrapper<ChannelSubsystem> {
 }

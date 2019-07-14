@@ -30,19 +30,21 @@ import java.util.Map;
  *     &lt;property name="dataSource" ref="dataSource"/&gt;
  * &lt;/bean&gt;
  * </pre>
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public class KvDaoImpl implements KvDao {
 
     private DataSource dataSource;
 
-    public List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams) {
+    @Override
+	public List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams) {
         NamedParameterJdbcTemplate tpl = new NamedParameterJdbcTemplate(dataSource);
         return tpl.queryForList(sql, namedParams);
     }
 
-    public void setDataSource(DataSource dataSource) {
+    @Override
+	public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 }

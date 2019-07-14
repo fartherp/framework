@@ -28,8 +28,8 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/6/15
+ * @author CK
+ * @date 2018/6/15
  */
 public class ExpressionParserTest {
 

@@ -24,16 +24,18 @@ import javax.servlet.ServletContextListener;
 
 /**
  * 初始化系统监听器
- * Author: CK
- * Date: 2015/6/24
+ * @author CK
+ * @date 2015/6/24
  */
 public class InitSystemListener implements ServletContextListener {
-    public void contextInitialized(ServletContextEvent event) {
+    @Override
+	public void contextInitialized(ServletContextEvent event) {
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
         ServiceLocator.setFactory(context);
     }
 
-    public void contextDestroyed(ServletContextEvent event) {
+    @Override
+	public void contextDestroyed(ServletContextEvent event) {
         ServiceLocator.setFactory(null);
     }
 }

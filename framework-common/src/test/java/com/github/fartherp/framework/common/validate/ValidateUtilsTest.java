@@ -25,8 +25,8 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/3/20
+ * @author CK
+ * @date 2018/3/20
  */
 public class ValidateUtilsTest {
 

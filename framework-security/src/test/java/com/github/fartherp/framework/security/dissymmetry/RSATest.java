@@ -30,8 +30,8 @@ import static org.testng.Assert.assertTrue;
  *     加密数据: Qc0Dvqxe1KsNWL7XA5aDXJwg0WmyTCPs1bFnv7+ijR7CZeVW1b9GhEYtFIkCEOwqLyfBEOxT6D+FO4iYVJvtuOJPwyOppGQxcp9cDWozNI8pdBUa4WmyJ3pYfFFSyzErP8srT47jJseBbwpEL4Az6p6+T4LQb7VLBiszYQGn8G8=
  *     解密数据: abc
  * </pre>
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class RSATest {
 

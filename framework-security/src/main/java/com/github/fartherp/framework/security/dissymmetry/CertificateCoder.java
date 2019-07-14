@@ -47,8 +47,8 @@ import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class CertificateCoder {
     /**

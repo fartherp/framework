@@ -30,8 +30,8 @@ import java.util.Set;
 /**
  * 基于spring验证注解并返回错误信息
  *
- * @author: CK
- * @date: 2018/3/12
+ * @author CK
+ * @date 2018/3/12
  */
 public class ValidUtils {
 
@@ -66,7 +66,8 @@ public class ValidUtils {
         }
 
         if (groups != null && groups.length > 0) {
-            ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(flag).buildValidatorFactory();
+            ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+				.configure().failFast(flag).buildValidatorFactory();
             Validator validator = validatorFactory.getValidator();
             Set<ConstraintViolation<T>> constraintViolations = validator.validate(bean, groups);
             if (!constraintViolations.isEmpty()) {

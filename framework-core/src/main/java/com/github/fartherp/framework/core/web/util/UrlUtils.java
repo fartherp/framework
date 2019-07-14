@@ -21,8 +21,8 @@ import java.util.SortedSet;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/12
+ * @author CK
+ * @date 2015/8/12
  */
 public class UrlUtils {
 
@@ -34,7 +34,7 @@ public class UrlUtils {
      * @return String
      */
     public static String urlMatch(SortedSet<String> urls, String path) {
-        if(urls == null || urls.size() == 0) {
+        if (urls == null || urls.size() == 0) {
             return null;
         }
 

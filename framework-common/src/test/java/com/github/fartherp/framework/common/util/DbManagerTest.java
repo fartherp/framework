@@ -30,8 +30,8 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2019/6/27
+ * @author CK
+ * @date 2019/6/27
  */
 public class DbManagerTest {
 

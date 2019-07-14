@@ -23,6 +23,9 @@ import java.util.List;
 
 /**
  * 发送邮件工具类
+ *
+ * @author CK
+ * @date 2019/1/7
  */
 public class MailUtil {
 

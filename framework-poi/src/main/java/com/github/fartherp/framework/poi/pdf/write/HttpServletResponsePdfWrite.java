@@ -27,18 +27,20 @@ import static com.github.fartherp.framework.poi.Constant.PDF_CONTENT_TYPE;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/20
+ * @author CK
+ * @date 2018/12/20
  */
 public class HttpServletResponsePdfWrite extends AbstractPdfWrite {
     private HttpServletResponse response;
 
-    public HttpServletResponsePdfWrite(String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public HttpServletResponsePdfWrite(String fileName,
+			HttpServletRequest request, HttpServletResponse response) {
         super(fileName);
         this.setResponse(request, response);
     }
 
-    public PdfWrite createOutputStream() {
+    @Override
+	public PdfWrite createOutputStream() {
         try {
             this.outputStream = this.response.getOutputStream();
         } catch (IOException e) {
@@ -74,7 +76,8 @@ public class HttpServletResponsePdfWrite extends AbstractPdfWrite {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/d.html">
      *     file content</a>
      */
-    public static HttpServletResponsePdfWrite build(String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static HttpServletResponsePdfWrite build(String fileName,
+			HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);

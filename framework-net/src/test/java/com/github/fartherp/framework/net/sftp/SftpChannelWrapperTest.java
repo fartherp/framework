@@ -22,8 +22,8 @@ import org.testng.annotations.Test;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
 public class SftpChannelWrapperTest {
 //    @Test

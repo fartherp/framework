@@ -20,8 +20,8 @@ import com.jcraft.jsch.ChannelShell;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public class ShellChannelWrapper extends ChannelWrapper<ChannelShell> {
+public class ShellChannelWrapper extends AbstractChannelWrapper<ChannelShell> {
 }

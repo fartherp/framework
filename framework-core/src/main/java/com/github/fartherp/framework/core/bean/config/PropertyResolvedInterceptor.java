@@ -20,8 +20,8 @@ import java.util.Properties;
 
 /**
  * Property resolved interceptor.
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public interface PropertyResolvedInterceptor {
     /**

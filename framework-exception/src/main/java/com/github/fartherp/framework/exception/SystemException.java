@@ -20,8 +20,8 @@ import java.sql.SQLException;
 
 /**
  * 系统统一异常
- * Author: CK
- * Date: 2016/2/5
+ * @author CK
+ * @date 2016/2/5
  */
 public class SystemException extends BaseSystemException {
     public SystemException(String msg, Throwable t, String... args) {

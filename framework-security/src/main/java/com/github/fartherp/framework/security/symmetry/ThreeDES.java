@@ -15,6 +15,9 @@
  */
 package com.github.fartherp.framework.security.symmetry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.Key;
 
 import static com.github.fartherp.framework.security.ISecurity.THREE_DES_ALGORITHM;
@@ -53,6 +56,9 @@ import static com.github.fartherp.framework.security.ISecurity.THREE_DES_ECB_ALG
  * @author CK
  */
 public class ThreeDES {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ThreeDES.class);
+
     /**
      * 加密
      * @param data 加密原数据
@@ -88,11 +94,12 @@ public class ThreeDES {
         if (key.length == 16) {
             // 双倍长
             byte[] keys = new byte[24];
-            System.arraycopy(key, 0, keys,0, 16);
-            System.arraycopy(key, 0, keys,16, 8);
+            System.arraycopy(key, 0, keys, 0, 16);
+            System.arraycopy(key, 0, keys, 16, 8);
             key = keys;
         } else if (key.length == 24) {
             // 三倍长
+			LOGGER.debug("the triple length key of the 3DES");
         } else {
             throw new RuntimeException("Invalid 3DES key length (must be 16 or 24 bytes)");
         }

@@ -17,8 +17,8 @@ package com.github.fartherp.framework.poi.excel;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2019/4/24
+ * @author CK
+ * @date 2019/4/24
  */
 public class ExcelDto1 {
     private Long id;

@@ -26,7 +26,6 @@ import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,12 +34,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 序列化工具类（基于 Protostuff 实现）
+ *
+ * @author CK
+ * @date 2019/1/7
  */
 public class ProtobufSerializeUtil {
 
-    private final static Map<String, Schema<?>> cachedSchema = new ConcurrentHashMap<>();
+    private static final Map<String, Schema<?>> CACHED_SCHEMA = new ConcurrentHashMap<>();
 
-    private final static Objenesis objenesis = new ObjenesisStd(true);
+    private static final Objenesis OBJENESIS = new ObjenesisStd(true);
 
     /**
      * logger
@@ -90,7 +92,9 @@ public class ProtobufSerializeUtil {
     }
 
     private static <T> byte[] serialization(T obj, String[] exclusions, String[] inclusives) {
-        if (null == obj) return null;
+        if (null == obj) {
+        	return null;
+		}
         @SuppressWarnings("unchecked")
         Class<T> cls = (Class<T>) obj.getClass();
         LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
@@ -120,10 +124,11 @@ public class ProtobufSerializeUtil {
      * 反序列化（字节数组 -> 对象），包含指定的需要反序列化的属性字段.
      */
     private static <T> T deserialization(byte[] data, Class<T> cls, String[] exclusions, String[] inclusives) {
-        if (data == null || data.length == 0)
+        if (data == null || data.length == 0) {
             return null;
+		}
         try {
-            T message = objenesis.newInstance(cls);
+            T message = OBJENESIS.newInstance(cls);
             Schema<T> schema = initSchema(exclusions, inclusives, cls);
             ProtobufIOUtil.mergeFrom(data, message, schema);
             return message;
@@ -170,10 +175,10 @@ public class ProtobufSerializeUtil {
     private static <T> Schema<T> getSchema(Class<T> cls) {
         String key = getKey(cls);
         @SuppressWarnings("unchecked")
-        Schema<T> schema = (Schema<T>) cachedSchema.get(key);
+        Schema<T> schema = (Schema<T>) CACHED_SCHEMA.get(key);
         if (schema == null) {
             schema = RuntimeSchema.createFrom(cls);
-            cachedSchema.put(key, schema);
+            CACHED_SCHEMA.put(key, schema);
         }
         return schema;
     }
@@ -182,10 +187,10 @@ public class ProtobufSerializeUtil {
         String key = getKeyWithExclusion(cls, fields);
 
         @SuppressWarnings("unchecked")
-        Schema<T> schema = (Schema<T>) cachedSchema.get(key);
+        Schema<T> schema = (Schema<T>) CACHED_SCHEMA.get(key);
         if (schema == null) {
             schema = RuntimeSchema.createFrom(cls, fields, RuntimeEnv.ID_STRATEGY);
-            cachedSchema.put(key, schema);
+            CACHED_SCHEMA.put(key, schema);
         }
         return schema;
     }
@@ -194,14 +199,14 @@ public class ProtobufSerializeUtil {
         String key = getKeyWithInclusion(cls, fields);
 
         @SuppressWarnings("unchecked")
-        Schema<T> schema = (Schema<T>) cachedSchema.get(key);
+        Schema<T> schema = (Schema<T>) CACHED_SCHEMA.get(key);
         if (schema == null) {
             Map<String, String> map = new LinkedHashMap<>();
             for (String field : fields) {
                 map.put(field, field);
             }
             schema = RuntimeSchema.createFrom(cls, map, RuntimeEnv.ID_STRATEGY);
-            cachedSchema.put(key, schema);
+            CACHED_SCHEMA.put(key, schema);
         }
         return schema;
     }

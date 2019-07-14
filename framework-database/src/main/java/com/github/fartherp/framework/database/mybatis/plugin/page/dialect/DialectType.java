@@ -19,17 +19,26 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/3/24
+ * @author CK
+ * @date 2016/3/24
  */
 public enum DialectType {
+	/**
+	 * mysql
+	 */
     MYSQL("mysql", MySQLDialect.class.getName()),
+	/**
+	 * oracle
+	 */
     ORACLE("oracle", ""),
+	/**
+	 * sql server
+	 */
     SQL_SERVER("microsoft sql server", ""),;
 
-    private String name;
+    String name;
 
-    private String className;
+    String className;
 
     DialectType(String name, String className) {
         this.name = name;
@@ -51,14 +60,10 @@ public enum DialectType {
                 try {
                     Class<Dialect> forName = (Class<Dialect>) Class.forName(type.getClassName());
                     return forName.newInstance();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
-            }
+			}
         }
         return null;
     }

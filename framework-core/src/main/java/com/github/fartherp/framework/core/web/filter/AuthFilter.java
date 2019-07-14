@@ -35,8 +35,8 @@ import java.util.TreeSet;
 
 /**
  * 权限过滤器
- * Auth: CK
- * Date: 2016/8/27
+ * @author CK
+ * @date 2016/8/27
  */
 public class AuthFilter extends JndiSupportFilter {
 
@@ -63,7 +63,8 @@ public class AuthFilter extends JndiSupportFilter {
      */
     private boolean open;
 
-    public void doInit(FilterConfig filterConfig) throws ServletException {
+    @Override
+	public void doInit(FilterConfig filterConfig) throws ServletException {
         excludePathv = new TreeSet<>();
         if (excludePath != null) {
             String[] paths = excludePath.split(";");
@@ -75,7 +76,9 @@ public class AuthFilter extends JndiSupportFilter {
         }
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    @Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+		throws IOException, ServletException {
         if (!open) {
             chain.doFilter(request, response);
             return;
@@ -104,7 +107,8 @@ public class AuthFilter extends JndiSupportFilter {
      * @param args 参数
      * @throws IOException 写流时,能抛该异常.
      */
-    private void printMessage(HttpServletResponse response, String template, Object... args) throws IOException {
+    private void printMessage(HttpServletResponse response, String template, Object... args)
+		throws IOException {
         PrintWriter writer = response.getWriter();
         response.setContentType("text/html;charset=utf-8");
         writer.write(String.format(template, args));

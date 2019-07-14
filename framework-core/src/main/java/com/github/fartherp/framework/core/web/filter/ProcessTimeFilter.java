@@ -35,8 +35,8 @@ import java.util.TreeSet;
 
 /**
  * record request time
- * Author: CK
- * Date:2014/10/6
+ * @author CK
+ * @date2014/10/6
  */
 public class ProcessTimeFilter implements Filter {
     protected final Logger logger = LoggerFactory.getLogger(ProcessTimeFilter.class);
@@ -47,7 +47,8 @@ public class ProcessTimeFilter implements Filter {
 
     private SortedSet<String> excludePathSet;
 
-    public void init(FilterConfig filterConfig) throws ServletException {
+    @Override
+	public void init(FilterConfig filterConfig) throws ServletException {
         excludePath = filterConfig.getInitParameter("excludePath");
         excludePathSet = new TreeSet<>();
         if (excludePath != null) {
@@ -61,7 +62,8 @@ public class ProcessTimeFilter implements Filter {
         logger.info("ProcessTimeFilter init");
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    @Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         // 如果在excludePath中，则跳过
@@ -79,7 +81,8 @@ public class ProcessTimeFilter implements Filter {
         }
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
         logger.info("ProcessTimeFilter destroy");
     }
 }

@@ -25,8 +25,8 @@ import java.lang.reflect.Modifier;
 
 /**
  * 反射工具类
- * Author: CK
- * Date: 2015/8/8
+ * @author CK
+ * @date 2015/8/8
  */
 public class ReflectUtil {
 
@@ -127,8 +127,7 @@ public class ReflectUtil {
                         r.setAccessible(true);
                     }
                     return r.invoke(obj);
-                }
-                catch (Throwable e) {
+                } catch (Throwable e) {
                     throw new RuntimeException("Could not get property '" + t.getName(), e);
                 }
             }

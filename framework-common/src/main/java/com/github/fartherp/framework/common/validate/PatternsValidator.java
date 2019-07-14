@@ -22,13 +22,14 @@ import java.util.regex.Pattern;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2019/1/7
+ * @author CK
+ * @date 2019/1/7
  */
 public class PatternsValidator implements ConstraintValidator<Patterns, Object> {
 
     private Pattern[] regexps;
 
+    @Override
     public void initialize(Patterns constraintAnnotation) {
         String[] values = constraintAnnotation.regexps();
         this.regexps = new Pattern[values.length];
@@ -37,6 +38,7 @@ public class PatternsValidator implements ConstraintValidator<Patterns, Object> 
         }
     }
 
+	@Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         for (Pattern pattern : regexps) {
             if (pattern.matcher(value.toString()).matches()) {

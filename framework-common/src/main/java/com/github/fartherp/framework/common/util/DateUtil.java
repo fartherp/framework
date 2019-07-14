@@ -33,19 +33,23 @@ import java.util.Map;
  * @author CK
  */
 public class DateUtil {
-    public static final String yyyyMMdd = "yyyyMMdd";
-    public static final String yyyy_MM_dd = "yyyy-MM-dd";
-    public static final String ddMMyy = "ddMMyy";
-    public static final String yyyyMM = "yyyyMM";
-    public static final String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
-    public static final String yyMMddHHmmss = "yyMMddHHmmss";
-    public static final String yyyyMMddHH = "yyyyMMddHH";
-    public static final String yyyyMMddHHmmss = "yyyyMMddHHmmss";
-    public static final String HH_mm_ss = "HH:mm:ss";
-    public static final String HHmmss = "HHmmss";
-    public static final String HH_mm = "HH:mm";
+    public static final String YYYYMMDD = "yyyyMMdd";
+    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String DDMMYY = "ddMMyy";
+    public static final String YYYY_MM = "yyyyMM";
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYMMDDHHMMSS = "yyMMddHHmmss";
+    public static final String YYYYMMDDHH = "yyyyMMddHH";
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+    public static final String HH_MM_SS = "HH:mm:ss";
+    public static final String HHMMSS = "HHmmss";
+    public static final String HH_MM = "HH:mm";
 
-    private final static ThreadLocal<Map<String, DateFormat>> threadLocal = new ThreadLocal<Map<String, DateFormat>>();
+    private static final ThreadLocal<Map<String, DateFormat>> DATE_THREAD_LOCAL;
+
+    static {
+		DATE_THREAD_LOCAL = new ThreadLocal<>();
+	}
 
     /**
      * second
@@ -68,10 +72,10 @@ public class DateUtil {
     public static final long DAY_TIME = HOUR_TIME * 24;
 
     public static DateFormat getDateFormat(String format) {
-        Map<String, DateFormat> formatMap = threadLocal.get();
+        Map<String, DateFormat> formatMap = DATE_THREAD_LOCAL.get();
         if (formatMap == null) {
             formatMap = new HashMap<String, DateFormat>();
-            threadLocal.set(formatMap);
+            DATE_THREAD_LOCAL.set(formatMap);
         }
         // 不同类型日期标识
         DateFormat dateFormat = formatMap.get(format);
@@ -270,10 +274,10 @@ public class DateUtil {
     public static int days(Date date) {
         int days = 0;
         int year = year(date) - 1;
-        days += year * 365;// one year have 365 day
-        days += year / 4;// 4 year one leap year
-        days -= year / 100;// 100 year no leap year
-        days += year / 400;// 400 year one leap year
+        days += year * 365; // one year have 365 day
+        days += year / 4; // 4 year one leap year
+        days -= year / 100; // 100 year no leap year
+        days += year / 400; // 400 year one leap year
         days += dayOfYear(date);
         return days;
     }
@@ -422,7 +426,7 @@ public class DateUtil {
         if (null == date) {
             return false;
         }
-        String dbDefault = format(yyyy_MM_dd_HH_mm_ss, date);
+        String dbDefault = format(YYYY_MM_DD_HH_MM_SS, date);
         return Constant.DB_DEFAULT_DATE.equals(dbDefault);
     }
 }

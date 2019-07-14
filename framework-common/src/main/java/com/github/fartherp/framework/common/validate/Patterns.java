@@ -31,8 +31,8 @@ import static java.lang.annotation.ElementType.PARAMETER;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2019/1/7
+ * @author CK
+ * @date 2019/1/7
  */
 @Target(value = {METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

@@ -26,8 +26,8 @@ import java.util.SortedSet;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/12/15
+ * @author CK
+ * @date 2015/12/15
  */
 public class SessionHelper {
     /**
@@ -45,7 +45,8 @@ public class SessionHelper {
      * @return 角色、权限集合
      */
     public static AuthWrapper getAuthWrap() {
-        return (AuthWrapper) ThreadLocalInfo.currentHttpServletSession().getAttribute(AuthWrapper.SESSION_AUTH_WRAPPER_MESSAGE);
+        return (AuthWrapper) ThreadLocalInfo.currentHttpServletSession()
+			.getAttribute(AuthWrapper.SESSION_AUTH_WRAPPER_MESSAGE);
     }
 
     /**

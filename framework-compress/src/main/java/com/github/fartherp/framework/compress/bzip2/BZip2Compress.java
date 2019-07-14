@@ -29,8 +29,8 @@ import java.io.OutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/15
+ * @author CK
+ * @date 2015/4/15
  */
 public class BZip2Compress extends CommonCompress {
 
@@ -38,6 +38,7 @@ public class BZip2Compress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
+    @Override
     public void compress() {
         if (2 == commonCompress.getFlag()) {
             startCompress(commonCompress.getSourceFile(), commonCompress.getHttpServletResponse());
@@ -46,6 +47,7 @@ public class BZip2Compress extends CommonCompress {
         }
     }
 
+	@Override
     public String unCompress() {
         File target = commonCompress.getTargetFile();
         startUnCompress(commonCompress.getSourceFile(), target);
@@ -61,7 +63,8 @@ public class BZip2Compress extends CommonCompress {
     }
 
     public void startCompress(File sourceFile, File targetFile) {
-        try (BZip2CompressorOutputStream outputStream = new BZip2CompressorOutputStream(new FileOutputStream(targetFile));
+        try (BZip2CompressorOutputStream outputStream
+				 = new BZip2CompressorOutputStream(new FileOutputStream(targetFile));
              FileInputStream inputStream = new FileInputStream(sourceFile)) {
             doCompress(inputStream, outputStream);
         } catch (Exception e) {
@@ -75,7 +78,8 @@ public class BZip2Compress extends CommonCompress {
 
     protected void startUnCompress(File sourceFile, File target) {
         try (FileOutputStream outputStream = new FileOutputStream(target);
-             BZip2CompressorInputStream inputStream = new BZip2CompressorInputStream(new FileInputStream(sourceFile));) {
+             BZip2CompressorInputStream inputStream
+				 = new BZip2CompressorInputStream(new FileInputStream(sourceFile));) {
             IOUtils.copy(inputStream, outputStream);
         } catch (Exception e) {
             throw new RuntimeException("TAR 解压缩文件或文件夹错误", e);

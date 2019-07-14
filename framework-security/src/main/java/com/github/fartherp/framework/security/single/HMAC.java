@@ -31,8 +31,8 @@ import java.security.NoSuchAlgorithmException;
  * 使用一个密钥生成一个固定大小的小数据块，即MAC，并将其加入到消息中，然后传输。
  * 接收方利用与发送方共享的密钥进行鉴别认证等
  * </pre>
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class HMAC {
 

@@ -27,8 +27,8 @@ import static org.testng.Assert.*;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
 public class ExecChannelWrapperTest {
 //    @Test

@@ -31,8 +31,8 @@ import java.util.List;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/20
+ * @author CK
+ * @date 2018/12/20
  */
 public class FilePdfWriteTest {
 

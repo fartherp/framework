@@ -20,8 +20,8 @@ import java.util.Map;
 
 /**
  * Support for Handler.
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public class KvHandlerSupport {
     /** the default vale of the page */

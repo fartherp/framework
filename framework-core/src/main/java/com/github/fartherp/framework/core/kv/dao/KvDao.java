@@ -28,8 +28,8 @@ import java.util.Map;
  *     &lt;property name="dataSource" ref="dataSource"/&gt;
  * &lt;/bean&gt;
  * </pre>
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public interface KvDao {
 
@@ -40,7 +40,7 @@ public interface KvDao {
      * @param namedParams the named params
      * @return the new {@code List<Map>}
      */
-    public List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams);
+	List<Map<String, Object>> execute(String sql, Map<String, Object> namedParams);
 
     void setDataSource(DataSource dataSource);
 }

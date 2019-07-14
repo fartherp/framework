@@ -20,8 +20,8 @@ import java.io.OutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/1/17
+ * @author CK
+ * @date 2016/1/17
  */
 public interface FileStore<T> {
     /**

@@ -40,8 +40,8 @@ import java.util.Properties;
 /**
  * 1. 参数对象转换为Page对象。<br>
  * 2. 配置读取：dialectClass, sqlPattern, pageFieldName
- * Author: CK
- * Date: 2015/6/14
+ * @author CK
+ * @date 2015/6/14
  */
 public abstract class BaseInterceptor implements Interceptor, Serializable {
 

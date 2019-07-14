@@ -29,8 +29,8 @@ import java.util.jar.JarOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class JarCompress extends CommonCompress {
 
@@ -38,10 +38,12 @@ public class JarCompress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
+	@Override
     public void compress() {
         startCompress(commonCompress.getSourceFile(), commonCompress.getTargetFile());
     }
 
+	@Override
     public String unCompress() {
         File target = commonCompress.getTargetFile();
         startUnCompress(commonCompress.getSourceFile(), target);
@@ -108,7 +110,7 @@ public class JarCompress extends CommonCompress {
                     continue;
                 }
                 int count;
-                byte data[] = new byte[BUFFER];
+                byte [] data = new byte[BUFFER];
                 File destFile = new File(target, entry.getName());
                 BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destFile), BUFFER);
                 while ((count = inputStream.read(data, 0, BUFFER)) != -1) {

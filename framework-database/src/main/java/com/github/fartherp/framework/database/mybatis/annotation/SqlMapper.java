@@ -28,8 +28,8 @@ import java.lang.annotation.Target;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/21
+ * @author CK
+ * @date 2015/6/21
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

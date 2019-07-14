@@ -22,8 +22,8 @@ import java.util.TreeSet;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/12/14
+ * @author CK
+ * @date 2015/12/14
  */
 public class AuthWrapper {
     /**

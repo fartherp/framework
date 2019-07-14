@@ -20,8 +20,8 @@ import java.util.Map;
 
 /**
  * 位置经纬度距离计算
- * Auth: CK
- * Date: 2016/6/15
+ * @author CK
+ * @date 2016/6/15
  */
 public class MapDistance {
     public static final double EARTH_RADIUS = 6378.137;

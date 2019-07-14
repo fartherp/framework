@@ -36,8 +36,8 @@ import java.util.Map;
  *     &lt;property name="dao" ref="kvDao"/&gt;
  * &lt;/bean&gt;
  * </pre>
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public class KvServiceImpl implements KvService {
 
@@ -53,11 +53,13 @@ public class KvServiceImpl implements KvService {
      *
      * @param handler the kv handler
      */
-    public void addHandler(KvHandler handler) {
+    @Override
+	public void addHandler(KvHandler handler) {
         this.kvHandlers.put(handler.getName(), handler);
     }
 
-    public KvHandlerSupport lookup(Integer name) {
+    @Override
+	public KvHandlerSupport lookup(Integer name) {
         if (null != name && kvHandlers.containsKey(name)) {
             KvHandlerSupport support = new KvHandlerSupport();
             support.setKvHandler(kvHandlers.get(name));
@@ -66,8 +68,9 @@ public class KvServiceImpl implements KvService {
         return null;
     }
 
-    public List<Map<Object, Object>> in(KvHandlerSupport support, Collection<Object> keys,
-                                        Map<String, Object> extraConds) {
+    @Override
+	public List<Map<Object, Object>> in(KvHandlerSupport support, Collection<Object> keys,
+										Map<String, Object> extraConds) {
         if (keys.isEmpty()) {
             return Collections.emptyList();
         }
@@ -77,24 +80,28 @@ public class KvServiceImpl implements KvService {
         return execute(support, context);
     }
 
-    public List<Map<Object, Object>> all(KvHandlerSupport support, Map<String, Object> extraConds) {
+    @Override
+	public List<Map<Object, Object>> all(KvHandlerSupport support, Map<String, Object> extraConds) {
         Map<String, Object> context = MapUtil.<String, Object> build().putAll(extraConds).get();
         return execute(support, context);
     }
 
-    public List<Map<Object, Object>> fuzzy(KvHandlerSupport support, String key,
-                                           Map<String, Object> extrConds, Integer maxLimit) {
+    @Override
+	public List<Map<Object, Object>> fuzzy(KvHandlerSupport support, String key,
+			Map<String, Object> extrConds, Integer maxLimit) {
         return prefix(support, key, extrConds, true, true, maxLimit);
     }
 
-    public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
-                                            Map<String, Object> extraConds, Integer maxLimit) {
+    @Override
+	public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
+			Map<String, Object> extraConds, Integer maxLimit) {
         return prefix(support, prefix, extraConds, true, false, maxLimit);
     }
 
-    public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
-                                            Map<String, Object> extraConds, boolean needPrefix,
-                                            boolean needPostfix,  Integer maxLimit) {
+    @Override
+	public List<Map<Object, Object>> prefix(KvHandlerSupport support, String prefix,
+		Map<String, Object> extraConds, boolean needPrefix, boolean needPostfix,
+		Integer maxLimit) {
         Preconditions.checkArgument(maxLimit > 0);
         if (StringUtils.isBlank(prefix)) {
             return Collections.emptyList();
@@ -128,9 +135,9 @@ public class KvServiceImpl implements KvService {
      */
     public List<Map<Object, Object>> transformResult(List<Map<String, Object>> list,
                                                      KvHandlerSupport support) {
-        List<Map<Object, Object>> result = new ArrayList<Map<Object, Object>>();
+        List<Map<Object, Object>> result = new ArrayList<>();
         if (1 == support.getDefaultValueFlag()) {
-            Map<Object, Object> m = new HashMap<Object, Object>();
+            Map<Object, Object> m = new HashMap<>();
             m.put("text", "全部");
             m.put("value", -1);
             if (support.getDefaultValue() == null) {

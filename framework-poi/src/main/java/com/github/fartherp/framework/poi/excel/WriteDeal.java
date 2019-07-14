@@ -22,8 +22,8 @@ import java.util.Map;
 /**
  * Excel写接口
  *
- * @author: CK
- * @date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
 @FunctionalInterface
 public interface WriteDeal<T> {

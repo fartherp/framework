@@ -20,8 +20,8 @@ import com.jcraft.jsch.ChannelDirectTCPIP;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public class DirectTCPIPChannelWrapper extends ChannelWrapper<ChannelDirectTCPIP> {
+public class DirectTCPIPChannelWrapper extends AbstractChannelWrapper<ChannelDirectTCPIP> {
 }

@@ -29,14 +29,14 @@ import static com.github.fartherp.framework.poi.Constant.EXCEL_CONTENT_TYPE;
 /**
  * 响应流
  *
- * @author: CK
- * @date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
-public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
+public final class HttpServletResponseExcelWrite implements OutputStreamDelegate {
 
-    private HttpServletResponse response;
+    private final HttpServletResponse response;
 
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     private HttpServletResponseExcelWrite(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
@@ -46,15 +46,14 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
     @Override
     public OutputStream createOutputStream(String fileName) {
         try {
-            this.setResponse(request, response, fileName);
-            return this.response.getOutputStream();
+            this.setResponse(fileName);
+            return response.getOutputStream();
         } catch (IOException e) {
             throw new RuntimeException("响应流异常", e);
         }
     }
 
-    private void setResponse(HttpServletRequest request, HttpServletResponse response, String fileName) {
-        this.response = response;
+    private void setResponse(String fileName) {
         response.reset();
         response.setContentType(EXCEL_CONTENT_TYPE);
         String filename = FileUtilies.getFileName(fileName, request);
@@ -96,12 +95,14 @@ public class HttpServletResponseExcelWrite implements OutputStreamDelegate {
      * @see <a href="https://github.com/fartherp/framework/blob/master/framework-poi/src/test/resources/c.xls">
      *     file content</a>
      */
-    public static ExcelWrite build(InputStream inputStream, String fileName, HttpServletRequest request, HttpServletResponse response) {
+    public static ExcelWrite build(InputStream inputStream, String fileName,
+			HttpServletRequest request, HttpServletResponse response) {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(fileName);
         Objects.requireNonNull(request);
         Objects.requireNonNull(response);
-        return new CopyInputStreamExcelWrite(inputStream, fileName, new HttpServletResponseExcelWrite(request, response));
+        return new CopyInputStreamExcelWrite(inputStream, fileName,
+			new HttpServletResponseExcelWrite(request, response));
     }
 
     /**

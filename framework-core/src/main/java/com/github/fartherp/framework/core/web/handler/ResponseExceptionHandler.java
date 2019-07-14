@@ -32,19 +32,21 @@ import java.util.ArrayList;
 
 /**
  * 固定JSON返回格式
- * Auth: CK
- * Date: 2016/9/9
+ * @author CK
+ * @date 2016/9/9
  */
 public class ResponseExceptionHandler implements CustomizeExceptionHandler {
 
-    public boolean support(Exception ex, Class clazz) {
+    @Override
+	public boolean support(Exception ex, Class clazz) {
         return ex instanceof ResponseException
                 || void.class.isAssignableFrom(clazz)
                 || String.class.isAssignableFrom(clazz);
     }
 
-    public ModelAndView deal(HttpServletRequest request, HttpServletResponse response,
-                     Object handler, Exception ex, CustomizeExceptionHandlerResolver resolver) {
+    @Override
+	public ModelAndView deal(HttpServletRequest request, HttpServletResponse response,
+		Object handler, Exception ex, CustomizeExceptionHandlerResolver resolver) {
         // 把漏网的异常信息记入日志
         try {
             String message = ex.getMessage();

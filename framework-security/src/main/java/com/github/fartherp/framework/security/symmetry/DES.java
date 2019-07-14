@@ -44,8 +44,8 @@ import static com.github.fartherp.framework.security.ISecurity.DES_ECB_ALGORITHM
  * DESKeySpec deSedeKeySpec = new DESKeySpec(key);
  * secretKeyFactory.generateSecret(deSedeKeySpec);
  * </pre>
- * Author: CK.
- * Date: 2015/4/11.
+ * @author CK.
+ * @date 2015/4/11.
  */
 public class DES {
 

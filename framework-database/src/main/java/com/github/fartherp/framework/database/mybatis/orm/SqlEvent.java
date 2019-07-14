@@ -23,8 +23,8 @@ import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/27
+ * @author CK
+ * @date 2015/8/27
  */
 public interface SqlEvent {
     /**

@@ -36,7 +36,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * <p>Zip的压缩、解压缩功能类</p>
  *
- * @author cyq
+ * @author CK
  */
 public class ZipCompress extends CommonCompress {
 
@@ -44,6 +44,7 @@ public class ZipCompress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
+	@Override
     public void compress() {
         if (2 == commonCompress.getFlag()) {
             startCompress(commonCompress.getSourceFile(), commonCompress.getHttpServletResponse());
@@ -53,6 +54,7 @@ public class ZipCompress extends CommonCompress {
         }
     }
 
+	@Override
     public String unCompress() {
         File target = commonCompress.getTargetFile();
         startUnCompress(commonCompress.getSourceFile(), target);
@@ -121,7 +123,8 @@ public class ZipCompress extends CommonCompress {
     }
 
     protected void startUnCompress(File sourceFile, File target) {
-        try (ZipArchiveInputStream is = new ZipArchiveInputStream(new BufferedInputStream(new FileInputStream(sourceFile)))) {
+        try (ZipArchiveInputStream is = new ZipArchiveInputStream(
+        	new BufferedInputStream(new FileInputStream(sourceFile)))) {
             ZipArchiveEntry entry = null;
             while ((entry = is.getNextZipEntry()) != null) {
                 if (entry.isDirectory()) {
@@ -130,7 +133,8 @@ public class ZipCompress extends CommonCompress {
                         f.mkdirs();
                     }
                 } else {
-                    try (OutputStream os = new BufferedOutputStream(new FileOutputStream(new File(target, entry.getName())))) {
+                    try (OutputStream os = new BufferedOutputStream(
+                    	new FileOutputStream(new File(target, entry.getName())))) {
                         IOUtils.copy(is, os);
                     }
                 }

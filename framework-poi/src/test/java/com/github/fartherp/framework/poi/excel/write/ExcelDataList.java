@@ -24,8 +24,8 @@ import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2019/4/24
+ * @author CK
+ * @date 2019/4/24
  */
 public class ExcelDataList {
 

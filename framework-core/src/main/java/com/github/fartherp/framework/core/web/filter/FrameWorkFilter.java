@@ -27,8 +27,8 @@ import java.io.IOException;
 
 /**
  * 请求绑定到线程级别
- * Author: CK
- * Date: 2015/8/17
+ * @author CK
+ * @date 2015/8/17
  */
 public class FrameWorkFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {

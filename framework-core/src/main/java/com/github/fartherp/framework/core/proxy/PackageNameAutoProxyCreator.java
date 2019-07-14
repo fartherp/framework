@@ -26,8 +26,8 @@ import java.util.List;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/14
+ * @author CK
+ * @date 2018/12/14
  */
 public class PackageNameAutoProxyCreator extends BeanNameAutoProxyCreator {
 

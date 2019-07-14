@@ -31,7 +31,7 @@ import java.io.FileOutputStream;
  * gzip只提供单一文件的压缩、解压缩 ，不提供文件夹的压缩、解压缩
  * </p>
  *
- * Author: CK
+ * @author CK
  */
 public class GzipCompress extends CommonCompress {
 
@@ -39,6 +39,7 @@ public class GzipCompress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
+	@Override
     public void compress() {
         if (2 == commonCompress.getFlag()) {
             startCompress(commonCompress.getSourceFile(), commonCompress.getHttpServletResponse());
@@ -47,6 +48,7 @@ public class GzipCompress extends CommonCompress {
         }
     }
 
+	@Override
     public String unCompress() {
         File target = commonCompress.getTargetFile();
         startUnCompress(commonCompress.getSourceFile(), target);
@@ -54,7 +56,8 @@ public class GzipCompress extends CommonCompress {
     }
 
     public void startCompress(File sourceFile, HttpServletResponse httpServletResponse) {
-        try (GzipCompressorOutputStream outputStream = new GzipCompressorOutputStream(httpServletResponse.getOutputStream());
+        try (GzipCompressorOutputStream outputStream
+				 = new GzipCompressorOutputStream(httpServletResponse.getOutputStream());
              FileInputStream inputStream = new FileInputStream(sourceFile)) {
             IOUtils.copy(inputStream, outputStream);
         } catch (Exception e) {

@@ -18,8 +18,8 @@ package com.github.fartherp.framework.security.dissymmetry;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/30
+ * @author CK
+ * @date 2017/11/30
  */
 public class DisSymmetryKey {
     private byte[] privateKey;

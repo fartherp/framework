@@ -31,8 +31,8 @@ import java.lang.reflect.Proxy;
 
 /**
  * spring代理操作类
- * Auth: CK
- * Date: 2016/9/11
+ * @author CK
+ * @date 2016/9/11
  */
 public class SpringProxyUtils {
 
@@ -50,7 +50,8 @@ public class SpringProxyUtils {
 			if (proxyFactory == null) {
 				return null;
 			}
-			ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+			ConfigurablePropertyAccessor accessor =
+				PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
             TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
             if (targetSource == null) {
             	return null;
@@ -75,14 +76,16 @@ public class SpringProxyUtils {
 			if (proxyFactory == null) {
 				return false;
 			}
-			ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
+			ConfigurablePropertyAccessor accessor =
+				PropertyAccessorFactory.forDirectFieldAccess(proxyFactory);
             TargetSource targetSource = (TargetSource) accessor.getPropertyValue("targetSource");
 			if (targetSource == null) {
 				return false;
 			}
             return AopUtils.isAopProxy(targetSource.getTarget());
         } catch (Exception e) {
-            throw new IllegalArgumentException("proxy args maybe not proxy with cglib or jdk dynamic proxy. this method not support", e);
+            throw new IllegalArgumentException("proxy args maybe not proxy " +
+				"with cglib or jdk dynamic proxy. this method not support", e);
         }
     }
 
@@ -104,11 +107,11 @@ public class SpringProxyUtils {
      */
     public static ProxyFactory findCglibProxyFactory(Object proxy) {
         ConfigurablePropertyAccessor accessor = PropertyAccessorFactory.forDirectFieldAccess(proxy);
-        Object cglib$CALLBACK_0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
-        if (cglib$CALLBACK_0 == null) {
+        Object cglibCallback0 = accessor.getPropertyValue("CGLIB$CALLBACK_0");
+        if (cglibCallback0 == null) {
         	return null;
 		}
-        accessor = PropertyAccessorFactory.forDirectFieldAccess(cglib$CALLBACK_0);
+        accessor = PropertyAccessorFactory.forDirectFieldAccess(cglibCallback0);
         return (ProxyFactory) accessor.getPropertyValue("advised");
     }
 

@@ -26,8 +26,8 @@ import java.util.Set;
 
 /**
  * 验证工具类
- * Author: CK
- * Date: 2015/9/29
+ * @author CK
+ * @date 2015/9/29
  */
 public class ValidateUtils {
 
@@ -53,7 +53,8 @@ public class ValidateUtils {
 
         Class<?>[] group = (groups == null || groups.length ==0) ? new Class[]{Default.class} : groups;
 
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(flag).buildValidatorFactory();
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+			.configure().failFast(flag).buildValidatorFactory();
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(bean, group);
         if (!constraintViolations.isEmpty()) {

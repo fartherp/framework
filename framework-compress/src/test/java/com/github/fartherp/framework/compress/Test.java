@@ -35,8 +35,8 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * Created by IntelliJ IDEA .
- * Auth: CK
- * Date: 2016/5/18
+ * @author CK
+ * @date 2016/5/18
  */
 public class Test {
     public static final int bufferLen = 1024 * 1024;

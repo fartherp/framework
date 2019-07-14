@@ -26,15 +26,17 @@ import java.util.stream.Collectors;
 
 /**
  * 简单树结构实现
- * Auth: CK
- * Date: 2016/8/27
+ * @author CK
+ * @date 2016/8/27
  */
 public class SimpleTreeServiceImpl<T> implements SimpleTreeService<T> {
-    public String findTreeStr(List<T> list, Function<T, SimpleTreeModel> mc) {
+    @Override
+	public String findTreeStr(List<T> list, Function<T, SimpleTreeModel> mc) {
         return JsonUtil.toJson(findTree(list, mc));
     }
 
-    public List<SimpleTreeModel> findTree(List<T> list, Function<T, SimpleTreeModel> mc) {
+    @Override
+	public List<SimpleTreeModel> findTree(List<T> list, Function<T, SimpleTreeModel> mc) {
         return list.stream().map(mc).collect(Collectors.toList());
     }
 }

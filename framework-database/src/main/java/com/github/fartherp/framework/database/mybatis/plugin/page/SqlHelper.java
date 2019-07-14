@@ -54,8 +54,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA .
- * Auth: CK
- * Date: 2016/9/8
+ * @author CK
+ * @date 2016/9/8
  */
 public class SqlHelper {
     protected static Log log = LogFactory.getLog(SqlHelper.class);
@@ -77,7 +77,7 @@ public class SqlHelper {
         if (parameterMappings != null) {
             Configuration configuration = mappedStatement.getConfiguration();
             TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-            MetaObject metaObject = (parameterObject == null ? null : configuration.newMetaObject(parameterObject));
+            MetaObject metaObject = parameterObject == null ? null : configuration.newMetaObject(parameterObject);
             for (int i = 0; i < parameterMappings.size(); i++) {
                 ParameterMapping parameterMapping = parameterMappings.get(i);
                 if (parameterMapping.getMode() != ParameterMode.OUT) {
@@ -98,7 +98,7 @@ public class SqlHelper {
                                     propertyName.substring(prop.getName().length()));
                         }
                     } else {
-                        value = (metaObject == null ? null : metaObject.getValue(propertyName));
+                        value = metaObject == null ? null : metaObject.getValue(propertyName);
                     }
                     TypeHandler typeHandler = parameterMapping.getTypeHandler();
                     if (typeHandler == null) {

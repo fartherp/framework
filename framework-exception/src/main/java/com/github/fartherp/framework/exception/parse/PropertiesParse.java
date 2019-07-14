@@ -25,26 +25,36 @@ import java.util.Properties;
 
 /**
  * 异常properties解析类
- * Author: CK
- * Date: 2016/2/5
+ * @author CK
+ * @date 2016/2/5
  */
 public enum PropertiesParse {
+	/**
+	 * 公共异常信息
+	 */
     COMMON_INSTANCE(BaseException.COMMON_EXCEPTION_MESSAGE),
+	/**
+	 * mysql异常信息
+	 */
     MYSQL_INSTANCE(BaseException.MYSQL_DATABASE),
+	/**
+	 * oracle异常信息
+	 */
     ORACLE_INSTANCE(BaseException.ORACLE_DATABASE);
 
-    public final String path;
+    String path;
 
-    private static Map<String, Properties> map = new HashMap<>();
+    private static final Map<String, Properties> PROPERTIES_HASH_MAP;
 
     static {
+		PROPERTIES_HASH_MAP = new HashMap<>();
         for (PropertiesParse parse : PropertiesParse.values()) {
             String tmp = "conf/" + parse.path.toLowerCase() + "-exception.properties";
             InputStream in = PropertiesParse.class.getClassLoader().getResourceAsStream(tmp);
             try {
                 Properties properties = new Properties();
                 properties.load(in);
-                map.put(parse.path, properties);
+                PROPERTIES_HASH_MAP.put(parse.path, properties);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,6 +66,6 @@ public enum PropertiesParse {
     }
 
     public static Properties getProperties(String name) {
-        return map.get(name);
+        return PROPERTIES_HASH_MAP.get(name);
     }
 }

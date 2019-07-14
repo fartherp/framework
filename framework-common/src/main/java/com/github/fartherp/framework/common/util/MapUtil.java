@@ -26,8 +26,8 @@ import java.util.Map;
 
 /**
  * 封装Map操作工具类
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
 public class MapUtil {
     /**
@@ -118,8 +118,9 @@ public class MapUtil {
      */
     public static Map<String, Object> toMap(Object o, Map<String, String> map, String... ignoreProperties) {
         PropertyDescriptor[] ts = ReflectUtil.getPropertyDescriptors(o);
-        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
-        Map<String,Object> m = new HashMap<>(ts.length);
+        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0)
+			? Arrays.asList(ignoreProperties) : null;
+        Map<String, Object> m = new HashMap<>(ts.length);
         for (PropertyDescriptor t : ts) {
             Method r = t.getReadMethod();
             String name = t.getName();
@@ -160,7 +161,8 @@ public class MapUtil {
      */
     public static void toObject(Map<String, Object> source, Object target, String... ignoreProperties) {
         PropertyDescriptor[] ts = ReflectUtil.getPropertyDescriptors(target);
-        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
+        List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0)
+			? Arrays.asList(ignoreProperties) : null;
         for (PropertyDescriptor t : ts) {
             String name = t.getName();
             if (ignoreList == null || !ignoreList.contains(name)) {

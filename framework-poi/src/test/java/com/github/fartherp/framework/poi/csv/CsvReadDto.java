@@ -17,8 +17,8 @@ package com.github.fartherp.framework.poi.csv;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/5/29
+ * @author CK
+ * @date 2016/5/29
  */
 public class CsvReadDto {
     private Long id;

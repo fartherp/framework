@@ -22,16 +22,17 @@ import java.util.Objects;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/19
+ * @author CK
+ * @date 2018/12/19
  */
-public class FilePdfWrite extends AbstractPdfWrite {
+public final class FilePdfWrite extends AbstractPdfWrite {
 
     private FilePdfWrite(String fileName) {
         super(fileName);
     }
 
-    public PdfWrite createOutputStream() {
+    @Override
+	public PdfWrite createOutputStream() {
         try {
             this.outputStream = new FileOutputStream(this.fileName);
         } catch (FileNotFoundException e) {

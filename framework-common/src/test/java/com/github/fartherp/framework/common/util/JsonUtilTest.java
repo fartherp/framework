@@ -22,8 +22,8 @@ import static org.testng.Assert.*;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/12/19
+ * @author CK
+ * @date 2017/12/19
  */
 public class JsonUtilTest {
     @Test

@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * 读取接口
- * Author: CK
- * Date: 2016/1/17
+ * @author CK
+ * @date 2016/1/17
  */
 @FunctionalInterface
 public interface ReadDeal<E> {

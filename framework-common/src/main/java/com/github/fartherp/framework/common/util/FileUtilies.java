@@ -28,8 +28,8 @@ import java.util.StringTokenizer;
 
 /**
  * 文件工具类
- * Author: CK.
- * Date: 2015/6/6.
+ * @author CK.
+ * @date 2015/6/6.
  */
 public class FileUtilies {
 

@@ -21,8 +21,8 @@ import java.util.StringTokenizer;
 
 /**
  * 路径匹配类
- * Author: CK
- * Date: 2015/8/12
+ * @author CK
+ * @date 2015/8/12
  */
 public class PathPatternMatcher {
     /**
@@ -35,7 +35,7 @@ public class PathPatternMatcher {
      * @see #match
      */
     public static boolean isPattern(String str) {
-        return (str.indexOf('*') != -1 || str.indexOf('?') != -1);
+        return str.indexOf('*') != -1 || str.indexOf('?') != -1;
     }
 
     /**
@@ -61,7 +61,7 @@ public class PathPatternMatcher {
         // match all elements up to the first **
         while (patIdxStart <= patIdxEnd && strIdxStart <= strIdxEnd) {
             String patDir = (String) patDirs.get(patIdxStart);
-            if (patDir.equals("**")) {
+            if ("**".equals(patDir)) {
                 break;
             }
             if (!matchStrings(patDir, (String) strDirs.get(strIdxStart))) {
@@ -89,7 +89,7 @@ public class PathPatternMatcher {
         // up to last '**'
         while (patIdxStart <= patIdxEnd && strIdxStart <= strIdxEnd) {
             String patDir = (String) patDirs.get(patIdxEnd);
-            if (patDir.equals("**")) {
+            if ("**".equals(patDir)) {
                 break;
             }
             if (!matchStrings(patDir, (String) strDirs.get(strIdxEnd))) {
@@ -123,8 +123,8 @@ public class PathPatternMatcher {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - patIdxStart - 1);
-            int strLength = (strIdxEnd - strIdxStart + 1);
+            int patLength = patIdxTmp - patIdxStart - 1;
+            int strLength = strIdxEnd - strIdxStart + 1;
             int foundIdx = -1;
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
@@ -197,7 +197,7 @@ public class PathPatternMatcher {
                 ch = patArr[i];
                 if (ch != '?') {
                     if (ch != strArr[i]) {
-                        return false;// Character mismatch
+                        return false; // Character mismatch
                     }
                 }
             }
@@ -213,7 +213,7 @@ public class PathPatternMatcher {
         while ((ch = patArr[patIdxStart]) != '*' && strIdxStart <= strIdxEnd) {
             if (ch != '?') {
                 if (ch != strArr[strIdxStart]) {
-                    return false;// Character mismatch
+                    return false; // Character mismatch
                 }
             }
             patIdxStart++;
@@ -234,7 +234,7 @@ public class PathPatternMatcher {
         while ((ch = patArr[patIdxEnd]) != '*' && strIdxStart <= strIdxEnd) {
             if (ch != '?') {
                 if (ch != strArr[strIdxEnd]) {
-                    return false;// Character mismatch
+                    return false; // Character mismatch
                 }
             }
             patIdxEnd--;
@@ -268,8 +268,8 @@ public class PathPatternMatcher {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - patIdxStart - 1);
-            int strLength = (strIdxEnd - strIdxStart + 1);
+            int patLength = patIdxTmp - patIdxStart - 1;
+            int strLength = strIdxEnd - strIdxStart + 1;
             int foundIdx = -1;
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {

@@ -26,8 +26,8 @@ import java.util.zip.InflaterInputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/14
+ * @author CK
+ * @date 2015/4/14
  */
 public class ZLibUtils {
     /**

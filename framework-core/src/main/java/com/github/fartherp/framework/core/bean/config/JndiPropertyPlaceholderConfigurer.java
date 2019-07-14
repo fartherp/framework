@@ -35,8 +35,8 @@ import java.util.Properties;
  * A property resource configurer that resolves placeholders in bean property
  * values of context definitions. It <i>pulls</i> values from a JNDI and
  * properties file into bean definitions.
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public class JndiPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
     /**

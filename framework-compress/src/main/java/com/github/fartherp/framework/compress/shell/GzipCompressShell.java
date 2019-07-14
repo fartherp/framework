@@ -20,7 +20,7 @@ import com.github.fartherp.framework.common.util.Tools;
 /**
  * <p>gzip压缩解压 在aix5测试通过</p>
  *
- * @author cyq
+ * @author CK
  */
 public class GzipCompressShell extends CompressShell {
     /**
@@ -45,11 +45,13 @@ public class GzipCompressShell extends CompressShell {
         }
     }
 
+	@Override
     public void compress(String source) {
         validation(source);
         gzip(source);
     }
 
+	@Override
     public void unCompress(String source) {
         validation(source);
         unGzip(source);

@@ -29,8 +29,8 @@ import java.io.OutputStream;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/19
+ * @author CK
+ * @date 2018/12/19
  */
 public abstract class AbstractPdfWrite implements PdfWrite {
 
@@ -60,20 +60,24 @@ public abstract class AbstractPdfWrite implements PdfWrite {
         this.converterProperties.setFontProvider(fp);
     }
 
-    public String getFileName() {
+    @Override
+	public String getFileName() {
         return fileName;
     }
 
-    public OutputStream getOutputStream() {
+    @Override
+	public OutputStream getOutputStream() {
         return outputStream;
     }
 
-    public PdfWrite addFontPath(String path) {
+    @Override
+	public PdfWrite addFontPath(String path) {
         fp.addDirectory(path);
         return this;
     }
 
-    public void write() {
+    @Override
+	public void write() {
         this.createOutputStream();
 
         try (PdfWriter writer = new PdfWriter(this.outputStream)) {
@@ -87,7 +91,8 @@ public abstract class AbstractPdfWrite implements PdfWrite {
         }
     }
 
-    public PdfWrite deal(PdfWriteDeal<?> deal) {
+    @Override
+	public PdfWrite deal(PdfWriteDeal<?> deal) {
         this.deal = deal;
         return this;
     }

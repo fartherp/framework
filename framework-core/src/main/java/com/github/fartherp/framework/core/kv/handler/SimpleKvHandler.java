@@ -19,10 +19,10 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
-public class SimpleKvHandler extends DefaultKvHandler {
+public class SimpleKvHandler extends BaseDefaultKvHandler {
 
     public SimpleKvHandler(Integer name, String tableName, String keyField, String valueField,
                            Map<String, Object> extraFields, int sqlFlag) {

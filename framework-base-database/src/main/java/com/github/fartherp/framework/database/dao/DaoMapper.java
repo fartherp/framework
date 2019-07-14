@@ -20,8 +20,8 @@ import java.util.List;
 
 /**
  * insert、delete、update、select method SQL of XML Mapper file
- * Author: CK
- * Date: 2015/6/5.
+ * @author CK
+ * @date 2015/6/5.
  */
 public interface DaoMapper<T, ID extends Serializable> {
     /**
@@ -88,12 +88,15 @@ public interface DaoMapper<T, ID extends Serializable> {
 
     /**
      * save batch
+	 * @param list list
+	 * @return effective count
      */
     int insertBatch(List<T> list);
 
     /**
      * delete batch
      * @param ids ids
+	 * @return effective count
      */
     int deleteBatch(List<ID> ids);
 }

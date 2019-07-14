@@ -24,8 +24,8 @@ import java.util.Map;
 
 /**
  * 包装spring上下文信息ApplicationContext
- * Author: CK
- * Date: 2015/6/24
+ * @author CK
+ * @date 2015/6/24
  */
 public class ServiceLocator implements ApplicationContextAware {
 
@@ -49,7 +49,8 @@ public class ServiceLocator implements ApplicationContextAware {
         return getFactory().getBeansOfType(type);
     }
 
-    public static <T> Map<String, T> getBeansOfType(Class<T> type, boolean includeNonSingletons, boolean allowEagerInit) {
+    public static <T> Map<String, T> getBeansOfType(Class<T> type,
+			boolean includeNonSingletons, boolean allowEagerInit) {
         return getFactory().getBeansOfType(type, includeNonSingletons, allowEagerInit);
     }
 

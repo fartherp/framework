@@ -32,8 +32,8 @@ import java.util.Map;
 
 /**
  * 数据库分页插件，只拦截查询语句.
- * Author: CK
- * Date: 2015/6/14
+ * @author CK
+ * @date 2015/6/14
  */
 @Intercepts({ @Signature(type = Executor.class, method = "query",
         args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })

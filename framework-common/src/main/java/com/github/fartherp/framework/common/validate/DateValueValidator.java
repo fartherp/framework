@@ -22,16 +22,18 @@ import java.util.Date;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/20
+ * @author CK
+ * @date 2018/12/20
  */
 public class DateValueValidator implements ConstraintValidator<DateValue, Object> {
     private String values;
 
+    @Override
     public void initialize(DateValue constraintAnnotation) {
         this.values = constraintAnnotation.values();
     }
 
+    @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
         if (obj == null) {
             return true;

@@ -20,10 +20,10 @@ import java.util.List;
 
 /**
  * 分页基础类
- * Author: CK
- * Date: 2015/6/14
+ * @author CK
+ * @date 2015/6/14
  */
-public class BasePagination<T extends Serializable> implements Pagination<T> {
+public abstract class BasePagination<T extends Serializable> implements Pagination<T> {
 
     /**
      * 默认的每页数据量（pageSize）
@@ -35,7 +35,7 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      */
     public static final int DEFAULT_PAGE_NUM = 1;
 
-    public int firstPage = DEFAULT_PAGE_NUM;
+	protected int firstPage = DEFAULT_PAGE_NUM;
 
     /**
      * 默认显示页码标签的个数 如： {首页 1 2 3 4 5 ... 16 17 18 末页}
@@ -129,7 +129,8 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         setRows(content);
     }
 
-    public void init(int total, int limit, int currentPage) {
+    @Override
+	public void init(int total, int limit, int currentPage) {
         this.total = total;
         this.limit = limit;
         this.currentPage = currentPage;
@@ -161,31 +162,38 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         }
     }
 
-    public List<T> getRows() {
+    @Override
+	public List<T> getRows() {
         return rows;
     }
 
-    public void setRows(List<T> rows) {
+    @Override
+	public void setRows(List<T> rows) {
         this.rows = rows;
     }
 
-    public int getTotal() {
+    @Override
+	public int getTotal() {
         return total;
     }
 
-    public int getLimit() {
+    @Override
+	public int getLimit() {
         return limit;
     }
 
-    public int getTotalPage() {
+    @Override
+	public int getTotalPage() {
         return totalPage;
     }
 
-    public int getCurrentPage() {
+    @Override
+	public int getCurrentPage() {
         return currentPage;
     }
 
-    public boolean isHasNext() {
+    @Override
+	public boolean isHasNext() {
         return hasNext;
     }
 
@@ -193,35 +201,43 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
         this.hasNext = hasNext;
     }
 
-    public int getNextPage() {
+    @Override
+	public int getNextPage() {
         return nextPage;
     }
 
-    public boolean isHasPrevious() {
+    @Override
+	public boolean isHasPrevious() {
         return hasPrevious;
     }
 
-    public int getPreviousPage() {
+    @Override
+	public int getPreviousPage() {
         return previousPage;
     }
 
-    public int getMaxPageIndexNumber() {
+    @Override
+	public int getMaxPageIndexNumber() {
         return maxPageIndexNumber;
     }
 
-    public void setMaxPageIndexNumber(int maxPageIndexNumber) {
+    @Override
+	public void setMaxPageIndexNumber(int maxPageIndexNumber) {
         this.maxPageIndexNumber = maxPageIndexNumber;
     }
 
-    public void setTotal(int total) {
+    @Override
+	public void setTotal(int total) {
         this.total = total;
     }
 
-    public void setLimit(int limit) {
+    @Override
+	public void setLimit(int limit) {
         this.limit = limit;
     }
 
-    public void setCurrentPage(int currentPage) {
+    @Override
+	public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 
@@ -238,23 +254,24 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
      *
      * @return 页码列表
      */
-    public int[] getPageNumberList() {
+    @Override
+	public int[] getPageNumberList() {
         if (totalPage > this.maxPageIndexNumber) {
             this.pageNumberList = new int[this.maxPageIndexNumber];
             int offset = (this.maxPageIndexNumber - 4) / 2;
             if (this.currentPage - offset <= (1 + 2)) {
                 for (int index = 0; index < maxPageIndexNumber - 2; index++) {
-                    pageNumberList[index] = (index + 1);
+                    pageNumberList[index] = index + 1;
                 }
             } else if (this.currentPage + offset >= (totalPage - 2)) {
                 int start = totalPage;
                 for (int index = maxPageIndexNumber - 1; index > 1; index--) {
-                    pageNumberList[index] = (start--);
+                    pageNumberList[index] = start--;
                 }
             } else {
                 int start = currentPage - offset;
                 for (int index = 2; index < maxPageIndexNumber - 2; index++) {
-                    pageNumberList[index] = (start++);
+                    pageNumberList[index] = start++;
                 }
             }
             pageNumberList[0] = 1;
@@ -263,13 +280,14 @@ public class BasePagination<T extends Serializable> implements Pagination<T> {
             // 总页数小于 设置的页码标签数
             this.pageNumberList = new int[this.totalPage];
             for (int index = 0; index <= totalPage - 1; index++) {
-                pageNumberList[index] = (index + 1);
+                pageNumberList[index] = index + 1;
             }
         }
         return pageNumberList;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         String contentType = "UNKNOWN";
 
         if (rows.size() > 0) {

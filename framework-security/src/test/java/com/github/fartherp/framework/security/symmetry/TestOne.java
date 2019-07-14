@@ -19,8 +19,8 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * Created by IntelliJ IDEA .
- * Auth: CK
- * Date: 2016/6/6
+ * @author CK
+ * @date 2016/6/6
  */
 public class TestOne {
     private static final int[][] s1 = {

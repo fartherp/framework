@@ -29,8 +29,8 @@ import java.security.spec.AlgorithmParameterSpec;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/30
+ * @author CK
+ * @date 2017/11/30
  */
 public class Symmetry {
 
@@ -78,7 +78,8 @@ public class Symmetry {
      * @param data 需要加密数据[数组]
      * @return 加密数据[数组]
      */
-    public static byte[] encrypt(String algorithm, Key key, byte[] data, AlgorithmParameterSpec algorithmParameterSpec) {
+    public static byte[] encrypt(String algorithm, Key key, byte[] data,
+			AlgorithmParameterSpec algorithmParameterSpec) {
         try {
             Cipher cipher = Cipher.getInstance(algorithm);
             // 传入加密标识与加密密钥
@@ -112,7 +113,8 @@ public class Symmetry {
             Cipher cipher = Cipher.getInstance(algorithm);
             // 传入解密标识与解密密钥
             cipher.init(Cipher.DECRYPT_MODE, key);
-            return cipher.doFinal(data);// 解密数据
+			// 解密数据
+            return cipher.doFinal(data);
         } catch (NoSuchPaddingException e) {
             throw new RuntimeException("[" + algorithm + "]无此填充", e);
         } catch (NoSuchAlgorithmException e) {
@@ -132,12 +134,14 @@ public class Symmetry {
      * @param key 解密密钥
      * @return 解密数据[数组]
      */
-    public static byte[] decrypt(String algorithm, Key key, byte[] data, AlgorithmParameterSpec algorithmParameterSpec) {
+    public static byte[] decrypt(String algorithm, Key key, byte[] data,
+			AlgorithmParameterSpec algorithmParameterSpec) {
         try {
             Cipher cipher = Cipher.getInstance(algorithm);
             // 传入解密标识与解密密钥
             cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
-            return cipher.doFinal(data);// 解密数据
+			// 解密数据
+            return cipher.doFinal(data);
         } catch (NoSuchPaddingException e) {
             throw new RuntimeException("[" + algorithm + "]无此填充", e);
         } catch (NoSuchAlgorithmException e) {

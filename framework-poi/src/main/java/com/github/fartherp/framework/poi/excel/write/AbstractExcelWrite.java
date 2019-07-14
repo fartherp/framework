@@ -40,8 +40,8 @@ import java.util.function.Consumer;
 /**
  * Excel模板抽象类
  *
- * @author: CK
- * @date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
 public abstract class AbstractExcelWrite implements ExcelWrite {
 
@@ -184,7 +184,8 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
 			// 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
 			int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
 			// 同一sheet类型，链表结构，达到Excel最大数量，可以追加
-			LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap.computeIfAbsent(hashCode, k -> new LinkedList<>());
+			LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap
+				.computeIfAbsent(hashCode, k -> new LinkedList<>());
 			list(title, deal, list, linkedList);
 		});
         return this;

@@ -27,8 +27,8 @@ import java.util.StringTokenizer;
 
 /**
  * code convert tools
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class ISOUtil {
     /**
@@ -207,15 +207,11 @@ public class ISOUtil {
     public static final byte ETX = 0x03;
 
     public static String ebcdicToAscii(byte[] e) {
-        return new String(
-                ebcdicToAsciiBytes(e, 0, e.length), CHARSET
-        );
+        return new String(ebcdicToAsciiBytes(e, 0, e.length), CHARSET);
     }
 
     public static String ebcdicToAscii(byte[] e, int offset, int len) {
-        return new String(
-                ebcdicToAsciiBytes(e, offset, len), CHARSET
-        );
+        return new String(ebcdicToAsciiBytes(e, offset, len), CHARSET);
     }
 
     public static byte[] ebcdicToAsciiBytes(byte[] e) {
@@ -224,36 +220,41 @@ public class ISOUtil {
 
     public static byte[] ebcdicToAsciiBytes(byte[] e, int offset, int len) {
         byte[] a = new byte[len];
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len; i++) {
             a[i] = EBCDIC2ASCII[e[offset + i] & 0xFF];
+		}
         return a;
     }
 
     public static byte[] asciiToEbcdic(String s) {
         int len = s.length();
-        byte b[] = new byte[len];
-        for (int i = 0; i < len; i++)
+        byte[] b = new byte[len];
+        for (int i = 0; i < len; i++){
             b[i] = ASCII2EBCDIC[s.charAt(i) & 0xFF];
+		}
         return b;
     }
 
     public static byte[] asciiToEbcdic(byte[] a) {
         byte[] e = new byte[a.length];
-        for (int i = 0; i < a.length; i++)
+        for (int i = 0; i < a.length; i++) {
             e[i] = ASCII2EBCDIC[a[i] & 0xFF];
+		}
         return e;
     }
 
     public static void asciiToEbcdic(String s, byte[] e, int offset) {
         int len = s.length();
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len; i++) {
             e[offset + i] = ASCII2EBCDIC[s.charAt(i) & 0xFF];
+		}
     }
 
     public static void asciiToEbcdic(byte[] s, byte[] e, int offset) {
         int len = s.length;
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len; i++) {
             e[offset + i] = ASCII2EBCDIC[s[i]];
+		}
     }
 
     /**
@@ -268,12 +269,14 @@ public class ISOUtil {
     public static String padleft(String s, int len, char c)
             throws RuntimeException {
         s = s.trim();
-        if (s.length() > len)
+        if (s.length() > len) {
             throw new RuntimeException("invalid len " + s.length() + "/" + len);
+		}
         StringBuilder d = new StringBuilder(len);
         int fill = len - s.length();
-        while (fill-- > 0)
+        while (fill-- > 0) {
             d.append(c);
+		}
         d.append(s);
         return d.toString();
     }
@@ -288,17 +291,18 @@ public class ISOUtil {
      * @param c   -
      *            padding char
      * @return padded string
-     * @throws RuntimeException if String's length greater than pad length
      */
-    public static String padright(String s, int len, char c) throws RuntimeException {
+    public static String padright(String s, int len, char c)  {
         s = s.trim();
-        if (s.length() > len)
+        if (s.length() > len) {
             throw new RuntimeException("invalid len " + s.length() + "/" + len);
+		}
         StringBuilder d = new StringBuilder(len);
         int fill = len - s.length();
         d.append(s);
-        while (fill-- > 0)
+        while (fill-- > 0) {
             d.append(c);
+		}
         return d.toString();
     }
 
@@ -318,9 +322,8 @@ public class ISOUtil {
      * @param s   - original string
      * @param len - desired len
      * @return zero padded string
-     * @throws RuntimeException if string's length greater than len
      */
-    public static String zeropad(String s, int len) throws RuntimeException {
+    public static String zeropad(String s, int len)  {
         return padleft(s, len, '0');
     }
 
@@ -348,15 +351,17 @@ public class ISOUtil {
      */
     public static String strpad(String s, int len) {
         StringBuilder d = new StringBuilder(s);
-        while (d.length() < len)
+        while (d.length() < len) {
             d.append(' ');
+		}
         return d.toString();
     }
 
     public static String zeropadRight(String s, int len) {
         StringBuilder d = new StringBuilder(s);
-        while (d.length() < len)
+        while (d.length() < len) {
             d.append('0');
+		}
         return d.toString();
     }
 
@@ -372,8 +377,9 @@ public class ISOUtil {
     public static byte[] str2bcd(String s, boolean padLeft, byte[] d, int offset) {
         int len = s.length();
         int start = (len & 1) == 1 && padLeft ? 1 : 0;
-        for (int i = start; i < len + start; i++)
+        for (int i = start; i < len + start; i++) {
             d[offset + (i >> 1)] |= s.charAt(i - start) - '0' << ((i & 1) == 1 ? 0 : 4);
+		}
         return d;
     }
 
@@ -403,8 +409,9 @@ public class ISOUtil {
         byte[] d = new byte[len + 1 >> 1];
         Arrays.fill(d, fill);
         int start = (len & 1) == 1 && padLeft ? 1 : 0;
-        for (int i = start; i < len + start; i++)
+        for (int i = start; i < len + start; i++) {
             d[i >> 1] |= s.charAt(i - start) - '0' << ((i & 1) == 1 ? 0 : 4);
+		}
         return d;
     }
 
@@ -425,8 +432,9 @@ public class ISOUtil {
             int shift = (i & 1) == 1 ? 0 : 4;
             char c = Character.forDigit(
                     b[offset + (i >> 1)] >> shift & 0x0F, 16);
-            if (c == 'd')
+            if (c == 'd') {
                 c = '=';
+			}
             d.append(Character.toUpperCase(c));
         }
         return d.toString();
@@ -512,9 +520,9 @@ public class ISOUtil {
                         d.append(']');
                         break;
                 }
-            } else
+            } else {
                 d.append(c);
-
+			}
         }
         return d.toString();
     }
@@ -548,8 +556,9 @@ public class ISOUtil {
         int len = b.size();
         len = len > 128 ? 128 : len;
         StringBuilder d = new StringBuilder(len);
-        for (int i = 0; i < len; i++)
+        for (int i = 0; i < len; i++) {
             d.append(b.get(i) ? '1' : '0');
+		}
         return d.toString();
     }
 
@@ -563,13 +572,17 @@ public class ISOUtil {
     public static byte[] bitSet2byte(BitSet b) {
         int len = b.length() + 62 >> 6 << 6;
         byte[] d = new byte[len >> 3];
-        for (int i = 0; i < len; i++)
-            if (b.get(i + 1))
+        for (int i = 0; i < len; i++) {
+            if (b.get(i + 1)) {
                 d[i >> 3] |= 0x80 >> i % 8;
-        if (len > 64)
+			}
+		}
+        if (len > 64) {
             d[0] |= 0x80;
-        if (len > 128)
+		}
+        if (len > 128) {
             d[8] |= 0x80;
+		}
         return d;
     }
 
@@ -585,14 +598,18 @@ public class ISOUtil {
         int len = bytes * 8;
 
         byte[] d = new byte[bytes];
-        for (int i = 0; i < len; i++)
-            if (b.get(i + 1))
+        for (int i = 0; i < len; i++) {
+            if (b.get(i + 1)) {
                 d[i >> 3] |= 0x80 >> i % 8;
-        //TODO: review why 2nd & 3rd bit map flags are set here??? 
-        if (len > 64)
+			}
+		}
+        //TODO: review why 2nd & 3rd bit map flags are set here???
+        if (len > 64) {
             d[0] |= 0x80;
-        if (len > 128)
+		}
+        if (len > 128) {
             d[8] |= 0x80;
+		}
         return d;
     }
 
@@ -605,8 +622,9 @@ public class ISOUtil {
         if (b > 0) {
             int value = (int) Math.pow(2, b);
             for (int i = 0; i <= b; i++) {
-                if (bs.get(i))
+                if (bs.get(i)) {
                     total += value;
+				}
                 value = value >> 1;
             }
         }
@@ -644,14 +662,14 @@ public class ISOUtil {
      * @param bitZeroMeansExtended - true for ISO-8583
      * @return java BitSet object
      */
-    public static BitSet byte2BitSet
-    (byte[] b, int offset, boolean bitZeroMeansExtended) {
-        int len = bitZeroMeansExtended ?
-                (b[offset] & 0x80) == 0x80 ? 128 : 64 : 64;
+    public static BitSet byte2BitSet(byte[] b, int offset, boolean bitZeroMeansExtended) {
+        int len = bitZeroMeansExtended ? (b[offset] & 0x80) == 0x80 ? 128 : 64 : 64;
         BitSet bmap = new BitSet(len);
-        for (int i = 0; i < len; i++)
-            if ((b[offset + (i >> 3)] & 0x80 >> i % 8) > 0)
+        for (int i = 0; i < len; i++) {
+            if ((b[offset + (i >> 3)] & 0x80 >> i % 8) > 0) {
                 bmap.set(i + 1);
+			}
+		}
         return bmap;
     }
 
@@ -665,18 +683,18 @@ public class ISOUtil {
      * @return java BitSet object
      */
     public static BitSet byte2BitSet(byte[] b, int offset, int maxBits) {
-        int len = maxBits > 64 ?
-                (b[offset] & 0x80) == 0x80 ? 128 : 64 : maxBits;
+        int len = maxBits > 64 ? (b[offset] & 0x80) == 0x80 ? 128 : 64 : maxBits;
 
-        if (maxBits > 128 &&
-                b.length > offset + 8 &&
-                (b[offset + 8] & 0x80) == 0x80) {
+        if (maxBits > 128 && b.length > offset + 8
+			&& (b[offset + 8] & 0x80) == 0x80) {
             len = 192;
         }
         BitSet bmap = new BitSet(len);
-        for (int i = 0; i < len; i++)
-            if ((b[offset + (i >> 3)] & 0x80 >> i % 8) > 0)
+        for (int i = 0; i < len; i++) {
+            if ((b[offset + (i >> 3)] & 0x80 >> i % 8) > 0) {
                 bmap.set(i + 1);
+			}
+		}
         return bmap;
     }
 
@@ -691,9 +709,11 @@ public class ISOUtil {
      */
     public static BitSet byte2BitSet(BitSet bmap, byte[] b, int bitOffset) {
         int len = b.length << 3;
-        for (int i = 0; i < len; i++)
-            if ((b[i >> 3] & 0x80 >> i % 8) > 0)
+        for (int i = 0; i < len; i++) {
+            if ((b[i >> 3] & 0x80 >> i % 8) > 0) {
                 bmap.set(bitOffset + i + 1);
+			}
+		}
         return bmap;
     }
 
@@ -706,16 +726,15 @@ public class ISOUtil {
      * @param bitZeroMeansExtended - true for ISO-8583
      * @return java BitSet object
      */
-    public static BitSet hex2BitSet
-    (byte[] b, int offset, boolean bitZeroMeansExtended) {
-        int len = bitZeroMeansExtended ?
-                (Character.digit((char) b[offset], 16) & 0x08) == 8 ? 128 : 64 :
-                64;
+    public static BitSet hex2BitSet(byte[] b, int offset, boolean bitZeroMeansExtended) {
+        int len = bitZeroMeansExtended
+			? (Character.digit((char) b[offset], 16) & 0x08) == 8 ? 128 : 64 : 64;
         BitSet bmap = new BitSet(len);
         for (int i = 0; i < len; i++) {
             int digit = Character.digit((char) b[offset + (i >> 2)], 16);
-            if ((digit & 0x08 >> i % 4) > 0)
+            if ((digit & 0x08 >> i % 4) > 0) {
                 bmap.set(i + 1);
+			}
         }
         return bmap;
     }
@@ -730,12 +749,11 @@ public class ISOUtil {
      * @return java BitSet object
      */
     public static BitSet hex2BitSet(byte[] b, int offset, int maxBits) {
-        int len = maxBits > 64 ?
-                (Character.digit((char) b[offset], 16) & 0x08) == 8 ? 128 : 64 :
-                maxBits;
-        if (len > 64 && maxBits > 128 &&
-                b.length > offset + 16 &&
-                (Character.digit((char) b[offset + 16], 16) & 0x08) == 8) {
+        int len = maxBits > 64
+			? (Character.digit((char) b[offset], 16) & 0x08) == 8 ? 128 : 64 : maxBits;
+        if (len > 64 && maxBits > 128
+			&& b.length > offset + 16
+			&& (Character.digit((char) b[offset + 16], 16) & 0x08) == 8) {
             len = 192;
         }
         BitSet bmap = new BitSet(len);
@@ -743,8 +761,9 @@ public class ISOUtil {
             int digit = Character.digit((char) b[offset + (i >> 2)], 16);
             if ((digit & 0x08 >> i % 4) > 0) {
                 bmap.set(i + 1);
-                if (i == 65 && maxBits > 128)
+                if (i == 65 && maxBits > 128) {
                     len = 192;
+				}
             }
         }
         return bmap;
@@ -763,8 +782,9 @@ public class ISOUtil {
         int len = b.length << 2;
         for (int i = 0; i < len; i++) {
             int digit = Character.digit((char) b[i >> 2], 16);
-            if ((digit & 0x08 >> i % 4) > 0)
+            if ((digit & 0x08 >> i % 4) > 0) {
                 bmap.set(bitOffset + i + 1);
+			}
         }
         return bmap;
     }
@@ -846,9 +866,9 @@ public class ISOUtil {
         for (int i = 0; i < 4 - bytes.length; i++) {
             byteBuffer.put((byte) 0);
         }
-        for (int i = 0; i < bytes.length; i++) {
-            byteBuffer.put(bytes[i]);
-        }
+		for (byte aByte : bytes) {
+			byteBuffer.put(aByte);
+		}
         byteBuffer.position(0);
         return byteBuffer.getInt();
     }
@@ -862,16 +882,18 @@ public class ISOUtil {
      * @return the string of hex chars.
      */
     public static String byte2hex(byte[] bs, int off, int length) {
-        if (bs.length <= off || bs.length < off + length)
+        if (bs.length <= off || bs.length < off + length) {
             throw new IllegalArgumentException();
+		}
         StringBuilder sb = new StringBuilder(length * 2);
         byte2hexAppend(bs, off, length, sb);
         return sb.toString();
     }
 
     private static void byte2hexAppend(byte[] bs, int off, int length, StringBuilder sb) {
-        if (bs.length <= off || bs.length < off + length)
+        if (bs.length <= off || bs.length < off + length) {
             throw new IllegalArgumentException();
+		}
         sb.ensureCapacity(sb.length() + length * 2);
         for (int i = off; i < off + length; i++) {
             sb.append(Character.forDigit(bs[i] >>> 4 & 0xf, 16));
@@ -891,8 +913,9 @@ public class ISOUtil {
         String suffix = Integer.toString(
                 (int) (Math.round(d * 100f) % 100));
         try {
-            if (len > 3)
+            if (len > 3) {
                 prefix = ISOUtil.padleft(prefix, len - 3, ' ');
+			}
             suffix = ISOUtil.zeropad(suffix, 2);
         } catch (RuntimeException e) {
             // should not happen
@@ -907,12 +930,12 @@ public class ISOUtil {
      * @param l   value
      * @param len display len
      * @return formated field
-     * @throws RuntimeException
      */
-    public static String formatAmount(long l, int len) throws RuntimeException {
+    public static String formatAmount(long l, int len) {
         String buf = Long.toString(l);
-        if (l < 100)
+        if (l < 100) {
             buf = zeropad(buf, 3);
+		}
         StringBuilder s = new StringBuilder(padleft(buf, len - 1, ' '));
         s.insert(len - 3, '.');
         return s.toString();
@@ -960,8 +983,9 @@ public class ISOUtil {
                         str.append(';');
                     } else if (ch > 0xff00) {
                         str.append((char) (ch & 0xFF));
-                    } else
+                    } else {
                         str.append(ch);
+					}
             }
         }
         return str.toString();
@@ -997,21 +1021,25 @@ public class ISOUtil {
         int lastFourIndex = -1;
         if (clear > 0) {
             lastFourIndex = s.indexOf('=') - 4;
-            if (lastFourIndex < 0)
+            if (lastFourIndex < 0) {
                 lastFourIndex = s.indexOf('^') - 4;
-            if (lastFourIndex < 0 && s.indexOf('^') < 0)
+			}
+            if (lastFourIndex < 0 && s.indexOf('^') < 0) {
                 lastFourIndex = s.indexOf('D') - 4;
-            if (lastFourIndex < 0)
+			}
+            if (lastFourIndex < 0) {
                 lastFourIndex = len - 4;
+			}
         }
         for (int i = 0; i < len; i++) {
-            if (s.charAt(i) == '=' || s.charAt(i) == 'D' && s.indexOf('^') < 0)
+            if (s.charAt(i) == '=' || s.charAt(i) == 'D' && s.indexOf('^') < 0) {
                 clear = 1;  // use clear=5 to keep the expiration date
-            else if (s.charAt(i) == '^') {
+			} else if (s.charAt(i) == '^') {
                 lastFourIndex = 0;
                 clear = len - i;
-            } else if (i == lastFourIndex)
+            } else if (i == lastFourIndex) {
                 clear = 4;
+			}
             sb.append(clear-- > 0 ? s.charAt(i) : '_');
         }
         s = sb.toString();
@@ -1031,16 +1059,18 @@ public class ISOUtil {
     public static int[] toIntArray(String s) {
         StringTokenizer st = new StringTokenizer(s);
         int[] array = new int[st.countTokens()];
-        for (int i = 0; st.hasMoreTokens(); i++)
+        for (int i = 0; st.hasMoreTokens(); i++) {
             array[i] = Integer.parseInt(st.nextToken());
+		}
         return array;
     }
 
     public static String[] toStringArray(String s) {
         StringTokenizer st = new StringTokenizer(s);
         String[] array = new String[st.countTokens()];
-        for (int i = 0; st.hasMoreTokens(); i++)
+        for (int i = 0; st.hasMoreTokens(); i++) {
             array[i] = st.nextToken();
+		}
         return array;
     }
 
@@ -1168,9 +1198,12 @@ public class ISOUtil {
      */
     public static String unPadRight(String s, char c) {
         int end = s.length();
-        if (end == 0)
+        if (end == 0) {
             return s;
-        while (0 < end && s.charAt(end - 1) == c) end--;
+		}
+        while (0 < end && s.charAt(end - 1) == c) {
+        	end--;
+		}
         return 0 < end ? s.substring(0, end) : s.substring(0, 1);
     }
 
@@ -1183,9 +1216,12 @@ public class ISOUtil {
      */
     public static String unPadLeft(String s, char c) {
         int fill = 0, end = s.length();
-        if (end == 0)
+        if (end == 0) {
             return s;
-        while (fill < end && s.charAt(fill) == c) fill++;
+		}
+        while (fill < end && s.charAt(fill) == c) {
+        	fill++;
+		}
         return fill < end ? s.substring(fill, end) : s.substring(fill - 1, end);
     }
 
@@ -1213,10 +1249,10 @@ public class ISOUtil {
      */
     public static boolean isAlphaNumeric(String s) {
         int i = 0, len = s.length();
-        while (i < len && (Character.isLetterOrDigit(s.charAt(i)) ||
-                s.charAt(i) == ' ' || s.charAt(i) == '.' ||
-                s.charAt(i) == '-' || s.charAt(i) == '_')
-                || s.charAt(i) == '?') {
+        while (i < len && (Character.isLetterOrDigit(s.charAt(i))
+			|| s.charAt(i) == ' ' || s.charAt(i) == '.'
+			|| s.charAt(i) == '-' || s.charAt(i) == '_')
+			|| s.charAt(i) == '?') {
             i++;
         }
         return i >= len;
@@ -1247,9 +1283,11 @@ public class ISOUtil {
     public static byte[] bitSet2extendedByte(BitSet b) {
         int len = 128;
         byte[] d = new byte[len >> 3];
-        for (int i = 0; i < len; i++)
-            if (b.get(i + 1))
+        for (int i = 0; i < len; i++) {
+            if (b.get(i + 1)) {
                 d[i >> 3] |= 0x80 >> i % 8;
+			}
+		}
         d[0] |= 0x80;
         return d;
     }
@@ -1268,19 +1306,22 @@ public class ISOUtil {
      */
     public static int parseInt(String s, int radix) throws NumberFormatException {
         int length = s.length();
-        if (length > 9)
+        if (length > 9) {
             throw new NumberFormatException("Number can have maximum 9 digits");
+		}
         int result;
         int index = 0;
         int digit = Character.digit(s.charAt(index++), radix);
-        if (digit == -1)
+        if (digit == -1) {
             throw new NumberFormatException("String contains non-digit");
+		}
         result = digit;
         while (index < length) {
             result *= radix;
             digit = Character.digit(s.charAt(index++), radix);
-            if (digit == -1)
+            if (digit == -1) {
                 throw new NumberFormatException("String contains non-digit");
+			}
             result += digit;
         }
         return result;
@@ -1315,19 +1356,22 @@ public class ISOUtil {
      */
     public static int parseInt(char[] cArray, int radix) throws NumberFormatException {
         int length = cArray.length;
-        if (length > 9)
+        if (length > 9) {
             throw new NumberFormatException("Number can have maximum 9 digits");
+		}
         int result;
         int index = 0;
         int digit = Character.digit(cArray[index++], radix);
-        if (digit == -1)
+        if (digit == -1) {
             throw new NumberFormatException("Char array contains non-digit");
+		}
         result = digit;
         while (index < length) {
             result *= radix;
             digit = Character.digit(cArray[index++], radix);
-            if (digit == -1)
+            if (digit == -1) {
                 throw new NumberFormatException("Char array contains non-digit");
+			}
             result += digit;
         }
         return result;
@@ -1362,19 +1406,22 @@ public class ISOUtil {
      */
     public static int parseInt(byte[] bArray, int radix) throws NumberFormatException {
         int length = bArray.length;
-        if (length > 9)
+        if (length > 9) {
             throw new NumberFormatException("Number can have maximum 9 digits");
+		}
         int result;
         int index = 0;
         int digit = Character.digit((char) bArray[index++], radix);
-        if (digit == -1)
+        if (digit == -1) {
             throw new NumberFormatException("Byte array contains non-digit");
+		}
         result = digit;
         while (index < length) {
             result *= radix;
             digit = Character.digit((char) bArray[index++], radix);
-            if (digit == -1)
+            if (digit == -1) {
                 throw new NumberFormatException("Byte array contains non-digit");
+			}
             result += digit;
         }
         return result;
@@ -1457,11 +1504,13 @@ public class ISOUtil {
                     hex = new StringBuilder();
                     ascii = new StringBuilder();
                     break;
+				default:
             }
         }
         if (hex.length() > 0) {
-            while (hex.length() < 49)
+            while (hex.length() < 49) {
                 hex.append(' ');
+			}
 
             sb.append(hexOffset(len));
             sb.append(sep);
@@ -1482,8 +1531,9 @@ public class ISOUtil {
      */
     public static String strpadf(String s, int len) {
         StringBuilder d = new StringBuilder(s);
-        while (d.length() < len)
+        while (d.length() < len) {
             d.append('F');
+		}
         return d.toString();
     }
 
@@ -1498,8 +1548,9 @@ public class ISOUtil {
             int l = s.length();
             if (l > 0) {
                 while (--l >= 0) {
-                    if (s.charAt(l) != 'F')
+                    if (s.charAt(l) != 'F') {
                         break;
+					}
                 }
                 s = l == 0 ? "" : s.substring(0, l + 1);
             }
@@ -1514,7 +1565,7 @@ public class ISOUtil {
      * @param n nuber of characters to take
      * @return String (may be null)
      */
-    public static String takeLastN(String s, int n) throws RuntimeException {
+    public static String takeLastN(String s, int n) {
         if (s.length() > n) {
             return s.substring(s.length() - n);
         } else {
@@ -1533,7 +1584,7 @@ public class ISOUtil {
      * @param n nuber of characters to take
      * @return String (may be null)
      */
-    public static String takeFirstN(String s, int n) throws RuntimeException {
+    public static String takeFirstN(String s, int n) {
         if (s.length() > n) {
             return s.substring(0, n);
         } else {
@@ -1582,16 +1633,17 @@ public class ISOUtil {
      * @param convRate - amount conversion rate
      * @return a string containing a amount conversion rate in the proper format,
      * witch is suitable for create fields 10 and 11
-     * @throws RuntimeException
      */
-    public static String formatAmountConversionRate(double convRate) throws RuntimeException {
-        if (convRate == 0)
+    public static String formatAmountConversionRate(double convRate) {
+        if (convRate == 0) {
             return null;
+		}
         BigDecimal cr = new BigDecimal(convRate);
         int x = 7 - cr.precision() + cr.scale();
         String bds = cr.movePointRight(cr.scale()).toString();
-        if (x > 9)
+        if (x > 9) {
             bds = ISOUtil.zeropad(bds, bds.length() + x - 9);
+		}
         String ret = ISOUtil.zeropadRight(bds, 7);
         return Math.min(9, x) + ISOUtil.takeFirstN(ret, 7);
     }
@@ -1626,8 +1678,9 @@ public class ISOUtil {
     public static String commaEncode(String[] ss) {
         StringBuilder sb = new StringBuilder();
         for (String s : ss) {
-            if (sb.length() > 0)
+            if (sb.length() > 0) {
                 sb.append(',');
+			}
             if (s != null) {
                 for (int i = 0; i < s.length(); i++) {
                     char c = s.charAt(i);
@@ -1636,6 +1689,7 @@ public class ISOUtil {
                         case ',':
                             sb.append('\\');
                             break;
+						default:
                     }
                     sb.append(c);
                 }
@@ -1665,13 +1719,15 @@ public class ISOUtil {
                         l.add(sb.toString());
                         sb = new StringBuilder();
                         continue;
+					default:
                 }
             }
             sb.append(c);
             escaped = false;
         }
-        if (sb.length() > 0)
+        if (sb.length() > 0) {
             l.add(sb.toString());
+		}
         return l.toArray(new String[l.size()]);
     }
 
@@ -1704,10 +1760,11 @@ public class ISOUtil {
                 throw new IllegalArgumentException("Invalid PAN " + p);
             }
             c = (char) (c - '0');
-            if (i % 2 != odd)
+            if (i % 2 != odd) {
                 crc += c * 2 >= 10 ? c * 2 - 9 : c * 2;
-            else
+			} else {
                 crc += c;
+			}
         }
 
         return (char) ((crc % 10 == 0 ? 0 : 10 - crc % 10) + '0');

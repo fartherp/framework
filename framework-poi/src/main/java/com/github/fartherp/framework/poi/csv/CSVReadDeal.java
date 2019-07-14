@@ -20,8 +20,8 @@ import com.github.fartherp.framework.poi.ReadDeal;
 /**
  * CSV读取接口
  *
- * @author: CK
- * @date: 2017/12/22
+ * @author CK
+ * @date 2017/12/22
  */
 public interface CSVReadDeal<E> extends ReadDeal<E> {
     /**

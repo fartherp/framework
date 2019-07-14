@@ -30,8 +30,8 @@ import static com.github.fartherp.framework.security.ISecurity.RSA_ALGORITHM;
 /**
  * RSA与C语言通用加密
  *
- * @author: CK
- * @date: 2018/1/29
+ * @author CK
+ * @date 2018/1/29
  */
 public class RSAC {
 

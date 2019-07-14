@@ -31,17 +31,19 @@ import java.util.ArrayList;
 
 /**
  * 通用异常处理
- * Auth: CK
- * Date: 2016/9/11
+ * @author CK
+ * @date 2016/9/11
  */
 public class GeneralExceptionHandler implements CustomizeExceptionHandler {
 
-    public boolean support(Exception ex, Class clazz) {
+    @Override
+	public boolean support(Exception ex, Class clazz) {
         return true;
     }
 
-    public ModelAndView deal(HttpServletRequest request, HttpServletResponse response,
-                             Object handler, Exception ex, CustomizeExceptionHandlerResolver resolver) {
+    @Override
+	public ModelAndView deal(HttpServletRequest request, HttpServletResponse response,
+		Object handler, Exception ex, CustomizeExceptionHandlerResolver resolver) {
         // 把漏网的异常信息记入日志
         try {
             String message = ex.getMessage();

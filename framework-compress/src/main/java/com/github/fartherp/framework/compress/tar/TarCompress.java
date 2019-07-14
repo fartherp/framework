@@ -30,8 +30,8 @@ import java.io.FileOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/15
+ * @author CK
+ * @date 2015/4/15
  */
 public class TarCompress extends CommonCompress {
 
@@ -39,6 +39,7 @@ public class TarCompress extends CommonCompress {
         this.commonCompress = commonCompress;
     }
 
+	@Override
     public void compress() {
         if (2 == commonCompress.getFlag()) {
             startCompress(commonCompress.getSourceFile(), commonCompress.getHttpServletResponse());
@@ -47,6 +48,7 @@ public class TarCompress extends CommonCompress {
         }
     }
 
+	@Override
     public String unCompress() {
         File target = commonCompress.getTargetFile();
         startUnCompress(commonCompress.getSourceFile(), target);
@@ -73,7 +75,8 @@ public class TarCompress extends CommonCompress {
         }
     }
 
-    public void doCompress(TarArchiveOutputStream tarArchiveOutputStream, File sourceFile, String path) throws Exception {
+    public void doCompress(TarArchiveOutputStream tarArchiveOutputStream, File sourceFile, String path)
+		throws Exception {
         if (sourceFile.isDirectory()) {
             File[] listFiles = sourceFile.listFiles();
             if (listFiles == null) {

@@ -35,8 +35,8 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 /**
  * Excel工具类
  *
- * @author: CK
- * @date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
 public class ExcelUtils {
 
@@ -140,7 +140,7 @@ public class ExcelUtils {
         }
     }
 
-    public static RichTextString setRichTextString(boolean largeDataMode,String type, String value) {
+    public static RichTextString setRichTextString(boolean largeDataMode, String type, String value) {
         if (largeDataMode) {
             return new XSSFRichTextString(value);
         }

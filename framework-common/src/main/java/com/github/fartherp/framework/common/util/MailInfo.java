@@ -22,6 +22,9 @@ import java.util.List;
 
 /**
  * 邮件信息
+ *
+ * @author CK
+ * @date 2019/1/7
  */
 public class MailInfo {
     /**

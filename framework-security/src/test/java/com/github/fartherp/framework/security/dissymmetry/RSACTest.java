@@ -23,8 +23,8 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/1/29
+ * @author CK
+ * @date 2018/1/29
  */
 public class RSACTest {
     static String ns = "CCE61184008CA71FBB9934C5264A4AE4C85EAECACD8A2C2454F93E965C90AE8FA919FEAAE926A5D9F508BD625946F4F5E86DBA931629442D3A90B8F96CFB526F";

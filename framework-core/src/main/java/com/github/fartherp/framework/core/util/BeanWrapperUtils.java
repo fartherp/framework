@@ -27,8 +27,8 @@ import java.util.Properties;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/8
+ * @author CK
+ * @date 2017/11/8
  */
 public class BeanWrapperUtils {
     public static void setProperties(Object obj, Properties properties) {

@@ -19,16 +19,24 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
+/**
+ * Created by IntelliJ IDEA.
+ *
+ * @author CK
+ * @date 2019/1/7
+ */
 public class ValueValidator implements ConstraintValidator<Value, Object> {
 
     private String[] values;
 
+	@Override
     public void initialize(Value constraintAnnotation) {
         this.values = constraintAnnotation.values();
         Arrays.sort(this.values);
     }
 
+	@Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        return (Arrays.binarySearch(values, value.toString()) >= 0);
+        return Arrays.binarySearch(values, value.toString()) >= 0;
     }
 }

@@ -23,8 +23,8 @@ import static org.testng.Assert.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class DESCBCTest {
 

@@ -32,8 +32,8 @@ import java.util.*;
 
 /**
  * 分页基础Vo
- * Author: CK
- * Date: 2016/1/20
+ * @author CK
+ * @date 2016/1/20
  */
 public class BaseVo<T extends Serializable> extends BasePagination<T> {
     /**
@@ -75,7 +75,8 @@ public class BaseVo<T extends Serializable> extends BasePagination<T> {
         return m;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

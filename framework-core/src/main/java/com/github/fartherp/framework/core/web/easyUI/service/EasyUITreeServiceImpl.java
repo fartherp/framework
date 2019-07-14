@@ -27,12 +27,13 @@ import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/1/23
+ * @author CK
+ * @date 2016/1/23
  */
 public class EasyUITreeServiceImpl<T> implements EasyUITreeService<T> {
 
-    public List<EasyUITreeModel> findChildren(List<T> list, Function<T, EasyUITreeModel> mc) {
+    @Override
+	public List<EasyUITreeModel> findChildren(List<T> list, Function<T, EasyUITreeModel> mc) {
         return findModel(list, mc).getChildren();
     }
 

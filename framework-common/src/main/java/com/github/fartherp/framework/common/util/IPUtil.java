@@ -24,8 +24,8 @@ import java.net.UnknownHostException;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/12/13
+ * @author CK
+ * @date 2017/12/13
  */
 public class IPUtil {
     // 新浪地址

@@ -17,8 +17,8 @@ package com.github.fartherp.framework.core.web.filter.auth;
 
 /**
  * Created by IntelliJ IDEA .
- * Auth: CK
- * Date: 2016/5/23
+ * @author CK
+ * @date 2016/5/23
  */
 public class GeneralAuthWrapper {
     private int status;

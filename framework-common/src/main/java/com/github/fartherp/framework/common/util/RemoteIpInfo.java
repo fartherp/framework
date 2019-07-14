@@ -18,8 +18,8 @@ package com.github.fartherp.framework.common.util;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/12/13
+ * @author CK
+ * @date 2017/12/13
  */
 public class RemoteIpInfo {
     private String ret;

@@ -27,16 +27,16 @@ import java.util.Properties;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
 public class ChannelWrapperFactory {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(FtpUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FtpUtils.class);
 
     @SuppressWarnings("all")
-    public static <T extends ChannelWrapper> T create(String host, String user, String password, int port, ChannelType channelType)
-            throws JSchException {
+    public static <T extends AbstractChannelWrapper> T create(String host, String user, String password,
+			int port, ChannelType channelType) throws JSchException {
         LOGGER.info("prepare host:{}, user:{}, password:{}, port:{}", host, user, password, port);
 
         JSch jsch = new JSch();
@@ -48,7 +48,7 @@ public class ChannelWrapperFactory {
         session.connect();
         LOGGER.info("host:{} connect success", host);
 
-        ChannelWrapper channelWrapper;
+        AbstractChannelWrapper channelWrapper;
         switch (channelType) {
             case SFTP:
                 channelWrapper = new SftpChannelWrapper();
@@ -71,8 +71,8 @@ public class ChannelWrapperFactory {
             case AUTH_AGENT:
             case X11:
             case SESSION:
-                default:
-                    throw new IllegalArgumentException("channel type is not support.");
+			default:
+				throw new IllegalArgumentException("channel type is not support.");
         }
         LOGGER.info("host:{} create connect channel success", host);
         channelWrapper.setSession(session);

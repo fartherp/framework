@@ -44,8 +44,8 @@ import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/27
+ * @author CK
+ * @date 2015/8/27
  */
 @Intercepts({
         @Signature(type = Executor.class, method = SqlMonitorManager.UPDATE, args = { MappedStatement.class,
@@ -106,7 +106,8 @@ public class SqlMonitorManager implements Interceptor {
      * @see org.apache.ibatis.plugin.Interceptor#intercept(org.apache.ibatis.plugin.Invocation)
      */
 
-    public Object intercept(Invocation invocation) throws Throwable {
+    @Override
+	public Object intercept(Invocation invocation) throws Throwable {
         Date begin = new Date();
         Date end;
         Object result = null;
@@ -124,7 +125,7 @@ public class SqlMonitorManager implements Interceptor {
 
             // call back
             if (callback != null) {
-                callback.onExecuteSql(sql, begin, (System.currentTimeMillis() - end.getTime()), queryRows, t);
+                callback.onExecuteSql(sql, begin, System.currentTimeMillis() - end.getTime(), queryRows, t);
             }
         }
         return result;
@@ -174,7 +175,6 @@ public class SqlMonitorManager implements Interceptor {
             sql = formatSql(sql);
             if (showSql) {
                 LOGGER.info(sql);
-                System.out.println(sql);
             }
 
             return sql;
@@ -198,15 +198,16 @@ public class SqlMonitorManager implements Interceptor {
      * @see org.apache.ibatis.plugin.Interceptor#plugin(java.lang.Object)
      */
 
-    public Object plugin(Object target) {
+    @Override
+	public Object plugin(Object target) {
         return Plugin.wrap(target, this);
     }
 
     /* (non-Javadoc)
      * @see org.apache.ibatis.plugin.Interceptor#setProperties(java.util.Properties)
      */
-
-    public void setProperties(Properties properties) {
+    @Override
+	public void setProperties(Properties properties) {
         if (properties == null) {
             return;
         }

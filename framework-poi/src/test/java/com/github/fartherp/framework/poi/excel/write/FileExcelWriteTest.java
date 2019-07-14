@@ -36,8 +36,8 @@ import static com.github.fartherp.framework.poi.excel.write.ExcelDataList.*;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
 public class FileExcelWriteTest {
 

@@ -18,10 +18,13 @@ package com.github.fartherp.framework.net.sftp;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/3
+ * @author CK
+ * @date 2018/4/3
  */
 public enum ChannelType {
+	/**
+	 * 通道类型
+	 */
     SESSION("session"),
     SHELL("shell"),
     EXEC("exec"),
@@ -31,7 +34,7 @@ public enum ChannelType {
     FORWARDED_TCP_IP("forwarded-tcpip"),
     SFTP("sftp"),
     SUBSYSTEM("subsystem");
-    private String type;
+    String type;
 
     ChannelType(String type) {
         this.type = type;

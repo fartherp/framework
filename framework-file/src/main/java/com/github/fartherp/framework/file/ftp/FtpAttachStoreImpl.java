@@ -31,21 +31,23 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/3/7
+ * @author CK
+ * @date 2016/3/7
  */
 public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
-    private static final Logger log = LoggerFactory.getLogger(FtpAttachStoreImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FtpAttachStoreImpl.class);
     /**
      * Ftp配置
      */
     private FtpConfig config;
 
-    public String partitionDir(Object mountDir) {
+    @Override
+	public String partitionDir(Object mountDir) {
         return config.getDefaultDir() + File.separator + mountDir;
     }
 
-    public String generateFilename(String rawName) {
+    @Override
+	public String generateFilename(String rawName) {
         if (StringUtils.isBlank(rawName)) {
             throw new RuntimeException("Raw file name is blank");
         }
@@ -54,12 +56,14 @@ public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
         return Joiner.on(".").join(withoutExt, Long.toString(System.currentTimeMillis()), ext);
     }
 
-    public void store(String dir, InputStream fileStream, String fileName) {
+    @Override
+	public void store(String dir, InputStream fileStream, String fileName) {
         fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         FtpUtils.store(config, dir, fileStream, fileName);
     }
 
-    public void fetch(String dir, String fileName, OutputStream output) {
+    @Override
+	public void fetch(String dir, String fileName, OutputStream output) {
         if (StringUtils.isBlank(dir)) {
             dir = config.getDefaultDir();
         }
@@ -68,11 +72,13 @@ public class FtpAttachStoreImpl implements FileStore<FtpConfig> {
         FtpUtils.fetch(config, path, output);
     }
 
-    public FtpConfig getStoreConfig() {
+    @Override
+	public FtpConfig getStoreConfig() {
         return config;
     }
 
-    public void setStoreConfig(FtpConfig config) {
+    @Override
+	public void setStoreConfig(FtpConfig config) {
         this.config = config;
     }
 }

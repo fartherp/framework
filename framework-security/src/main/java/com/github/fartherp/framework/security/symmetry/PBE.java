@@ -31,8 +31,8 @@ import static com.github.fartherp.framework.security.ISecurity.PBE_ALGORITHM;
  * Password-based encryption（基于密码加密）.
  * 其特点在于口令由用户自己掌管，不借助任何物理媒体；采用随机数（这里我们叫做盐）杂凑多重加密等方法保证数据的安全性
  * </pre>
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class PBE {
 

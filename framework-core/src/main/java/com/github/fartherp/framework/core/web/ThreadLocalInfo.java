@@ -25,22 +25,22 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/17
+ * @author CK
+ * @date 2015/8/17
  * @see org.springframework.web.context.request.RequestContextHolder
  */
 public class ThreadLocalInfo {
-    private static final ThreadLocal<ServletRequest> servletRequestThreadLocal =
+    private static final ThreadLocal<ServletRequest> SERVLET_REQUEST_THREAD_LOCAL =
             new NamedThreadLocal<ServletRequest>("ServletRequest");
-    private static final ThreadLocal<ServletResponse> servletResponseThreadLocal =
+    private static final ThreadLocal<ServletResponse> SERVLET_RESPONSE_THREAD_LOCAL =
             new NamedThreadLocal<ServletResponse>("ServletResponse");
 
     public static void resetServletRequest() {
-        servletRequestThreadLocal.remove();
+        SERVLET_REQUEST_THREAD_LOCAL.remove();
     }
 
     public static void resetServletResponse() {
-        servletResponseThreadLocal.remove();
+        SERVLET_RESPONSE_THREAD_LOCAL.remove();
     }
 
     public static void reset() {
@@ -53,7 +53,7 @@ public class ThreadLocalInfo {
      * @param servletRequest 请求
      */
     public static void setServletRequest(ServletRequest servletRequest) {
-        servletRequestThreadLocal.set(servletRequest);
+        SERVLET_REQUEST_THREAD_LOCAL.set(servletRequest);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ThreadLocalInfo {
      * @param servletResponse 响应
      */
     public static void setServletResponse(ServletResponse servletResponse) {
-        servletResponseThreadLocal.set(servletResponse);
+        SERVLET_RESPONSE_THREAD_LOCAL.set(servletResponse);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ThreadLocalInfo {
      * @return 请求
      */
     public static HttpServletRequest currentHttpServletRequest() {
-        return (HttpServletRequest) servletRequestThreadLocal.get();
+        return (HttpServletRequest) SERVLET_REQUEST_THREAD_LOCAL.get();
     }
 
     /**
@@ -88,7 +88,7 @@ public class ThreadLocalInfo {
      * @return 响应
      */
     public static HttpServletResponse currentHttpServletResponse() {
-        return (HttpServletResponse) servletResponseThreadLocal.get();
+        return (HttpServletResponse) SERVLET_RESPONSE_THREAD_LOCAL.get();
     }
 
     /**

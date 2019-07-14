@@ -21,8 +21,8 @@ import java.math.BigDecimal;
 
 /**
  * The BigDecimal calculate tool. the default scale is two precision.
- * Author: CK
- * Date: 2015/3/27.
+ * @author CK
+ * @date 2015/3/27.
  */
 public class BigDecimalUtil {
 

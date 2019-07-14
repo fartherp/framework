@@ -26,7 +26,7 @@ public class PlaceholderResolverTest {
 
     @Test
     public void testDoParse() {
-        final Map<String, String> placeholderVals = new HashMap<String, String>(5);
+        final Map<String, String> placeholderVals = new HashMap<>(5);
         placeholderVals.put("key1", "china");
         placeholderVals.put("key2", "3");
         placeholderVals.put("key3", "beijin");

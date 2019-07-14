@@ -27,8 +27,8 @@ import java.sql.SQLException;
 
 /**
  * the database manager tools
- * Author: CK
- * Date: 2015/3/27.
+ * @author CK
+ * @date 2015/3/27.
  * @see Connection
  * @see PreparedStatement
  * @see ResultSet
@@ -153,7 +153,8 @@ public class DbManager {
      * @param localTableName the table name of table
      * @return the primary key
      */
-    public ResultSet getPrimaryKeys(Connection connection, String localCatalog, String localSchema, String localTableName) {
+    public ResultSet getPrimaryKeys(Connection connection, String localCatalog,
+									String localSchema, String localTableName) {
         try {
             return getDatabaseMetaData(connection).getPrimaryKeys(localCatalog, localSchema, localTableName);
         } catch (SQLException e) {

@@ -30,8 +30,8 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/11/30
+ * @author CK
+ * @date 2017/11/30
  */
 public class DisSymmetry {
     /**
@@ -49,7 +49,7 @@ public class DisSymmetry {
      */
     private static final int MAX_DECRYPT_BLOCK = 128;
 
-    private static final String seed = "0f22507a10bbddd07d8a3082122966e3";
+    private static final String SEED = "0f22507a10bbddd07d8a3082122966e3";
 
     /**
      * <p>创建公钥&私钥</p>
@@ -65,7 +65,7 @@ public class DisSymmetry {
             throw new RuntimeException("[" + algorithm + "]获取自增密钥错误", e);
         }
         SecureRandom secureRandom = new SecureRandom();
-        secureRandom.setSeed(seed.getBytes());
+        secureRandom.setSeed(SEED.getBytes());
         keyPairGen.initialize(KEY_SIZE, secureRandom);
         KeyPair keyPair = keyPairGen.generateKeyPair();
         disSymmetryKey.setPublicKey(keyPair.getPublic().getEncoded());

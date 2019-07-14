@@ -17,7 +17,6 @@ package com.github.fartherp.framework.common.util;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -33,8 +32,8 @@ import java.util.Map;
 
 /**
  * http client tools
- * Auth: CK
- * Date: 2016/4/28
+ * @author CK
+ * @date 2016/4/28
  */
 public class HttpClientUtil {
 

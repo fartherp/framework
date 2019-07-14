@@ -21,8 +21,8 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA .
- * Auth: CK
- * Date: 2016/5/20
+ * @author CK
+ * @date 2016/5/20
  */
 public class KvVo {
     private Integer module;

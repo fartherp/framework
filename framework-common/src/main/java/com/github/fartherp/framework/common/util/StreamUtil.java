@@ -20,7 +20,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Created by zhjie.zhang on 2019/3/26.
+ * Created by IntelliJ IDEA.
+ *
+ * @author zhjie.zhang
+ * @date 2019/3/26
  */
 public class StreamUtil {
     public static <T, R> List<R> map(List<T> data, Function<T, R> mapFunc) {

@@ -15,14 +15,14 @@
  */
 package com.github.fartherp.framework.database.pojo;
 
-import com.github.fartherp.framework.database.dao.FieldAccessVo;
+import com.github.fartherp.framework.database.dao.BaseFieldAccessVo;
 
 import java.util.Date;
 
 /**
  * `user` 
  */
-public class UserBase extends FieldAccessVo<Integer> {
+public class UserBase extends BaseFieldAccessVo<Integer> {
     /**
      * id
      */

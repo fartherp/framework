@@ -19,8 +19,8 @@ import java.io.Serializable;
 
 /**
  * Created by framework .
- * Auth: hyssop
- * Date: 12:29
+ * @author hyssop
+ * @date 12:29
  */
 public class PageRequest extends BasePagination implements Pagination, Serializable {
 
@@ -82,7 +82,8 @@ public class PageRequest extends BasePagination implements Pagination, Serializa
         return result;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return String.format("Page request [number: %d, limit %d, sort: %s]", currentPage, limit);
     }
 }

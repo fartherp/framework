@@ -34,8 +34,8 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2019/6/27
+ * @author CK
+ * @date 2019/6/27
  */
 public class GenericServiceTest {
 

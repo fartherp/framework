@@ -17,8 +17,8 @@ package com.github.fartherp.framework.database.mybatis.plugin.page.dialect;
 
 /**
  * 类似hibernate的Dialect,但只精简出分页部分
- * Author: CK
- * Date: 2015/6/14
+ * @author CK
+ * @date 2015/6/14
  */
 public interface Dialect {
 
@@ -27,7 +27,7 @@ public interface Dialect {
      *
      * @return true：支持当前的分页查询方式
      */
-    public boolean supportsLimit();
+	boolean supportsLimit();
 
     /**
      * 将sql转换为分页SQL，分别调用分页sql
@@ -37,7 +37,7 @@ public interface Dialect {
      * @param pageSize 每页显示多少纪录条数
      * @return 分页查询的sql
      */
-    public String getLimitString(String sql, int offset, int pageSize);
+	String getLimitString(String sql, int offset, int pageSize);
 
-    public void getLimitString(StringBuilder sb, int offset, int pageSize);
+    void getLimitString(StringBuilder sb, int offset, int pageSize);
 }

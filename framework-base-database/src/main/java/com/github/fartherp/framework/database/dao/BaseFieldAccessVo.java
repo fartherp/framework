@@ -19,10 +19,10 @@ import java.io.Serializable;
 
 /**
  * 字段操作类
- * Author: CK
- * Date: 2015/6/5.
+ * @author CK
+ * @date 2015/6/5.
  */
-public abstract class FieldAccessVo<ID> implements Cloneable, Serializable {
+public abstract class BaseFieldAccessVo<ID> implements Cloneable, Serializable {
 
     /**
      * get primary key

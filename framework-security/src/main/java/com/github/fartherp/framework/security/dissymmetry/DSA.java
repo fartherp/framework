@@ -28,8 +28,8 @@ import static com.github.fartherp.framework.security.ISecurity.DSA_ALGORITHM;
 /**
  * DSA.
  * Digital Signature Algorithm，数字签名
- * Author: CK.
- * Date: 2015/4/11.
+ * @author CK.
+ * @date 2015/4/11.
  */
 public class DSA {
 

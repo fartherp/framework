@@ -28,8 +28,8 @@ import java.util.Map;
 
 /**
  * 前后端统一接口
- * Author: CK
- * Date: 2016/1/27
+ * @author CK
+ * @date 2016/1/27
  */
 public class JsonResp {
     /**
@@ -64,7 +64,7 @@ public class JsonResp {
     /**
      * 响应类型
      */
-    public static enum RespType {
+    public enum RespType {
         /**
          * 数据列表
          */

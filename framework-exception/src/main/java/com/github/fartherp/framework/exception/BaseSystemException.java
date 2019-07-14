@@ -24,8 +24,8 @@ import java.util.Properties;
 
 /**
  * 系统基础异常抽象类
- * Author: CK
- * Date: 2016/2/5
+ * @author CK
+ * @date 2016/2/5
  */
 public abstract class BaseSystemException extends RuntimeException implements BaseException {
     /**
@@ -84,14 +84,17 @@ public abstract class BaseSystemException extends RuntimeException implements Ba
         this.throwable = t;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
 
+	@Override
     public Throwable getThrowable() {
         return throwable;
     }
 
+	@Override
     public void setDatabase(String database) {
         this.database = database;
     }

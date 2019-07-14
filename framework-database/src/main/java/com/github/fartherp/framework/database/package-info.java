@@ -16,7 +16,7 @@
 /**
  * Created by IntelliJ IDEA.
  *
- * @author cuiyuqiang
+ * @author CK
  * @date 2019/7/10
  */
 package com.github.fartherp.framework.database;

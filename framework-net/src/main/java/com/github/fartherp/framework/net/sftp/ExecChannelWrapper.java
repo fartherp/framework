@@ -29,10 +29,10 @@ import java.util.Map;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public class ExecChannelWrapper extends ChannelWrapper<ChannelExec> {
+public class ExecChannelWrapper extends AbstractChannelWrapper<ChannelExec> {
 
     public Map<String, Object> execute(String command) throws JSchException {
         Map<String, Object> result = new HashMap<>();

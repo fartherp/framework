@@ -21,8 +21,8 @@ import javax.naming.NamingException;
 
 /**
  * A utility class for Jndi operation.
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public class JndiUtil {
     /**

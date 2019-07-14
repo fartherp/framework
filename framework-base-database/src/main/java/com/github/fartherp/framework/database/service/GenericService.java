@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/5.
+ * @author CK
+ * @date 2015/6/5.
  */
 public interface GenericService<T, ID> {
     /**
@@ -32,6 +32,7 @@ public interface GenericService<T, ID> {
 
     /**
      * 批量删除对象
+	 * @param ids ids
      */
     void deleteBatch(List<ID> ids);
 
@@ -59,6 +60,7 @@ public interface GenericService<T, ID> {
      * 保存对象
      *
      * @param entity entity
+	 * @return ID
      */
     ID saveEntity(T entity);
 

@@ -17,8 +17,8 @@ package com.github.fartherp.framework.common.util;
 
 /**
  * 根据 user agent string 来判断出客户端的浏览器以及平台等信息
- * Author: CK
- * Date: 2015/9/22
+ * @author CK
+ * @date 2015/9/22
  */
 public class UserAgent {
     /**

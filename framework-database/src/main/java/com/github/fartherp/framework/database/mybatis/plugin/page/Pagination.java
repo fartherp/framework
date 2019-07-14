@@ -20,26 +20,26 @@ import java.util.List;
 
 /**
  * 分页接口
- * Author: CK
- * Date: 2015/6/14
+ * @author CK
+ * @date 2015/6/14
  */
 public interface Pagination<T> extends Serializable {
 
     /**
      * 当pagination做为参数放入map传到mybatis时，该值为取pagination的key
      */
-    public final static String MAP_PAGE_FIELD = Pagination.class.getName() + ".MAP_PAGE_FIELD";
+	String MAP_PAGE_FIELD = Pagination.class.getName() + ".MAP_PAGE_FIELD";
     /**
      * 默认pagesize
      */
-    public final static int DEFAULT_PAGE_SIZE = 50;
+	int DEFAULT_PAGE_SIZE = 50;
 
     /**
      * 获取需分页的数据总量 <br/>
      *
      * @return 分页的数据总量
      */
-    public int getTotal();
+	int getTotal();
 
     /**
      * 获取每页数据容量<br/>
@@ -53,7 +53,7 @@ public interface Pagination<T> extends Serializable {
      *
      * @return 总页数
      */
-    public int getTotalPage();
+	int getTotalPage();
 
     /**
      * 获取当前页码数 <br/>
@@ -67,42 +67,42 @@ public interface Pagination<T> extends Serializable {
      *
      * @return 是否还有下一页
      */
-    public boolean isHasNext();
+	boolean isHasNext();
 
     /**
      * 获取下一页页码 <br/>
      *
      * @return 获取下一页页码
      */
-    public int getNextPage();
+	int getNextPage();
 
     /**
      * 是否还有上一页 <br/>
      *
      * @return 是否还有上一页
      */
-    public boolean isHasPrevious();
+	boolean isHasPrevious();
 
     /**
      * 获取上一页页码 <br/>
      *
      * @return 获取上一页页码
      */
-    public int getPreviousPage();
+	int getPreviousPage();
 
     /**
      * 获取该页的数据列表 <br/>
      *
      * @return 获取该页的数据列表
      */
-    public List<T> getRows();
+	List<T> getRows();
 
     /**
      * 设置该页数据 <br/>
      *
      * @param rows 数据列表
      */
-    public void setRows(List<T> rows);
+	void setRows(List<T> rows);
 
     /**
      * 初始化page各项参数 <br/>
@@ -111,48 +111,48 @@ public interface Pagination<T> extends Serializable {
      * @param pageSize 页大小
      * @param currentPage 当前页
      */
-    public void init(int totalCount, int pageSize, int currentPage);
+	void init(int totalCount, int pageSize, int currentPage);
 
     /**
      * 获取页码标签列表大小 <br/>
      *
      * @return 页码标签列表大小
      */
-    public int getMaxPageIndexNumber();
+	int getMaxPageIndexNumber();
 
     /**
      * 设置页码标签列表大小 <br/>
      *
      * @param maxPageIndexNumber 页码标签列表大小
      */
-    public void setMaxPageIndexNumber(int maxPageIndexNumber);
+	void setMaxPageIndexNumber(int maxPageIndexNumber);
 
     /**
      * 获取页码列表 <br/>
      *
      * @return 页码列表
      */
-    public int[] getPageNumberList();
+	int[] getPageNumberList();
 
     /**
      * 设置总页数 <br/>
      *
      * @param totalCount 总页数
      */
-    public void setTotal(int totalCount);
+	void setTotal(int totalCount);
 
     /**
      * 设置每页大小 <br/>
      *
      * @param limit 每页大小
      */
-    public void setLimit(int limit);
+	void setLimit(int limit);
 
     /**
      * 设置当前页 <br/>
      *
      * @param currentPage 当前页
      */
-    public void setCurrentPage(int currentPage);
+	void setCurrentPage(int currentPage);
 
 }

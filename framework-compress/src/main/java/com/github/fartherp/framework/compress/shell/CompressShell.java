@@ -21,8 +21,8 @@ import java.io.File;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/15
+ * @author CK
+ * @date 2015/4/15
  */
 public abstract class CompressShell {
     protected void compress(String command) {

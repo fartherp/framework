@@ -26,19 +26,21 @@ import java.util.Map;
 
 /**
  * 返回错误页面
- * Auth: CK
- * Date: 2016/9/9
+ * @author CK
+ * @date 2016/9/9
  */
 public class ForwardExceptionHandler implements CustomizeExceptionHandler {
 
-    public boolean support(Exception ex, Class clazz) {
+    @Override
+	public boolean support(Exception ex, Class clazz) {
         return ex instanceof ForwardException
                 || ModelAndView.class.isAssignableFrom(clazz)
                 || ModelMap.class.isAssignableFrom(clazz);
     }
 
-    public ModelAndView deal(HttpServletRequest request, HttpServletResponse response, Object handler,
-                             Exception ex, CustomizeExceptionHandlerResolver resolver) {
+    @Override
+	public ModelAndView deal(HttpServletRequest request, HttpServletResponse response, Object handler,
+		Exception ex, CustomizeExceptionHandlerResolver resolver) {
         // 把漏网的异常信息记入日志
         Map<String, Object> map = new HashMap<String, Object>(1);
         String message = ex.getMessage();

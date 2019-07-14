@@ -25,8 +25,8 @@ import static org.testng.Assert.*;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/5/21
+ * @author CK
+ * @date 2018/5/21
  */
 public class MailUtilTest {
 //    @Test

@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
 
 /**
  * the CSV tools that the response write the csv file of the page and write the csv file of the user-defined
- * Author: CK
- * Date: 2015/9/22
+ * @author CK
+ * @date 2015/9/22
  */
 public class CsvUtil {
     /**
@@ -94,7 +94,7 @@ public class CsvUtil {
 	 * @param objs the body content of the csv file
 	 */
 	public static <T> void writeCsvFile(HttpServletResponse response, HttpServletRequest request,
-									String filename, String[] title, List<T> objs, Function<T, String[]> function) {
+			String filename, String[] title, List<T> objs, Function<T, String[]> function) {
 		List<String[]> bodyList = objs.stream().map(function).collect(Collectors.toList());
 		writeCsvFile(response, request, filename, title, bodyList);
 	}
@@ -117,7 +117,8 @@ public class CsvUtil {
      * @param bodyList this body content of the csv file
      */
     public static void writeCsvFile(String filename, String[] title, List<String[]> bodyList) {
-        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File(filename + ".csv")), "GBK"))) {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(
+        	new FileOutputStream(new File(filename + ".csv")), "GBK"))) {
             write(writer, title, bodyList);
         } catch (IOException e) {
             throw new RuntimeException("write csv file fail ", e);
@@ -147,7 +148,8 @@ public class CsvUtil {
 	 * @param objs 对象列表
 	 * @param function 对象转字符串数组回调
 	 */
-	public static <T> void writeCsvFile(String filename, String[] title, List<T> objs, Function<T, String[]> function) {
+	public static <T> void writeCsvFile(String filename, String[] title, List<T> objs,
+										Function<T, String[]> function) {
 		List<String[]> bodyList = objs.stream().map(function).collect(Collectors.toList());
 		writeCsvFile(filename, title, bodyList);
 	}

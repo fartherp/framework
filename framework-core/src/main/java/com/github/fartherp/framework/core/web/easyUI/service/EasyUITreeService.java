@@ -22,8 +22,8 @@ import java.util.function.Function;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/1/23
+ * @author CK
+ * @date 2016/1/23
  */
 public interface EasyUITreeService<T> {
     /**
@@ -32,7 +32,7 @@ public interface EasyUITreeService<T> {
      * @param mc 回调接口
      * @return 返回值
      */
-    public List<EasyUITreeModel> findChildren(List<T> list, Function<T, EasyUITreeModel> mc);
+	List<EasyUITreeModel> findChildren(List<T> list, Function<T, EasyUITreeModel> mc);
 
-    public void setCheck(List<EasyUITreeModel> easyUITreeModels);
+    void setCheck(List<EasyUITreeModel> easyUITreeModels);
 }

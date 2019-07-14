@@ -29,12 +29,12 @@ import java.io.OutputStream;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class FtpUtils {
 
-    public static final Logger log = LoggerFactory.getLogger(FtpUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FtpUtils.class);
 
     /**
      * 配置一个ftp连接.
@@ -43,12 +43,12 @@ public class FtpUtils {
      * @param config 配置对象.
      */
     private static void prepareConnection(FTPClient ftp, FtpConfig config) {
-        log.info("prepare.connection:{}", config);
+        LOGGER.info("prepare.connection:{}", config);
 
         try {
             ftp.connect(config.getHost(), config.getPort());
         } catch (IOException e) {
-            log.error("ftp connect fail[refused,config={}]", config);
+            LOGGER.error("ftp connect fail[refused,config={}]", config);
             setReplyCode(ftp, e);
         }
 
@@ -59,7 +59,7 @@ public class FtpUtils {
                 ftp.setFileType(FTP.ASCII_FILE_TYPE);
             }
         } catch (IOException e) {
-            log.error("ftp set file type fail[refused,config={}]", config);
+            LOGGER.error("ftp set file type fail[refused,config={}]", config);
             setReplyCode(ftp, e);
         }
 
@@ -76,7 +76,7 @@ public class FtpUtils {
                 ftp.pass(config.getPassword());
             }
         } catch (IOException e) {
-            log.error("ftp set username/password fail[refused,config={}]", config);
+            LOGGER.error("ftp set username/password fail[refused,config={}]", config);
             setReplyCode(ftp, e);
         }
     }
@@ -91,9 +91,9 @@ public class FtpUtils {
      * @throws FtpFailException the FtpFailException
      */
     public static void store(FtpConfig config, String ftpPath, InputStream fileStream, String fileName) {
-        log.info("ftp.store[{}]", config);
+        LOGGER.info("ftp.store[{}]", config);
         if (StringUtils.isBlank(fileName)) {
-            log.error("ftp.store.fileName=blank");
+            LOGGER.error("ftp.store.fileName=blank");
             throw new FtpFailException(0, "File Name is blank");
         }
 
@@ -107,7 +107,7 @@ public class FtpUtils {
                 ftp.changeWorkingDirectory(config.getDefaultDir());
             }
         } catch (IOException e) {
-            log.error("ftp.cwd.error:{}", e);
+            LOGGER.error("ftp.cwd.error:{}", e);
             closeFtpQuietly(ftp);
             setReplyCode(ftp, e);
         }
@@ -115,7 +115,7 @@ public class FtpUtils {
         try {
             ftp.storeFile(fileName, fileStream);
         } catch (IOException e) {
-            log.error("ftp.store.error:{}", e);
+            LOGGER.error("ftp.store.error:{}", e);
             setReplyCode(ftp, e);
         } finally {
             closeFtpQuietly(ftp);
@@ -132,7 +132,7 @@ public class FtpUtils {
      * @param output 输出流,写回下载的文件流. 不能为null, 资源管理由调用方负责.
      */
     public static void fetch(FtpConfig config, String path, OutputStream output) {
-        log.info("ftp.fetch[{}]", config);
+        LOGGER.info("ftp.fetch[{}]", config);
 
         FTPClient ftp = new FTPClient();
         prepareConnection(ftp, config);
@@ -140,7 +140,7 @@ public class FtpUtils {
         try {
             ftp.retrieveFile(path, output);
         } catch (IOException e) {
-            log.error("ftp.retrieve.error:{}", e);
+            LOGGER.error("ftp.retrieve.error:{}", e);
             setReplyCode(ftp, e);
         } finally {
             closeFtpQuietly(ftp);
@@ -154,7 +154,7 @@ public class FtpUtils {
      */
     private static void setReplyCode(FTPClient ftp, Exception e) {
         int reply = ftp.getReplyCode();
-        log.info("reply={}", reply);
+        LOGGER.info("reply={}", reply);
         if (!FTPReply.isPositiveCompletion(reply)) {
             throw new FtpFailException(0, e.getMessage());
         } else {
@@ -176,7 +176,7 @@ public class FtpUtils {
             try {
                 ftp.disconnect();
             } catch (IOException e) {
-                log.error("closeFtpQuietly.error:{}", e);
+                LOGGER.error("closeFtpQuietly.error:{}", e);
             }
         }
     }

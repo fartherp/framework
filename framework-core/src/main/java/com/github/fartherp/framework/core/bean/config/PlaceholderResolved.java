@@ -17,8 +17,8 @@ package com.github.fartherp.framework.core.bean.config;
 
 /**
  * Placeholder resolved call back
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public interface PlaceholderResolved {
     /**

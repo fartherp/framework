@@ -17,28 +17,29 @@ package com.github.fartherp.framework.common.constant;
 
 /**
  * A Constant of the framework-common module that record with manage ALL Constant message
- * Author: CK
- * Date: 2015/6/30.
+ *
+ * @author CK
+ * @date 2015/6/30.
  */
-public class Constant {
+public interface Constant {
 
-    public static final String EMPTY = "";
+    String EMPTY = "";
 
-    public static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
+    String MAIL_SMTP_AUTH = "mail.smtp.auth";
 
-    public static final String MAIL_SMTP_HOST = "mail.smtp.host";
+    String MAIL_SMTP_HOST = "mail.smtp.host";
 
-    public static final String DEFAULT_DRIVE_NAME = "com.mysql.jdbc.Driver";
+    String DEFAULT_DRIVE_NAME = "com.mysql.jdbc.Driver";
 
-    public static final int DEFAULT_SCALE = 2;
+    int DEFAULT_SCALE = 2;
 
-    public static final String SEMICOLON_DELIMITER = ";";
+    String SEMICOLON_DELIMITER = ";";
 
-    public static final String COMMA_DELIMITER = ",";
+    String COMMA_DELIMITER = ",";
 
-    public static final String DB_DEFAULT_DATE = "1970-01-01 00:00:00";
+    String DB_DEFAULT_DATE = "1970-01-01 00:00:00";
 
-    public static final String DEFAULT_EMAIL_PATTTERN = "\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*";
+    String DEFAULT_EMAIL_PATTTERN = "\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*";
 
-    public static final String DEFAULT_MOBILE_PATTERN = "((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}";
+    String DEFAULT_MOBILE_PATTERN = "((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}";
 }

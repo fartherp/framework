@@ -25,14 +25,15 @@ import java.util.List;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2017/12/22
+ * @author CK
+ * @date 2017/12/22
  */
 public class CSVReadTest {
     @Test
     public void testRead() {
         CSVRead.read(CSVReadTest.class.getResourceAsStream("/a.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
+			@Override
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();
                 dto.setId(Long.valueOf(arr[0]));
@@ -42,6 +43,7 @@ public class CSVReadTest {
             }
 
             // 批量数据处理（可以批量入库）
+			@Override
             public void dealBatchBean(List<CsvReadDto> list) {
                 Assert.assertEquals("name1", list.get(0).getName());
                 Assert.assertEquals("name2", list.get(1).getName());
@@ -55,6 +57,7 @@ public class CSVReadTest {
         CSVParser parser = new CSVParserBuilder().withSeparator('|').withIgnoreQuotations(true).build();
         CSVRead.read(CSVReadTest.class.getResourceAsStream("/a1.csv"), new CSVReadDeal<CsvReadDto>() {
             // 单条数据处理（每个excel一行对应一个javabean）
+			@Override
             public CsvReadDto dealBean(String[] arr) {
                 CsvReadDto dto = new CsvReadDto();
                 dto.setId(Long.valueOf(arr[0]));
@@ -64,6 +67,7 @@ public class CSVReadTest {
             }
 
             // 批量数据处理（可以批量入库）
+			@Override
             public void dealBatchBean(List<CsvReadDto> list) {
                 Assert.assertEquals("name1", list.get(0).getName());
                 Assert.assertEquals("name2", list.get(1).getName());

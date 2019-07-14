@@ -19,8 +19,8 @@ import com.github.fartherp.framework.compress.CommonCompress;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/14
+ * @author CK
+ * @date 2015/4/14
  */
 public class ZIP extends CommonCompress {
     public ZIP() {

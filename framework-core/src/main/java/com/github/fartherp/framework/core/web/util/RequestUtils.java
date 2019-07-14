@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/8/12
+ * @author CK
+ * @date 2015/8/12
  */
 public class RequestUtils {
 

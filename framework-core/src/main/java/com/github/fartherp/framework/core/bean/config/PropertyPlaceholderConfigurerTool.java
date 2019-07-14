@@ -26,8 +26,8 @@ import java.util.Properties;
 
 /**
  * Utility class for {@link PropertyPlaceholderConfigurer}
- * Auth: CK
- * Date: 2016/8/29
+ * @author CK
+ * @date 2016/8/29
  */
 public final class PropertyPlaceholderConfigurerTool {
 
@@ -60,12 +60,7 @@ public final class PropertyPlaceholderConfigurerTool {
         if (propertyResource == null) {
             return null;
         }
-        PlaceholderResolver resolver = new PlaceholderResolver(
-                new PlaceholderResolved() {
-                    public String doResolved(String placeholder) {
-                        return propertyResource.getProperty(placeholder);
-                    }
-                });
+        PlaceholderResolver resolver = new PlaceholderResolver(propertyResource::getProperty);
         return resolver;
     }
 }

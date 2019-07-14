@@ -27,7 +27,7 @@ import javax.annotation.Resource;
  * `user` 
  */
 @Service("userService")
-public class UserServiceImpl extends GenericSqlMapServiceImpl<User, Integer> implements UserService {
+public class UserServiceImpl extends BaseGenericSqlMapServiceImpl<User, Integer> implements UserService {
 
     @Resource
     private UserMapper userMapper;

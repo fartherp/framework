@@ -25,10 +25,10 @@ import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/11/13
+ * @author CK
+ * @date 2015/11/13
  */
-public abstract class DefaultKvHandler implements KvHandler {
+public abstract class BaseDefaultKvHandler implements KvHandler {
     /**
      * 名称
      */
@@ -61,12 +61,14 @@ public abstract class DefaultKvHandler implements KvHandler {
      */
     protected int defaultValueFlag;
 
-    public DefaultKvHandler(Integer name, String tableName, String keyField, String valueField,
-                            Map<String, Object> extraFields, int type, boolean daoExecuteFlag,
-                            int defaultValueFlag) {
-        Preconditions.checkArgument(name != null, "class [" + this.getName() + "] the missing name");
-        Preconditions.checkArgument(StringUtils.isNotBlank(keyField), "class [" + this.getName() + "] the missing keyField");
-        Preconditions.checkArgument(StringUtils.isNotBlank(valueField), "class [" + this.getName() + "] the missing valueField");
+    public BaseDefaultKvHandler(Integer name, String tableName, String keyField, String valueField,
+		Map<String, Object> extraFields, int type, boolean daoExecuteFlag, int defaultValueFlag) {
+        Preconditions.checkArgument(name != null,
+			"class [" + this.getName() + "] the missing name");
+        Preconditions.checkArgument(StringUtils.isNotBlank(keyField),
+			"class [" + this.getName() + "] the missing keyField");
+        Preconditions.checkArgument(StringUtils.isNotBlank(valueField),
+			"class [" + this.getName() + "] the missing valueField");
         this.type = type;
         this.name = name;
         this.tableName = tableName;
@@ -119,33 +121,40 @@ public abstract class DefaultKvHandler implements KvHandler {
         }
     }
 
-    public List<Map<String, Object>> extendExecute(Map<String, Object> params) {
+    @Override
+	public List<Map<String, Object>> extendExecute(Map<String, Object> params) {
         return fn.apply(params);
     }
 
-    public boolean isDaoExecute() {
+    @Override
+	public boolean isDaoExecute() {
         return daoExecuteFlag;
     }
 
-    public String createSql(Map<String, Object> params) {
+    @Override
+	public String createSql(Map<String, Object> params) {
         ST sql = setSql(type);
         setupTemplates(sql, params);
         return sql.render();
     }
 
-    public Integer getName() {
+    @Override
+	public Integer getName() {
         return name;
     }
 
-    public String getKeyField() {
+    @Override
+	public String getKeyField() {
         return keyField;
     }
 
-    public String getValueField() {
+    @Override
+	public String getValueField() {
         return valueField;
     }
 
-    public int getDefaultValueFlag() {
+    @Override
+	public int getDefaultValueFlag() {
         return defaultValueFlag;
     }
 }

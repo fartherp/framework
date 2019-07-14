@@ -35,10 +35,10 @@ import static com.jcraft.jsch.ChannelSftp.SSH_FX_NO_SUCH_FILE;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
+public class SftpChannelWrapper extends AbstractChannelWrapper<ChannelSftp> {
 
     public static final String FILE_NAME_SUFFIX = ".r";
 
@@ -46,7 +46,8 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
 
     public static final String HMS_NAME_TYPE = "";
 
-    public void openChannel(ChannelType channelType) throws JSchException {
+    @Override
+	public void openChannel(ChannelType channelType) throws JSchException {
         super.openChannel(channelType);
         this.getChannel().connect();
     }
@@ -76,7 +77,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
      */
     public void upload(String localfilename, String path) throws SftpException {
         this.getChannel().cd(path);
-        String remoteName = FtpFileName(localfilename);
+        String remoteName = ftpFileName(localfilename);
         String remoteNameU = remoteName + FILE_NAME_SUFFIX;
         File file = new File(localfilename);
         try {
@@ -95,7 +96,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
      * @param inFile 本地的文件
      * @return 新文件
      */
-    private static String FtpFileName(String inFile) {
+    private static String ftpFileName(String inFile) {
         inFile = inFile.replace('\\', '/');
         int lastSlash = inFile.lastIndexOf(File.separator);
         return inFile.substring(lastSlash + 1, inFile.length());
@@ -110,7 +111,8 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
      * @param nameType          文件类型
      * @return 文件名
      */
-    public String getFile(String folder, String destinationFolder, String fileName, String nameType) throws SftpException {
+    public String getFile(String folder, String destinationFolder, String fileName, String nameType)
+		throws SftpException {
         // 如果是模糊匹配，而且匹配正确，则需要将FTP上的文件名替代本地文件名。
         Vector<LsEntry> files = this.getChannel().ls(folder);
         Iterator<LsEntry> iter = files.iterator();
@@ -183,7 +185,8 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
      * @param fileName          文件名
      * @param nameType          文件类型
      */
-    public void delFile(String folder, String destinationFolder, String fileName, String nameType) throws SftpException {
+    public void delFile(String folder, String destinationFolder, String fileName, String nameType)
+		throws SftpException {
         Vector<LsEntry> files = this.getChannel().ls(folder);
         Iterator<LsEntry> iter = files.iterator();
         if (BLUR_NAME_TYPE.equals(nameType.trim())) {
@@ -332,8 +335,8 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
      * @throws SftpException
      */
     public void mkdir(String path) throws SftpException {
-        char result[] = path.toCharArray();
-        List<String> dirs = new ArrayList<String>();
+        char[] result = path.toCharArray();
+        List<String> dirs = new ArrayList<>();
         for (int i = 0; i < result.length; i++) {
             if (result[i] == '/') {
                 dirs.add(path.substring(0, i));
@@ -352,6 +355,7 @@ public class SftpChannelWrapper extends ChannelWrapper<ChannelSftp> {
             } catch (SftpException e) {
                 if ("No such file".equals(e.getMessage())) {
                     // do nothing
+					logger.debug(e.getMessage());
                 }
                 this.getChannel().mkdir(dir);
             }

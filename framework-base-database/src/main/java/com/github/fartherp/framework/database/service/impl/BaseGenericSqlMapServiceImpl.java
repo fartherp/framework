@@ -16,7 +16,7 @@
 package com.github.fartherp.framework.database.service.impl;
 
 import com.github.fartherp.framework.database.dao.DaoMapper;
-import com.github.fartherp.framework.database.dao.FieldAccessVo;
+import com.github.fartherp.framework.database.dao.BaseFieldAccessVo;
 import com.github.fartherp.framework.database.service.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,42 +28,52 @@ import java.util.List;
 
 /**
  * XML配置Service实现
- * Author: CK
- * Date: 2015/6/5.
+ * @author CK
+ * @date 2015/6/5.
  */
-public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID extends Serializable>
+public abstract class BaseGenericSqlMapServiceImpl<T extends BaseFieldAccessVo<ID>, ID extends Serializable>
         implements GenericService<T, ID> {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public abstract DaoMapper<T, ID> getDao();
+	/**
+	 * this get DaoMapper
+	 * @return DaoMapper
+	 */
+	public abstract DaoMapper<T, ID> getDao();
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public void delete(ID id) {
         Assert.notNull(id, "delete failed due to PrimaryKey is null");
         getDao().deleteByPrimaryKey(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public void deleteBatch(List<ID> ids){
     	if (ids != null && !ids.isEmpty()) {
         	getDao().deleteBatch(ids);
 		}
     }
 
+	@Override
     public List<T> findAll() {
         return getDao().selectAll();
     }
 
+	@Override
     public T findById(ID id) {
         return getDao().selectByPrimaryKey(id);
     }
 
+	@Override
     public long count() {
         return getDao().count();
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public ID saveEntity(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insert(entity);
@@ -71,6 +81,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public ID saveEntitySelective(T entity) {
         Assert.notNull(entity, "save entity failed due to entity is null");
         getDao().insertSelective(entity);
@@ -78,6 +89,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public void saveBatch(List<T> entitys) {
         if (entitys!= null && !entitys.isEmpty()) {
             getDao().insertBatch(entitys);
@@ -85,6 +97,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public void updateEntity(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
         Assert.notNull(entity.primaryKey(), "update entity failed due to entity id is null");
@@ -92,6 +105,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public void updateEntitySelective(T entity) {
         Assert.notNull(entity, "update entity failed due to entity is null");
         Assert.notNull(entity.primaryKey(), "update entity failed due to entity id is null");
@@ -99,6 +113,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public T saveOrUpdate(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
         ID id = entity.primaryKey();
@@ -115,6 +130,7 @@ public abstract class GenericSqlMapServiceImpl<T extends FieldAccessVo<ID>, ID e
     }
 
     @Transactional(rollbackFor = Exception.class)
+	@Override
     public T saveOrUpdateSelective(T entity) {
         Assert.notNull(entity, "save or update entity failed due to entity is null");
         ID id = entity.primaryKey();

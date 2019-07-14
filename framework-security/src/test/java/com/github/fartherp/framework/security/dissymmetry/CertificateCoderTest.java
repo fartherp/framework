@@ -24,8 +24,8 @@ import java.net.URL;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2015/4/13
+ * @author CK
+ * @date 2015/4/13
  */
 public class CertificateCoderTest {
 

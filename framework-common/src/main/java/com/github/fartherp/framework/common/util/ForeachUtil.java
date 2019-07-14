@@ -21,7 +21,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Created by zhjie.zhang on 2019/3/26.
+ * Created by IntelliJ IDEA.
+ *
+ * @author zhjie.zhang.
+ * @date 2019/3/26.
  */
 public class ForeachUtil {
     public static <T> List<T> foreachAddWithReturn(int num, Function<Integer, List<T>> getFunc) {

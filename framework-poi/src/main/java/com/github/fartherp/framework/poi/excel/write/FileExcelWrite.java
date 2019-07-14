@@ -24,12 +24,14 @@ import java.util.Objects;
 /**
  * 文件流
  *
- * Author: CK
- * Date: 2017/11/25
+ * @author CK
+ * @date 2017/11/25
  */
-public class FileExcelWrite implements OutputStreamDelegate {
+public final class FileExcelWrite implements OutputStreamDelegate {
+	private FileExcelWrite() {
+	}
 
-    @Override
+	@Override
     public OutputStream createOutputStream(String fileName) {
         try {
             return new FileOutputStream(fileName);

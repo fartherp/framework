@@ -29,7 +29,8 @@ public class ExcelReadTest {
         // a.xls/a.xlsx
         ExcelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
             // 单条数据处理（每个excel一行对应一个对象）
-            public ExcelReadDto dealBean(Row row) {
+            @Override
+			public ExcelReadDto dealBean(Row row) {
                 ExcelReadDto dto = new ExcelReadDto();
                 dto.setId(new BigDecimal(row.getCell(0).toString()).longValue());
                 dto.setName(row.getCell(1).toString());
@@ -38,7 +39,8 @@ public class ExcelReadTest {
             }
 
             // 批量数据处理（可以批量入库）
-            public void dealBatchBean(List<ExcelReadDto> list) {
+            @Override
+			public void dealBatchBean(List<ExcelReadDto> list) {
                 Assert.assertEquals("name1", list.get(0).getName());
                 Assert.assertEquals("name2", list.get(1).getName());
                 Assert.assertEquals("name3", list.get(2).getName());

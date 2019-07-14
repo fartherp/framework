@@ -24,8 +24,8 @@ import java.util.function.BiConsumer;
 
 /**
  * Excel写接口
- * Author: CK
- * Date: 2016/5/29
+ * @author CK
+ * @date 2016/5/29
  */
 public interface ExcelWrite {
 

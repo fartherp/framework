@@ -32,8 +32,8 @@ import java.util.function.Consumer;
 
 /**
  * 已有Excel模板，读取流生成新Excel模板
- * Author: CK
- * Date: 2019/4/24
+ * @author CK
+ * @date 2019/4/24
  */
 public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
 
@@ -102,7 +102,7 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
                 }
                 stringCellValue =  new StringSubstitutor(params).replace(stringCellValue);
                 cell.setCellValue(stringCellValue);
-                if(this.headStyle != null){
+                if (this.headStyle != null) {
                     cell.setCellStyle(this.headStyle);
                 }
             }

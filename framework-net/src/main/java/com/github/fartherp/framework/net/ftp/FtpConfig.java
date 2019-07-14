@@ -17,8 +17,8 @@ package com.github.fartherp.framework.net.ftp;
 
 /**
  * FTP配置
- * Author: CK
- * Date: 2015/6/30.
+ * @author CK
+ * @date 2015/6/30.
  */
 public class FtpConfig {
 
@@ -126,7 +126,8 @@ public class FtpConfig {
         this.defaultDir = defaultDir;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder sb = new StringBuilder("FtpConfig{");
         sb.append("host='").append(host).append('\'');
         sb.append(", port=").append(port);

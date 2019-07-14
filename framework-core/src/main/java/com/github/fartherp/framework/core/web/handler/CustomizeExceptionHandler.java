@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 异常处理接口
- * Auth: CK
- * Date: 2016/9/11
+ * @author CK
+ * @date 2016/9/11
  */
 public interface CustomizeExceptionHandler {
 

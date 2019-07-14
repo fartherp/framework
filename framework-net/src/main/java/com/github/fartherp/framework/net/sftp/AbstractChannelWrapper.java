@@ -18,14 +18,18 @@ package com.github.fartherp.framework.net.sftp;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/17
+ * @author CK
+ * @date 2018/4/17
  */
-public abstract class ChannelWrapper<T extends Channel> {
+public abstract class AbstractChannelWrapper<T extends Channel> {
+
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Session session;
     private T channel;

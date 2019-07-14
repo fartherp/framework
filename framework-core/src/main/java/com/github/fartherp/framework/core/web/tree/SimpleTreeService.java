@@ -22,8 +22,8 @@ import java.util.function.Function;
 
 /**
  * 简单树结构Service
- * Auth: CK
- * Date: 2016/8/27
+ * @author CK
+ * @date 2016/8/27
  */
 public interface SimpleTreeService<T> {
     /**
@@ -32,7 +32,7 @@ public interface SimpleTreeService<T> {
      * @param mc 业务回调接口
      * @return 返回给前端Tree数据
      */
-    public String findTreeStr(List<T> list, Function<T, SimpleTreeModel> mc);
+	String findTreeStr(List<T> list, Function<T, SimpleTreeModel> mc);
 
     /**
      * 返回树列表
@@ -40,5 +40,5 @@ public interface SimpleTreeService<T> {
      * @param mc 回调接口
      * @return 返回值
      */
-    public List<SimpleTreeModel> findTree(List<T> list, Function<T, SimpleTreeModel> mc);
+	List<SimpleTreeModel> findTree(List<T> list, Function<T, SimpleTreeModel> mc);
 }

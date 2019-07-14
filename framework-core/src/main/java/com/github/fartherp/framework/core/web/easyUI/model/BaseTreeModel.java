@@ -17,8 +17,8 @@ package com.github.fartherp.framework.core.web.easyUI.model;
 
 /**
  * Created by IntelliJ IDEA.
- * Author: CK
- * Date: 2016/1/23
+ * @author CK
+ * @date 2016/1/23
  */
 public class BaseTreeModel {
     /**

@@ -20,8 +20,8 @@ import java.io.OutputStream;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/19
+ * @author CK
+ * @date 2018/12/19
  */
 public interface PdfWrite {
     /**

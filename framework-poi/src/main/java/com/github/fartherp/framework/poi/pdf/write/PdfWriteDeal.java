@@ -18,8 +18,8 @@ package com.github.fartherp.framework.poi.pdf.write;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/12/19
+ * @author CK
+ * @date 2018/12/19
  */
 @FunctionalInterface
 public interface PdfWriteDeal<R> {

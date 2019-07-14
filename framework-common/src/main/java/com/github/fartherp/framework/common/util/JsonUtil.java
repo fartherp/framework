@@ -35,8 +35,8 @@ import java.util.List;
 
 /**
  * A json tools for the gson deal of the google.
- * Author: CK
- * Date: 2015/8/7
+ * @author CK
+ * @date 2015/8/7
  */
 public class JsonUtil {
     /**
@@ -55,7 +55,7 @@ public class JsonUtil {
     }
 
     public static Gson gson(String... ignoreProperties) {
-        String datePattern = DateUtil.yyyy_MM_dd_HH_mm_ss;
+        String datePattern = DateUtil.YYYY_MM_DD_HH_MM_SS;
         GsonBuilder builder = new GsonBuilder();
         builder.setDateFormat(datePattern);
         ExclusionStrategy exclusionStrategy = getExclusionStrategy(ignoreProperties);
@@ -78,13 +78,17 @@ public class JsonUtil {
 
     public static ExclusionStrategy getExclusionStrategy(String... ignoreProperties) {
         ExclusionStrategy exclusionStrategy = null;
-        final List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0) ? Arrays.asList(ignoreProperties) : null;
+        final List<String> ignoreList = (ignoreProperties != null && ignoreProperties.length > 0)
+			? Arrays.asList(ignoreProperties) : null;
         if (ignoreList != null) {
             exclusionStrategy = new ExclusionStrategy() {
+
+            	@Override
                 public boolean shouldSkipField(FieldAttributes fa) {
                     return ignoreList.contains(fa.getName());
                 }
 
+                @Override
                 public boolean shouldSkipClass(Class<?> clazz) {
                     return false;
                 }
@@ -97,6 +101,8 @@ public class JsonUtil {
      * the time stamp convert the {@link Date} of java
      */
     public static class DateDeserializer implements JsonDeserializer<Date> {
+
+    	@Override
         public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
                 throws JsonParseException {
             return new Date(json.getAsJsonPrimitive().getAsLong());
@@ -107,6 +113,8 @@ public class JsonUtil {
      * the {@link Date} of java convert the time stamp
      */
     public static class DateSerializer implements JsonSerializer<Date> {
+
+    	@Override
         public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(src.getTime());
         }

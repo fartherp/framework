@@ -30,15 +30,16 @@ import java.util.Map;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author: CK
- * @date: 2018/4/4
+ * @author CK
+ * @date 2018/4/4
  */
 @Component("fartherpMockInterceptor")
 public class MockInterceptor implements MethodInterceptor, Serializable, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
-    public Object invoke(MethodInvocation invocation) throws Throwable {
+    @Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
         Object o = SpringProxyUtils.getRealTarget(invocation.getThis());
         Class<?> targetClass = o.getClass();
         Class<?>[] interfaces = targetClass.getInterfaces();
@@ -57,7 +58,8 @@ public class MockInterceptor implements MethodInterceptor, Serializable, Applica
         return invocation.proceed();
     }
 
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    @Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 }
