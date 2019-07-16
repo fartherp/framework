@@ -24,6 +24,8 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * code convert tools
@@ -1777,4 +1779,20 @@ public class ISOUtil {
         }
         return sb.toString();
     }
+
+	/**
+	 * unicode -> utf-8
+	 * @param str unicode字符串
+	 * @return utf-8字符串
+	 */
+	public static String unicode2String(String str) {
+		Matcher matcher = UNICODE_2_STRING_PATTERN.matcher(str);
+		while (matcher.find()) {
+			char ch = (char) Integer.parseInt(matcher.group(2), 16);
+			str = str.replace(matcher.group(1), ch + "");
+		}
+		return str;
+	}
+
+	private static final Pattern UNICODE_2_STRING_PATTERN = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
 }
