@@ -391,7 +391,7 @@ public class FileExcelWriteTest {
                 .write();
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testWriteExcelOverMaxCountExceptionByInputStream() {
 		FileExcelWrite.build(this.getClass().getResourceAsStream("/c.xls"), fileName)
 				.setLargeDataMode(true)
