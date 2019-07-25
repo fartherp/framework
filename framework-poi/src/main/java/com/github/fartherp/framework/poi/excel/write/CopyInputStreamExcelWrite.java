@@ -53,7 +53,7 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
         try {
             this.wb = WorkbookFactory.create(this.inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+			logger.debug("ignore exception:{}", e);
         }
     }
 
@@ -61,12 +61,12 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
 	public void close(Consumer<Object> consumer) {
     	try {
 			super.close(consumer);
-		} catch (Throwable ex) {
+		} catch (Exception ex) {
 			if (this.inputStream != null) {
 				try {
 					this.inputStream.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.debug("ignore exception:{}", e);
 				}
 			}
     		throw ex;
@@ -80,10 +80,10 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
     public <T> Sheet createSheet(SheetWrapper currentSheetWrapper, String[] title, WriteDeal<T> deal) {
         int count = currentSheetWrapper.getTotal() + deal.skipLine();
         if (count > deal.setMaxRows(type)) {
-            throw new RuntimeException("数据太大，超过当前sheet的最大数量");
+            throw new IllegalArgumentException("数据太大，超过当前sheet的最大数量");
         }
         if (currentSheetNumber >= wb.getNumberOfSheets()) {
-            throw new RuntimeException("数据太大，超过设置的sheet数");
+            throw new IllegalArgumentException("数据太大，超过设置的sheet数");
         }
         Sheet currentSheet = wb.getSheetAt(currentSheetNumber++);
         // 额外参数
@@ -119,7 +119,7 @@ public class CopyInputStreamExcelWrite extends AbstractExcelWrite {
                 try {
                     this.inputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+					logger.debug("ignore exception:{}", e);
                 }
             }
         }

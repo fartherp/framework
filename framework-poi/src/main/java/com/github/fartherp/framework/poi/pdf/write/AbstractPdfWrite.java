@@ -87,7 +87,7 @@ public abstract class AbstractPdfWrite implements PdfWrite {
 
             convertToPdf(o, pdfDoc);
         } catch (IOException e) {
-            throw new RuntimeException("PDF写入错误", e);
+            throw new IllegalArgumentException("PDF写入错误", e);
         }
     }
 

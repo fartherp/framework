@@ -44,7 +44,7 @@ public class HttpServletResponsePdfWrite extends AbstractPdfWrite {
         try {
             this.outputStream = this.response.getOutputStream();
         } catch (IOException e) {
-            throw new RuntimeException("响应流异常", e);
+            throw new IllegalArgumentException("响应流异常", e);
         }
         return this;
     }

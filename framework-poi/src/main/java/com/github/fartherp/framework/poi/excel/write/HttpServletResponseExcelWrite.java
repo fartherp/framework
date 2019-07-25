@@ -49,7 +49,7 @@ public final class HttpServletResponseExcelWrite implements OutputStreamDelegate
             this.setResponse(fileName);
             return response.getOutputStream();
         } catch (IOException e) {
-            throw new RuntimeException("响应流异常", e);
+            throw new IllegalArgumentException("响应流异常", e);
         }
     }
 

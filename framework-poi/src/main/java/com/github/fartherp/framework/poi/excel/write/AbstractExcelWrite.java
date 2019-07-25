@@ -157,17 +157,20 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         }
     }
 
-    public abstract void createWb();
+	/**
+	 * 创建Workbook
+	 */
+	public abstract void createWb();
 
 	public void close(Consumer<Object> consumer) {
 		try {
 			consumer.accept(null);
-		} catch (Throwable ex) {
+		} catch (Exception ex) {
 			if (this.outputStream != null) {
 				try {
 					this.outputStream.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.debug("ignore exception:{}", e);
 				}
 			}
 			throw ex;
@@ -244,36 +247,42 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         return currentSheetWrapper;
     }
 
+	/**
+	 * 创建Sheet
+	 * @param currentSheetWrapper sheet包装
+	 * @param title 标题
+	 * @param deal 自定义处理接口
+	 * @param <T> T
+	 * @return Sheet
+	 */
     public abstract <T> Sheet createSheet(SheetWrapper currentSheetWrapper, String[] title, WriteDeal<T> deal);
 
     @Override
     public void write() {
         // 最终把所有sheet改成自动调整列宽
-        wrapperLinkedListMap.forEach((k, v) -> {
-            v.forEach(currentSheetWrapper -> {
-				Sheet currentSheet = currentSheetWrapper.getSheet();
-                if (currentSheet instanceof SXSSFSheet) {
-                    SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
-                    // 自动调整列宽
-                    sxssfSheet.trackAllColumnsForAutoSizing();
-                }
-				for (int i = 0; i < currentSheetWrapper.getTitleLength(); i++) {
-					currentSheet.autoSizeColumn(i);
-				}
-            });
-        });
+        wrapperLinkedListMap.forEach((k, v) -> v.forEach(currentSheetWrapper -> {
+			Sheet currentSheet = currentSheetWrapper.getSheet();
+			if (currentSheet instanceof SXSSFSheet) {
+				SXSSFSheet sxssfSheet = (SXSSFSheet) currentSheet;
+				// 自动调整列宽
+				sxssfSheet.trackAllColumnsForAutoSizing();
+			}
+			for (int i = 0; i < currentSheetWrapper.getTitleLength(); i++) {
+				currentSheet.autoSizeColumn(i);
+			}
+		}));
 
         // 创建文件输出流，准备输出电子表格
         try {
             wb.write(this.outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+			logger.debug("ignore exception:{}", e);
         } finally {
             if (this.outputStream != null) {
                 try {
                     this.outputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+					logger.debug("ignore exception:{}", e);
                 }
             }
         }

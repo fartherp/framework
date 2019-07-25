@@ -36,7 +36,7 @@ public final class FileExcelWrite implements OutputStreamDelegate {
         try {
             return new FileOutputStream(fileName);
         } catch (IOException e) {
-            throw new RuntimeException("响应流异常", e);
+            throw new IllegalArgumentException("响应流异常", e);
         }
     }
 

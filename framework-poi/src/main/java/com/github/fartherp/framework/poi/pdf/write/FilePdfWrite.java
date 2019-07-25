@@ -36,7 +36,7 @@ public final class FilePdfWrite extends AbstractPdfWrite {
         try {
             this.outputStream = new FileOutputStream(this.fileName);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("文件不存在", e);
+            throw new IllegalArgumentException("文件不存在", e);
         }
         return this;
     }
