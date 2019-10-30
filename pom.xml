@@ -91,7 +91,7 @@
         <httpcore.version>4.4.10</httpcore.version>
         <compress.version>1.18</compress.version>
         <log4j.version>1.2.17</log4j.version>
-        <netty-all.version>4.1.32.Final</netty-all.version>
+        <netty-all.version>4.1.42.Final</netty-all.version>
         <fastjson.version>1.2.54</fastjson.version>
         <guice.version>4.2.2</guice.version>
         <validation.version>2.0.1.Final</validation.version>
