@@ -37,6 +37,9 @@ public class ValueValidator implements ConstraintValidator<Value, Object> {
 
 	@Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
+		if (value == null) {
+			return true;
+		}
         return Arrays.binarySearch(values, value.toString()) >= 0;
     }
 }
