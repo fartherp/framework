@@ -185,7 +185,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
 		close(o -> {
 			build();
 			// 标题一样，认为是一个sheet类型，标题不一样，按回调对象来区分
-			int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title);
+			int hashCode = title != null && title.length == 0 ? deal.hashCode() : Arrays.hashCode(title) + deal.hashCode();
 			// 同一sheet类型，链表结构，达到Excel最大数量，可以追加
 			LinkedList<SheetWrapper> linkedList = wrapperLinkedListMap
 				.computeIfAbsent(hashCode, k -> new LinkedList<>());
