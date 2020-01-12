@@ -1,10 +1,19 @@
 language: java
 
 jdk:
-  - oraclejdk8
+  - openjdk-ea
+  - openjdk13
+  - openjdk12
+  - openjdk11
+  - openjdk8
 
 services:
+  - docker
   - mysql
+
+cache:
+  directories:
+    - $HOME/.m2
 
 addons:
   apt:
@@ -22,20 +31,12 @@ before_install:
   - sudo mysql -u root -proot -e 'CREATE DATABASE IF NOT EXISTS test_tmp;'
   - sudo mysql -u root -proot -e 'use test_tmp; CREATE TABLE tb_user (id int(11) NOT NULL AUTO_INCREMENT, user_name varchar(50) NOT NULL, password varchar(50) NOT NULL, phone varchar(20) NOT NULL, create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id) ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
 
-
-install: ./mvnw install -DskipTests=true -B -V
-script: ./mvnw clean test -B
 after_success:
-  - ./mvnw clean test jacoco:report coveralls:report -q -DrepoToken="${COVERALLS_TOKEN}"  -Dmaven.test.redirectTestOutputToFile=true
+  - chmod -R 777 ./travis/after_success.sh
+  - ./travis/after_success.sh
 
 notifications:
   email: false
-
-sudo: false
-
-cache:
-  directories:
-    - $HOME/.m2
 
 env:
   global:

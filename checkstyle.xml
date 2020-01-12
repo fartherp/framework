@@ -115,9 +115,9 @@
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
 		<!-- 每行字符数 -->
-		<module name="LineLength">
-			<property name="max" value="120"/>
-		</module>
+		<!--<module name="LineLength">-->
+			<!--<property name="max" value="120"/>-->
+		<!--</module>-->
 		<!-- Checks for long methods and constructors. max default 150行. -->
 		<module name="MethodLength"/>
 		<!-- Checks the number of parameters of a method or constructor. max default 7个. -->
