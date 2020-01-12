@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/fartherp/framework.svg?branch=master)](https://travis-ci.org/fartherp/framework)
 [![Coverage Status](https://coveralls.io/repos/github/fartherp/framework/badge.svg?branch=master)](https://coveralls.io/github/fartherp/framework?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fartherp/framework/)
-[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.github.fartherp/framework.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/github/fartherp/framework)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.github.fartherp/framework.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/github/fartherp/framework/)
 [![GitHub release](https://img.shields.io/github/release/fartherp/framework.svg)](https://github.com/fartherp/framework/releases)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Project Stats](https://www.openhub.net/p/fartherp-framework/widgets/project_thin_badge.gif)](https://www.openhub.net/p/fartherp-framework)

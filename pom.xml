@@ -91,7 +91,7 @@
         <httpclient.version>4.5.6</httpclient.version>
         <httpasyncclient.version>4.1.4</httpasyncclient.version>
         <httpcore.version>4.4.10</httpcore.version>
-        <compress.version>1.18</compress.version>
+        <compress.version>1.19</compress.version>
         <log4j.version>1.2.17</log4j.version>
         <netty-all.version>4.1.32.Final</netty-all.version>
         <fastjson.version>1.2.54</fastjson.version>
