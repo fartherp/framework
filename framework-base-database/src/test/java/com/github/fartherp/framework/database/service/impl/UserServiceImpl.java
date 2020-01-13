@@ -19,9 +19,8 @@ import com.github.fartherp.framework.database.dao.DaoMapper;
 import com.github.fartherp.framework.database.dao.UserMapper;
 import com.github.fartherp.framework.database.pojo.User;
 import com.github.fartherp.framework.database.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * `user` 
@@ -29,7 +28,7 @@ import javax.annotation.Resource;
 @Service("userService")
 public class UserServiceImpl extends BaseGenericSqlMapServiceImpl<User, Integer> implements UserService {
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
     public DaoMapper<User, Integer> getDao() {
