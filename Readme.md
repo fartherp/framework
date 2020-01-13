@@ -5,7 +5,8 @@
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/com.github.fartherp/framework.svg)](https://oss.sonatype.org/content/repositories/snapshots/com/github/fartherp/framework/)
 [![GitHub release](https://img.shields.io/github/release/fartherp/framework.svg)](https://github.com/fartherp/framework/releases)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
-[![Project Stats](https://www.openhub.net/p/fartherp-framework/widgets/project_thin_badge.gif)](https://www.openhub.net/p/fartherp-framework)
+[![Project Stats](https://www.openhub.net/p/fartherp-framework/widgets/project_thin_badge.gif)](https://www.openhub.net/p/fartherp-framework)  
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=fartherp_framework)](https://sonarcloud.io/dashboard?id=fartherp_framework)
 
 Framework Spring Boot Starter 用于帮助你在Spring Boot项目中轻松集成Framework。
 > framework-spring-boot(https://github.com/fartherp/framework-spring-boot)
