@@ -19,6 +19,7 @@ import com.github.fartherp.framework.poi.excel.WriteDeal;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -102,6 +103,11 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
      */
     protected BiConsumer<CellStyle, Font> bodyStyleConsumer;
 
+	/**
+	 * 文本类型
+	 */
+	protected CellStyle textStyle;
+
     private Map<Integer, LinkedList<SheetWrapper>> wrapperLinkedListMap = new HashMap<>();
 
     private OutputStreamDelegate delegate;
@@ -142,6 +148,9 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
             this.outputStream = delegate.createOutputStream(this.fileName);
             // 创建excel
             createWb();
+			DataFormat dataFormat = wb.createDataFormat();
+			this.textStyle = wb.createCellStyle();
+			this.textStyle.setDataFormat(dataFormat.getFormat("@"));
             if (this.headStyleConsumer != null) {
                 this.headStyle = wb.createCellStyle();
                 Font headFont = wb.createFont();
@@ -219,6 +228,7 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
                 if (this.bodyStyle != null) {
                     cell.setCellStyle(this.bodyStyle);
                 }
+				currentSheetWrapper.setDefaultColumnStyle(k, textStyle);
             }
         }
     }
@@ -297,6 +307,11 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
          */
         private int total = 0;
 
+		/**
+		 * 每列设计文本类型
+		 */
+		private int column = -1;
+
         public Sheet getSheet() {
             return sheet;
         }
@@ -336,5 +351,12 @@ public abstract class AbstractExcelWrite implements ExcelWrite {
         public void increaseTotal(int i) {
             total += i;
         }
-    }
+
+		public void setDefaultColumnStyle(int column, CellStyle textStyle) {
+        	if (this.column < column) {
+        		this.column = column;
+				this.sheet.setDefaultColumnStyle(column, textStyle);
+			}
+		}
+	}
 }
