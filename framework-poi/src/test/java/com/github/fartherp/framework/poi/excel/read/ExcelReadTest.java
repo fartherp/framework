@@ -15,7 +15,6 @@
  */
 package com.github.fartherp.framework.poi.excel.read;
 
-import org.apache.poi.ss.usermodel.Row;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -30,11 +29,11 @@ public class ExcelReadTest {
         ExcelRead.read(ExcelReadTest.class.getResourceAsStream("/a.xls"), new ExcelReadDeal<ExcelReadDto>() {
             // 单条数据处理（每个excel一行对应一个对象）
             @Override
-			public ExcelReadDto dealBean(Row row) {
+			public ExcelReadDto dealBean(RowDelegate delegate) {
                 ExcelReadDto dto = new ExcelReadDto();
-                dto.setId(new BigDecimal(row.getCell(0).toString()).longValue());
-                dto.setName(row.getCell(1).toString());
-                dto.setAge(Integer.valueOf(row.getCell(2).toString()));
+				delegate.getString(0).map(BigDecimal::new).map(BigDecimal::longValue).ifPresent(dto::setId);
+				delegate.getString(1).ifPresent(dto::setName);
+				delegate.getString(2).map(Integer::valueOf).ifPresent(dto::setAge);
                 return dto;
             }
 

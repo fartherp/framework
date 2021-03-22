@@ -16,7 +16,6 @@
 package com.github.fartherp.framework.poi.excel.read;
 
 import com.github.fartherp.framework.poi.ReadDeal;
-import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,8 +26,8 @@ import org.apache.poi.ss.usermodel.Row;
 public interface ExcelReadDeal<E> extends ReadDeal<E> {
     /**
      * 一行excel数据返回业务BEAN
-     * @param row 一行excel数据
+     * @param delegate 一行excel数据
      * @return 业务BEAN
      */
-    E dealBean(Row row);
+    E dealBean(RowDelegate delegate);
 }

@@ -76,6 +76,7 @@ public class ExcelRead {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(deal);
         try (Workbook wb = WorkbookFactory.create(inputStream)) {
+			RowDelegate delegate = new RowDelegate();
             for (int i = 0; i < wb.getNumberOfSheets(); i++) {
                 Sheet sheet = wb.getSheetAt(i);
                 if (null == sheet) {
@@ -89,7 +90,8 @@ public class ExcelRead {
                     if (index <= deal.skipLine()) {
                         continue;
                     }
-                    E o = deal.dealBean(row);
+					delegate.setRow(row);
+                    E o = deal.dealBean(delegate);
                     if (null != o) {
                         l.add(o);
                         if (index % tmp == 0) {
