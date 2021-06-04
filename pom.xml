@@ -88,7 +88,7 @@
         <ST4.version>4.1</ST4.version>
         <druid.version>1.1.12</druid.version>
         <dbunit.version>2.6.0</dbunit.version>
-        <httpclient.version>4.5.6</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <httpasyncclient.version>4.1.4</httpasyncclient.version>
         <httpcore.version>4.4.10</httpcore.version>
         <compress.version>1.19</compress.version>
