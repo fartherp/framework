@@ -72,7 +72,7 @@
         <fileupload.version>1.4</fileupload.version>
         <lang3.version>3.8.1</lang3.version>
         <io.version>2.6</io.version>
-        <net.version>3.6</net.version>
+        <net.version>3.9.0</net.version>
         <jsch.version>0.1.55</jsch.version>
         <freemarker.version>2.3.28</freemarker.version>
         <ognl.version>3.2.10</ognl.version>
